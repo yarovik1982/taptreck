@@ -1,0 +1,115 @@
+.form {
+   width: 100%;
+   background-color: #fff;
+   border-radius: 16px;
+   margin: 0 auto;
+   padding: 0 25px;
+ }
+ .form-content {
+   width: 100%;
+   padding: 50px 0px;
+ }
+ .form-header {
+   font-size: 29px;
+   font-weight: bold;
+   margin-bottom: 9px;
+ }
+ .form-row {
+   display: flex;
+   justify-content: space-around;
+   position: relative;
+ }
+ .form-title{
+   position: relative;
+   cursor: pointer;
+ }
+ .form-title.active::after{
+   position: absolute;
+   content: "";
+   top: 100%;
+   left: 0;
+   width: 50%;
+   height: 4px;
+   background-color: #FBCC04;
+ }
+ .form-body .form-row {
+   width: 409px;
+   height: 63px;
+   background-color: #f7f0d4;
+   border-radius: 10px;
+   padding: 0 16px;
+   margin-top: 40px;
+   display: flex;
+   flex-direction: column;
+   justify-content: end;
+ }
+ .form-label {
+   position: absolute;
+   top: 5px;
+   left: 16px;
+   color: #403a4b;
+   transition: top 0.3s linear;
+ }
+ input {
+   font-size: 18px;
+   font-weight: bold;
+   outline: none;
+   border: 0;
+   background-color: transparent;
+   padding-bottom: 8px;
+ }
+ input:focus ~ .form-label {
+   top: 0;
+ }
+ .form-icon {
+   position: absolute;
+   top: 50%;
+   left: 90%;
+   transform: translateY(-50%);
+   cursor: pointer;
+ }
+ .form-row-check {
+   margin-top: 12px;
+   margin-bottom: 14.5px;
+   display: flex;
+   align-items: center;
+ }
+ .form-label-check {
+   display: flex;
+   align-items: center;
+   font-size: 12px;
+ }
+ .form-input-check-fake {
+   position: absolute;
+   z-index: -1;
+   opacity: 0;
+ }
+ .icon-checked {
+   width: 28.5px;
+   height: 28.5px;
+   margin-right: 16px;
+ }
+ .icon-unchecked {
+   width: 28.5px;
+   height: 28.5px;
+   border-radius: 4px;
+   border: 2px solid #64520a;
+   margin-right: 16px;
+ }
+ .icon-checked img {
+   width: 100%;
+   object-fit: cover;
+ }
+ 
+ .form-footer-policy {
+   font-size: 12px;
+   color: #969698;
+   margin-left: 40px;
+ }
+ .form-reset-password {
+    margin-bottom: 49px;
+    text-align: center;
+ }
+ .form-reset-password a{
+    color:#000;
+ }
