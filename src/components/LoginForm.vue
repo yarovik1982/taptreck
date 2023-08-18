@@ -6,11 +6,9 @@
    >
     <div class="form-content">
       <div class="form-header">
+         <p class="text-light bg-success text-center">{{ message }}</p>
         <div class="form-row">
           <h4 class="form-title active">Вход</h4>
-          <!-- <h4 class="form-title" @click="$router.push('/register')">
-            Регистрация
-          </h4> -->
         </div>
       </div>
       <div class="form-body">
@@ -60,12 +58,10 @@
             Запомнить меня
           </label>
         </div>
-
-        <button
+         <button
           class="btn-big radius-10"
           type="submit"
           style="margin-bottom: 49px"
-          data-bs-dismiss="modal"
         >
           Войти
         </button>
@@ -77,7 +73,7 @@
         <login-by-social></login-by-social>
       </div>
     </div>
-    <!-- <p>{{ message }}</p> -->
+    
   </form>
 </template>
 
@@ -85,7 +81,7 @@
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import LoginBySocial from "./LoginBySocial.vue";
-import { BASE_URL } from "@/HelperFunctions/BaseUrl";
+import { BASE_URL, apiList } from "@/HelperFunctions/BaseUrl";
 export default {
   components: { LoginBySocial },
   name: "login-form",
@@ -110,7 +106,7 @@ export default {
         password: password.value,
       };
       try {
-        const response = await fetch(BASE_URL + "user/auth", {
+        const response = await fetch(BASE_URL + apiList.userAuth, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -121,7 +117,7 @@ export default {
           const data = await response.json();
           const token = data.token;
           document.cookie = `token=${token}; path=/`;
-          const profileResponse = await fetch(BASE_URL + "user/profile", {
+          const profileResponse = await fetch(BASE_URL + apiList.userProfile, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -130,8 +126,11 @@ export default {
             const profileData = await profileResponse.json();
 
             localStorage.setItem("user", JSON.stringify(profileData));
-            // attrValue.value = !attrValue.value
             toProfile.push("/profile");
+            message.value = 'Вы авторизованы, можете закрыть форму.'
+            setTimeout(() => {
+               message.value = ''
+            }, 3000)
           } else
             message.value = "Упс , что-то пошло не так. Попробуйте заново!";
         }

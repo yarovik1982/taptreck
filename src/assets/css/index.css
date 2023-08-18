@@ -3,6 +3,10 @@
    padding: 0;
    box-sizing: border-box;
  }
+ body.unscroll{
+   overflow: hidden;
+   padding-right:25px ;
+ }
  a{
    text-decoration: none;
  }
@@ -16,6 +20,22 @@
    max-width: 1700px;
    margin: 0 auto;
    padding: 0 10px;
+}
+#intro{
+   margin-top: 50px;
+}
+.section-title{
+   position: relative;
+   font-weight: 600;
+}
+.section-title::after{
+   position: absolute;
+   content: "";
+   width: 50%;
+   height: 4px;
+   background-color: #FACA10;
+   top: 100%;
+   left: 0;
 }
 section:not(#intro){
    margin-top: 85px;
@@ -33,7 +53,7 @@ button{
    border: none;
 }
 .btn-big{
-   width: 409px;
+   width:100%;
    height: 52px;
    display: flex;
    justify-content: center;
@@ -43,6 +63,19 @@ button{
    background-color: #FACA10;
    font-size: 18px;
    letter-spacing: 2px;
+}
+.btn-more{
+   width: 407px;
+   height: 52px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: #fff;
+   background-color: #FACA10;
+   font-size: 18px;
+   letter-spacing: 2px;
+   border-radius: 10px;
+   border:0;
 }
 .btn-yellow{
    background-color: #F2E534;

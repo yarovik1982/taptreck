@@ -1,19 +1,37 @@
 <template>
-  <navbar></navbar>
-  <router-view/>
+  <div class="app">
+    <div
+      class="layout w-100 h-100 position-fixed bg-opacity-75 bg-dark"
+      style="z-index: 2"
+      v-show="isModal"
+      @click.self="toggleModal"
+    ></div>
+    <navbar @toggle-modal="toggleModal"></navbar>
+    <router-view />
+    <app-footer @toggle-modal="toggleModal"></app-footer>
+  </div>
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue'
-// import HomePage from '@/views/HomePage.vue'
+import AppFooter from "./components/AppFooter.vue";
+import Navbar from "./components/Navbar.vue";
+import { ref } from "vue";
 export default {
-  components: { Navbar },
-  // components: { HomePage },
-  name:'app',
+  components: { Navbar, AppFooter },
+
+  name: "app",
   setup() {
-    
+    const isModal = ref(false);
+    const toggleModal = () => {
+      isModal.value = !isModal.value;
+      document.body.classList.toggle('unscroll')
+    };
+    return {
+      isModal,
+      toggleModal,
+    };
   },
-}
+};
 </script>
 
 <style>
@@ -21,8 +39,9 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
 }
+
+
 
 /* nav {
   padding: 30px;
