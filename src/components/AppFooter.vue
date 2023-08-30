@@ -42,17 +42,34 @@
                 >Пивоварни</router-link
               >
             </li>
-            <li class="navbar-list-item mb-2"
-               @click='handler'
+            <li
+              class="navbar-list-item mb-2"
+              @click="activeModal = 'feedback'; openModal()"
             >
-              <!-- <router-link to="/feedback" class="header-list-link"
-                >Написать нам</router-link -->
-                <span class="navbar-list-link" style="cursor:pointer;"
-              
-              >Написать нам</span>
-              
+              <span class="navbar-list-link" style="cursor: pointer"
+                >Написать нам</span
+              >
             </li>
           </ul>
+          <teleport to="body">
+            <div
+              id="modal"
+              v-show="activeModal === 'feedback'"
+              class="appModal"
+              
+              @click.self="activeModal = null"
+            >
+              <div class="appModal-content"
+                v-if="activeModal != null"
+                :style="{top:scrollPosition + 'px'}"
+              >
+                <button class="close" @click="activeModal = null">
+                  &times;
+                </button>
+                <feedback-form></feedback-form>
+              </div>
+            </div>
+          </teleport>
         </div>
         <div class="col-12 col-md-3 mb-1 text-center text-md-end">
           <h5 class="mb-2">Контакты</h5>
@@ -80,7 +97,11 @@
         <a href="#" target="_blanc" class="p-1">
           <img src="@/assets/images/App-Store.png" alt="" width="282px" />
         </a>
-        <a href="https://play.google.com/store/apps" target="_blanc" class="p-1">
+        <a
+          href="https://play.google.com/store/apps"
+          target="_blanc"
+          class="p-1"
+        >
           <img src="@/assets/images/google-play.png" alt="" width="282px" />
         </a>
       </div>
@@ -89,23 +110,30 @@
 </template>
 
 <script>
-import {ref} from 'vue'
+import { ref } from "vue";
+import FeedbackForm from "@/components/FeedbackForm.vue";
 export default {
-   emits:['toggle-modal'],
-   name:'app-footer',
-   setup(_, {emit}) {
-      const handler = () => {
-         emit('toggle-modal')
-      }
-      return{
-         handler,
-      }
-   },
-}
+  components: { FeedbackForm },
+  name: "app-footer",
+  setup() {
+    const activeModal = ref(null);
+    const scrollPosition = ref(0);
+    const openModal = () => {
+      scrollPosition.value =
+        window.pageYOffset || document.documentElement.scrollTop;
+      activeModal.value = 'feedback'
+    };
+    return {
+      activeModal,
+      openModal,
+      scrollPosition,
+    };
+  },
+};
 </script>
 <style scoped>
-a{
-   text-decoration: none;
+a {
+  text-decoration: none;
 }
 .navbar-list-link {
   color: #1e1e1e;
@@ -114,7 +142,6 @@ a{
   padding: 4px 0;
   position: relative;
   text-decoration: none;
- 
 }
 .navbar-list-link::after {
   position: absolute;
@@ -131,4 +158,3 @@ a{
   opacity: 1;
 }
 </style>
-

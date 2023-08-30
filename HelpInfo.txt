@@ -1,2 +1,17 @@
 testUser : madbad_o
 testPassword : 8dC96IOm
+token : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5YXJvdmlrIiwiaXNzIjoiYXBwIiwiZXhwIjoxNjkyOTA1NjEwLCJpYXQiOjE2OTI5MDM4MTB9.5uxIcXbLA1Ycd9Z1X3iKPIpsLSBmkcgbOYk8UtL29ltIkJo6gGPYcnnpIm47WtSA-IJgddGOdP2QPsGMxUMQhA"
+user: {
+   "userId":261,
+   "userName":"Oleg",
+   "login":"yarovik",
+   "mail":"yarovik@yandex.ru",
+   "telephoneNumber":null,
+   "birthday":null,
+   "country":null,
+   "city":null,
+   "image":null,
+   "dateReg":"09-08-2023",
+   "totalFeedback":0,
+   "userRole":0
+   }

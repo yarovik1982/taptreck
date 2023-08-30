@@ -1,5 +1,4 @@
 <template>
-  <!-- <div class="card mb-3" style="max-width: 540px;"> -->
   <div
     class="card mb-3"
     style="padding: 40px 20px; border: 1px solid #000"
@@ -57,43 +56,12 @@
 </template>
 <script>
 import { ref } from "vue";
+import {useStore} from "vuex"
 export default {
   name: "profile-favorites-page",
   setup() {
-    const cardList = ref([
-      {
-        title: "Красное & Белое",
-        id: Date.now(),
-        type: "Магазин",
-        image: require("@/assets/images/profile-favorites1.png"),
-        description:
-          "Российская компания-ритейлер и одноимённая сеть магазинов формата самообслуживания.",
-      },
-      {
-        title: "Алкомаркет",
-        id: Date.now(),
-        type: "Магазин",
-        image: require("@/assets/images/profile-favorites2.png"),
-        description:
-          "Российская компания-ритейлер и одноимённая сеть магазинов формата самообслуживания.",
-      },
-      {
-        title: "Василеостровская",
-        id: Date.now(),
-        type: "Пивоварня",
-        image: require("@/assets/images/profile-favorites3.png"),
-        description:
-          "Российская компания-ритейлер и одноимённая сеть магазинов формата самообслуживания.",
-      },
-      {
-        title: "Пивнуха",
-        id: Date.now(),
-        type: "Бар",
-        image: require("@/assets/images/profile-favorites4.png"),
-        description:
-          "Российская компания-ритейлер и одноимённая сеть магазинов формата самообслуживания.",
-      },
-    ]);
+    const srore = useStore()
+    const cardList = srore.state.favoritesList
     // const isFavorites = ref(true)
     return {
       cardList,

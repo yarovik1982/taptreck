@@ -7,7 +7,11 @@
             <div class="card-body">
               <h1
                 class="card-title"
-                style="font-size: calc(1.35rem + 1.5vw); font-weight: 700; padding-top: 100px"
+                style="
+                  font-size: calc(1.35rem + 1.5vw);
+                  font-weight: 700;
+                  padding-top: 100px;
+                "
               >
                 Насладитесь красивым закатом или приятной компанией с Tap<span
                   style="font-weight: normal"
@@ -21,59 +25,25 @@
                 Попробуйте интересные и оригинальные сорта пива, которые можно
                 найти у нас, и отметьте любой праздник с хорошей бутылкой пива.
               </p>
-              <button 
-                class="btn btn-info btn-sm" 
-                data-bs-toggle="modal"
-                data-bs-target="#writeUs"
-                style="background: #fff1bb">
+              <button
+                class="btn btn-info btn-sm"
+                style="background: #fff1bb"
+                @click="activeModal = 'feedback'"
+              >
                 Написать нам
               </button>
-              <!-- Кнопка-триггер модального окна -->
-              
-
-              <!-- Модальное окно -->
-              <div
-                class="modal fade"
-                id="writeUs"
-                tabindex="-1"
-                aria-labelledby="writeUsModalLabel"
-                aria-hidden="true"
-              >
-              <div class="form-content">
-                <form action="" class="form">
-                <label for=""></label>
-                <input type="text" class="form-control">
-              </form>
-              </div>
-                <div class="modal-dialog d-none">
-                  <div class="modal-content">
-                    <div class="modal-header text-center border-0 position-relative">
-                      <h1 class="modal-title fs-5" id="writeUsModalLabel">
-                        Связаться с нами
-                      </h1>
-                      <i 
-                        class="bi bi-x position-absolute"
-                        style="right:-50px; color:#fff; font-size:50px; cursor:pointer;"
-                        data-bs-dismiss="modal"
-                        aria-label="Закрыть"
-                      ></i>
-                    </div>
-                    <div class="modal-body">...</div>
-                    <div class="modal-footer">
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal"
-                      >
-                        Закрыть
-                      </button>
-                      <button type="button" class="btn btn-primary">
-                        Сохранить изменения
-                      </button>
-                    </div>
+              <teleport to="body">
+                <div
+                  v-if="activeModal === 'feedback'"
+                  class="appModal"
+                  @click.self="activeModal = null"
+                >
+                  <div class="appModal-content">
+                    <button class="close" @click="activeModal = null">&times;</button>
+                    <feedback-form></feedback-form>
                   </div>
                 </div>
-              </div>
+              </teleport>              
             </div>
           </div>
           <div class="col-lg-7">
@@ -95,9 +65,7 @@
   </section>
 
   <section id="places">
-    
-      <app-slider-places></app-slider-places>
-    
+    <app-slider-places></app-slider-places>
   </section>
 
   <section id="news">
@@ -114,24 +82,35 @@
 </template>
 
 <script>
-import AppSliderPlaces from '@/components/AppSliderPlaces.vue';
-import AppNews from '@/components/AppNews.vue';
-import AppReviews from '@/components/AppReviews.vue';
-import AppOffers from '@/components/AppOffers.vue';
+import {ref} from 'vue'
+import AppSliderPlaces from "@/components/AppSliderPlaces.vue";
+import AppNews from "@/components/AppNews.vue";
+import AppReviews from "@/components/AppReviews.vue";
+import AppOffers from "@/components/AppOffers.vue";
+import FeedbackForm from "@/components/FeedbackForm.vue";
+
 export default {
-  components:{AppSliderPlaces, AppNews, AppReviews, AppOffers},
+  components: { AppSliderPlaces, AppNews, AppReviews, AppOffers, FeedbackForm },
   name: "home-page",
-  setup() {},
+  setup() {
+    const activeModal = ref(null)
+    return{activeModal}
+  },
 };
 </script>
 
 <style scoped>
-.form-content {
+/* .form-content {
   max-width: 950px;
   top: 30px;
   left: 50%;
-  transform: translate(-50%,0);
+  transform: translate(-50%, 0);
   padding: 80px;
   border-radius: 0;
-}
+} */
+/* .modal-feedback{
+  max-width: 950px;
+  width: 100%;
+  margin: 0 auto;
+} */
 </style>

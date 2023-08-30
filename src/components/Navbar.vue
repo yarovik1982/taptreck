@@ -26,6 +26,7 @@
             />
             <button
               class="btn btn-warning btn-sm"
+              type="submit"
               style="
                 border-radius: 0px 22px 22px 0px;
                 box-shadow: 0 0 0 1px #ffc107;
@@ -37,82 +38,65 @@
         </div>
       </div>
       <div class="col-3 d-flex justify-content-end">
-        <div class="user-btns d-flex"
-          v-if="!isAuth"
-        >
+        <div class="user-btns d-flex" v-if="!isAuth">
           <button
             type="button"
             class="btn btn-warning btn-sm d-none d-lg-block px-4 text-white"
-            data-bs-toggle="modal"
-            data-bs-target="#loginModal"
+            @click="activeModal = 'login'"
           >
             Вход
           </button>
-          <div
-            class="modal fade"
-            id="loginModal"
-            tabindex="-1"
-            aria-labelledby="loginModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog ">
-              <div class="modal-content">
-                <div
-                  class="modal-header"
-                  style="border-bottom: 2px solid #faca10"
-                >
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Закрыть"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  <login-form></login-form>
-                </div>
+          <teleport to="body">
+            <div
+              v-if="activeModal === 'login'"
+              class="appModal"
+              @click.self="activeModal = null"
+            >
+              <div class="appModal-content">
+                <button class="close" @click="activeModal = null">
+                  &times;
+                </button>
+                <login-form></login-form>
               </div>
             </div>
-          </div>
+
+            <div
+              v-if="activeModal === 'register'"
+              class="appModal"
+              @click.self="activeModal = null"
+            >
+              <div class="appModal-content">
+                <button class="close" @click="activeModal = null">
+                  &times;
+                </button>
+                <register-form></register-form>
+              </div>
+            </div>
+
+            <div
+              v-if="activeModal === 'feedback'"
+              class="appModal"
+              @click.self="activeModal = null"
+            >
+              <div class="appModal-content">
+                <button class="close" @click="activeModal = null">
+                  &times;
+                </button>
+                <feedback-form></feedback-form>
+              </div>
+            </div>
+          </teleport>
           <button
             class="btn btn-warning btn-sm d-none d-lg-block text-white"
             style="margin-left: 16px"
-            data-bs-toggle="modal"
-            data-bs-target="#registerModal"
+            @click="activeModal = 'register'"
           >
             Регистрация
           </button>
-          <div
-            class="modal fade"
-            id="registerModal"
-            tabindex="-1"
-            aria-labelledby="registerModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog "> <!--modal-dialog-scrollable-->
-              <div class="modal-content">
-                <div
-                  class="modal-header"
-                  style="border-bottom: 2px solid #faca10"
-                >
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Закрыть"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  <register-form></register-form>
-                </div>
-              </div>
-            </div>
-          </div>
           <i
             class="bi bi-box-arrow-in-right d-block d-lg-none"
             style="color: rgb(255, 193, 7); font-size: 32px; cursor: pointer"
-            data-bs-toggle="modal"
-            data-bs-target="#loginModal"
+            @click="activeModal = 'login'"
           ></i>
           <i
             class="bi bi-person-square d-block d-lg-none"
@@ -122,29 +106,21 @@
               cursor: pointer;
               margin-left: 16px;
             "
-            data-bs-toggle="modal"
-            data-bs-target="#registerModal"
+            @click="activeModal = 'register'"
           ></i>
-          <!-- <i
-          class="bi bi-box-arrow-left"
-          style="font-size: 40px; color: #ffc107; cursor: pointer"
-        ></i> -->
         </div>
-        <i class="bi bi-box-arrow-left"
+        <i
+          class="bi bi-box-arrow-left"
           v-else
-          style="font-size:40px; color:#FFC107;cursor:pointer;"
+          style="font-size: 40px; color: #ffc107; cursor: pointer"
           @click="logout"
         ></i>
       </div>
     </div>
   </header>
 
-   
-
-
   <nav class="navbar navbar-expand-lg" aria-label="Fifth navbar example">
     <div class="container-fluid">
-    <!-- <div class="app-container"> -->
       <button
         class="navbar-toggler collapsed"
         type="button"
@@ -161,9 +137,7 @@
         <div
           class="row d-flex w-100 justify-content-between align-items-center"
         >
-          <ul class="navbar-list navbar-nav me-auto mb-2 mb-lg-0"
-            v-if="isAuth"
-          >
+          <ul class="navbar-list navbar-nav me-auto mb-2 mb-lg-0" v-if="isAuth">
             <li class="navbar-list-item px-3">
               <router-link to="/" class="navbar-list-link">Главная</router-link>
             </li>
@@ -197,29 +171,22 @@
                 >Карта</router-link
               >
             </li>
-            <li class="navbar-list-item px-3"
-              @click='handler'
-            >
-              <span class="navbar-list-link" style="cursor:pointer;"
-              
-              >Написать нам</span>
-              <!-- <router-link to="/feedback" class="navbar-list-link"
-                >Написать нам</router-link
-              > -->
+            <li class="navbar-list-item px-3" @click="activeModal = 'feedback'">
+              <span class="navbar-list-link" style="cursor: pointer"
+                >Написать нам</span
+              >
             </li>
             <li
               class="navbar-list-item px-3"
               v-show="isAuth"
-              style="margin-left:auto;"
+              style="margin-left: auto"
             >
               <router-link to="/profile" class="navbar-list-link"
                 >Профиль</router-link
               >
             </li>
           </ul>
-          <ul class="navbar-list navbar-nav me-auto mb-2 mb-lg-0"
-            v-else
-          >
+          <ul class="navbar-list navbar-nav me-auto mb-2 mb-lg-0" v-else>
             <li class="navbar-list-item px-2">
               <router-link to="/" class="navbar-list-link">Главная</router-link>
             </li>
@@ -228,16 +195,6 @@
                 >Места</router-link
               >
             </li>
-            <!-- <li class="navbar-list-item px-2">
-              <router-link to="/news" class="navbar-list-link"
-                >Новинки</router-link
-              >
-            </li> -->
-            <!-- <li class="navbar-list-item px-2">
-              <router-link to="/reviews" class="navbar-list-link"
-                >Отзывы</router-link
-              >
-            </li> -->
             <li class="navbar-list-item px-2">
               <router-link to="/beer" class="navbar-list-link"
                 >Пиво</router-link
@@ -248,20 +205,15 @@
                 >Пивоварни</router-link
               >
             </li>
-            <li class="navbar-list-item px-2"
-              @click='handler'
-            >
-              <span class="navbar-list-link" style="cursor:pointer;"
-              
-              >Написать нам</span>
-              <!-- <router-link to="/feedback" class="navbar-list-link"
-                >Написать нам</router-link
-              > -->
+            <li class="navbar-list-item px-2" @click="activeModal = 'feedback'">
+              <span class="navbar-list-link" style="cursor: pointer"
+                >Написать нам</span
+              >
             </li>
             <li
               class="navbar-list-item px-2"
               v-show="isAuth"
-              style="margin-left:auto;"
+              style="margin-left: auto"
             >
               <router-link to="/profile" class="navbar-list-link"
                 >Профиль</router-link
@@ -275,36 +227,53 @@
 </template>
 
 <script>
+import { ref, computed } from "vue";
+import { getCookie } from "@/HelperFunctions/isAuthenticated";
+import {ClearDataProfile} from '@/HelperFunctions/GetDataProfile'
 import LoginForm from "@/components/LoginForm.vue";
-import RegisterForm from "./RegisterForm.vue";
-import {ref, computed} from 'vue'
-import {isAuthenticated} from '@/HelperFunctions/isAuthenticated'
+import RegisterForm from "@/components/RegisterForm.vue";
+import FeedbackForm from "@/components/FeedbackForm.vue";
 export default {
-  components: { LoginForm, RegisterForm },
+  components: { LoginForm, RegisterForm, FeedbackForm },
   name: "navbar",
   emits: ["toggle-modal"],
-  setup(_, {emit}) {
-   const isShow = ref(false)
-   const isAuth = ref(isAuthenticated())
-   const toggleValue = () => {
-      isShow.value = !isShow.value
-   }
-   const setValue = computed(() => isShow.value)
-   const handler = () => {
-    emit('toggle-modal')
-   }
-   return{
+  setup(_, { emit }) {
+    const activeModal = ref(null);
+    const isShow = ref(false);
+    const isAuth = ref(getCookie("token="));
+    const isAgeConfirmed = ref(getCookie("ageConfirm="));
+    const toggleValue = () => {
+      isShow.value = !isShow.value;
+    };
+    const setValue = computed(() => isShow.value);
+    const handler = () => {
+      emit("toggle-modal");
+    };
+    const logout = () => {
+      document.cookie.split(";").forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+      });
+          ClearDataProfile()
+          isAuth.value = false
+          isAgeConfirmed.value = false
+    };
+    return {
       isShow,
       toggleValue,
       setValue,
       isAuth,
       handler,
-   }
+      activeModal,
+      logout,
+    };
   },
 };
 </script>
 <style scoped>
-@import '@/assets/css/fonts.css';
+@import "@/assets/css/fonts.css";
+@import "@/assets/css/popup.css";
 .navbar-list-link {
   color: #1e1e1e;
   font-weight: bold;
@@ -312,7 +281,6 @@ export default {
   padding: 4px 0;
   position: relative;
   text-decoration: none;
- 
 }
 .navbar-list-link::after {
   position: absolute;

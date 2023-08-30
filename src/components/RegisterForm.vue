@@ -136,72 +136,40 @@
 </template>
 <script>
 import { ref, computed } from "vue";
-import LoginBySocial from './LoginBySocial.vue';
-import {BASE_URL, apiList} from '@/HelperFunctions/BaseUrl'
-// import {sendForm} from '@/HelperFunctions/SendForm'
-import {messages} from '@/HelperFunctions/Messages'
+import {useStore} from 'vuex'
+
+import LoginBySocial from '@/components/LoginBySocial.vue';
+
 export default {
-  components: { LoginBySocial },
   name: "register-form",
+  components: { LoginBySocial },
   setup() {
+    const store = useStore()
     const marker = ref([false, false]);
     const isChecked = ref(true);
     const isCheckedPolicy = ref(true);
-    const toggleType = (index) => {
-      marker.value[index] = !marker.value[index];
-    };
-
-    const getInputType = computed(() => (index) => (marker.value[index] ? "text" : "password"));
     const userName = ref('')
     const login    = ref('')
     const mail     = ref('')
     const password = ref('')
-    const message  = ref("")
 
-    // const data = {
-    //   userName:userName.value,
-    //   login   :login.value,
-    //   mail    :mail.value,
-    //   password:password.value
-    // }
-    // const urlapi = BASE_URL + apiList.userCreate
-    // const mess = message.value
-    // const submitForm = () => {
-    //   sendForm(data, urlapi, mess)
-    // }
-    const submitForm = async () => {
+    const getInputType = computed(() => (index) => (marker.value[index] ? "text" : "password"));
+    const message  = computed(()=> store.state.currentMessage)
+    
+    const toggleType = (index) => {
+      marker.value[index] = !marker.value[index];
+    };
+
+    const submitForm = () => {
       const registerData = {
         userName:userName.value,
         login   :login.value,
         mail    :mail.value,
         password:password.value
       }
-
-      try{
-        const response = await fetch((BASE_URL + apiList.userCreate), {
-          method: 'POST',
-          headers:{
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(registerData),
-        })
-          if(response.ok){
-            // message.value = "Вы зарегистрировались, закройте форму и авторизуйтесь"
-            message.value = messages.registerSuccess
-
-            setTimeout(() => {
-              message.value = ''
-            }, 5000)
-          }else {
-          // message.value = 'Ошибка регистрации. Попробуйте еще раз.';
-          message.value = messages.registerError
-        }
-      }catch(error){
-        //  message.value = 'Произошла ошибка при отправке запроса. Попробуйте позже.';
-         message.value = messages.errorRequest
-        console.error(error);
-      }
+      store.dispatch('CREATE_USER', registerData)
     }
+
     return {
       marker, isChecked,isCheckedPolicy,
       toggleType, getInputType, userName,

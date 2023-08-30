@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/views/HomePage.vue'
-import { isAuthenticated } from '@/HelperFunctions/isAuthenticated'
+import { getCookie } from '@/HelperFunctions/isAuthenticated'
 
 const routes = [
   {
@@ -73,8 +73,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/profile') {
-    if (isAuthenticated()) {
+  if (to.path.startsWith('/profile')) {
+    if (getCookie('token=')) {
       next();
     } else {
       next('/');
