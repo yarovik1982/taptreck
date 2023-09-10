@@ -1,5 +1,5 @@
 <template>
-  <form class="form" @submit.prevent="editProfile">
+  <form class="form" @submit.prevent="editProfile" style="width:100%;">
     <div class="form-content">
       <div class="form-header">
         <div class="form-row">
@@ -101,7 +101,7 @@ export default {
     const mail = ref(data?.mail ?? "");
 
     const userId = data?.userId ?? null;
-    console.log(userId);
+    // console.log(userId);
 
     const file = ref(null);
     const changeFile = (e) => {
@@ -163,38 +163,7 @@ export default {
     };
 
   
-    //     method: "POST",
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //       userName: userName.value,
-    //       birthday: birthday.value,
-    //       city: city.value,
-    //       country: country.value,
-    //       telephoneNumber: telephoneNumber.value,
-    //       mail: mail.value
-    //     }),
-    //   });
-
-    //   if (!profileResponse.ok) {
-    //     throw new Error(`Ошибка: ${profileResponse.statusText}`);
-    //   }
-
-    //   const photoData = new FormData();
-    //       photoData.append("file", file.value);
-
-    //       const photoResponse = await fetch(BASE_URL+apiList.userPhoto+`?id=${userId}`, {
-    //         method: "POST",
-    //         body: photoData,
-    //       });
-
-    //       if (!photoResponse.ok) {
-    //         throw new Error(`Ошибка: ${photoResponse.statusText}`);
-    //       }
-    // };
-
-    // console.log(data);
+    
     return {
       userName,
       birthday,

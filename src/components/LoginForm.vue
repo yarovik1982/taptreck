@@ -3,8 +3,9 @@
     class="form" 
     @submit.prevent="auth"
     style="max-width:509px;"
+    
    >
-    <div class="form-content">
+    <div class="form-content" style="display: flex;flex-direction: column;align-items: center;">
       <div class="form-header">
          <p class="text-light bg-success text-center">{{ message }}</p>
         <div class="form-row">
@@ -16,6 +17,7 @@
           <img class="form-icon" src="@/assets/images/user.svg" alt="" />
           <input
             class="form-input"
+            
             type="text"
             name="name"
             id="name"
@@ -85,7 +87,8 @@ import { BASE_URL, apiList } from "@/HelperFunctions/BaseUrl";
 export default {
   components: { LoginBySocial },
   name: "login-form",
-  setup() {
+  emits:['close-modal'],
+  setup(props,{emit}) {
     const login = ref("");
     const password = ref("");
     const message = ref("");
@@ -126,10 +129,11 @@ export default {
             const profileData = await profileResponse.json();
 
             localStorage.setItem("user", JSON.stringify(profileData));
-            toProfile.push("/profile/profile-favorites");
             message.value = 'Вы авторизованы, можете закрыть форму.'
             setTimeout(() => {
-               message.value = ''
+              message.value = ''
+              toProfile.push("/profile/profile-favorites");
+              location.reload()
             }, 3000)
           } else
             message.value = "Упс , что-то пошло не так. Попробуйте заново!";

@@ -9,7 +9,7 @@
   </div>
   <div class="container-fluid">
     <div
-      class="row link-group d-flex align-items-center justify-content-between px-5"
+      class="row link-group d-flex align-items-center  px-5"
     >
       <div class="col-12 d-flex justify-content-start py-1 col-lg-3 col-md-6">
         <div class="link-wrapper">
@@ -25,14 +25,14 @@
           >
         </div>
       </div>
-      <div class="col-12 d-flex justify-content-start py-1 col-lg-3 col-md-6">
+      <div class="col-12 d-flex justify-content-start py-1 col-lg-3 col-md-6" v-if="userRole === 3 || userRole === 1">
         <div class="link-wrapper">
           <router-link to="/profile/profile-beweries" class="profile-link"
             >Мои пивоварни</router-link
           >
         </div>
       </div>
-      <div class="col-12 d-flex justify-content-start py-1 col-lg-3 col-md-6">
+      <div class="col-12 d-flex justify-content-start py-1 col-lg-3 col-md-6" v-if="userRole === 2 || userRole === 3">
         <div class="link-wrapper">
           <router-link to="/profile/profile-shops" class="profile-link"
             >Мои точки продаж</router-link
@@ -42,7 +42,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="row overflow-hidden position-relative">
+    <div class="row position-relative">
       <i
         class="bi bi-three-dots-vertical"
         title="Редактировать профиль"
@@ -74,12 +74,12 @@
               <i class=" bi bi-pencil"></i>
             </div>
             <teleport to="body">
-              <div v-if="showModal" class="appModal" @click.self="closeModal">
+              <div v-if="showModal" class="appModal" @click.self="showModal = false">
                 <div class="appModal-content">
                   <form  id="formLoadPhoto" @submit.prevent="loadedPhoto">
                     <div class="form-header">
                       <span class="close"
-                        @click="closeModal"
+                        @click="showModal = false"
                       >&times;</span>
                     </div>
                     <div class="form-body">
@@ -150,18 +150,19 @@ export default {
     const email = ref(data?.mail ?? null);
     const image = ref(data?.image ?? null);
     const showModal = ref(false);
-
+    const userRole = data.userRole
+    
     const closeModal = () => {
       showModal.value = false;
       nextTick(()=>{
-        document.body.classList.remove('modal-open') // Включить прокрутку
+        document.body.classList.remove('unscroll') // Включить прокрутку
       })
     };
 
     const openModal = () => {
       showModal.value = true;
       nextTick(()=>{
-        document.body.classList.add('modal-open') // Запретить прокрутку
+        document.body.classList.add('unscroll') // Запретить прокрутку
       })
       
     };
@@ -176,6 +177,7 @@ export default {
       // showProfile,
       showModal,
       // toggleModal,
+      userRole,
     };
   },
 };

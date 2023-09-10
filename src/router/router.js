@@ -36,6 +36,12 @@ const routes = [
     ],
   },
   {
+    path: '/profile/profile-shops/:placeId',
+    name: 'one-sile-page',
+    component: () => import('@/views/viewsProfile/OneSilePage.vue')
+  },
+  
+  {
     path: '/places',
     name: 'places',
     component: () => import('@/views/PlacesPage.vue')

@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h2 class="text-center" style="margin-bottom:60px;">
+    <h2 class="text-center" style="margin-bottom: 60px">
       <span class="section-title">Отзывы</span>
     </h2>
     <swiper
@@ -19,14 +19,14 @@
       :modules="modules"
       class="reviewsSwiper"
     >
-      <swiper-slide v-for="reviewItem in reviewsList" :key="reviewItem.id">
-        <div class="slide-image">
-          <img :src="reviewItem.image" alt="BEER" />
+      <swiper-slide v-for="reviewItem in FEEDBACK_LIST_MAIN" :key="reviewItem.id">
+        <!-- <div class="slide-image" :style="{backgroundImage: 'url(' + reviewItem.image + ')', width: '120px', height: '120px'}"> -->
+        <div class="slide-image" style="width:120px;height:120px;">
+          <img :src="reviewItem.imageBeer" alt="BEER" style="width:100%;height:100%;object-fit:cover;"/>
         </div>
         <div class="review">
           <p>
-            Вкусный пивной напиток со вкусом персика. Garage hard peach drink.
-            Пробка легко открывается при помощи открывашки.
+            {{reviewItem.feedbackText}}
           </p>
           <span>{{ reviewItem.userName }}</span>
         </div>
@@ -40,7 +40,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
-import { ref } from "vue";
+import { mapActions, mapGetters } from "vuex";
+
 
 export default {
   name: "app-reviews",
@@ -48,73 +49,19 @@ export default {
     Swiper,
     SwiperSlide,
   },
-  setup() {
-    const reviewsList = ref([
-      {
-        id: 1,
-        userName: "Окунь Глушеный",
-        review: "",
-        image: require("@/assets/images/right-slide.png"),
-      },
-      {
-        id: 2,
-        userName: "Таранька Вяленая",
-        review: "",
-        image: require("@/assets/images/center-slade.png"),
-      },
-      {
-        id: 3,
-        userName: "Вобла Копченая",
-        review: "",
-        image: require("@/assets/images/left-slide.png"),
-      },
-      {
-        id: 4,
-        userName: "Вилка Булочка",
-        review: "",
-        image: require("@/assets/images/right-slide.png"),
-      },
-      {
-        id: 5,
-        userName: "Щука Подкоряжная",
-        review: "",
-        image: require("@/assets/images/center-slade.png"),
-      },
-      {
-        id: 6,
-        userName: "Карась Пучеглазов",
-        review: "",
-        image: require("@/assets/images/left-slide.png"),
-      },
-      {
-        id: 7,
-        userName: "Карась Пучеглазов",
-        review: "",
-        image: require("@/assets/images/right-slide.png"),
-      },
-      {
-        id: 8,
-        userName: "Карась Пучеглазов",
-        review: "",
-        image: require("@/assets/images/center-slade.png"),
-      },
-      {
-        id: 9,
-        userName: "Карась Пучеглазов",
-        review: "",
-        image: require("@/assets/images/left-slide.png"),
-      },
-      {
-        id: 10,
-        userName: "Карась Пучеглазов",
-        review: "",
-        image: require("@/assets/images/right-slide.png"),
-      },
-    ]);
+  data() {
     return {
       modules: [Pagination, Navigation],
-      reviewsList,
     };
+  },
+    computed: {
+    ...mapGetters(["FEEDBACK_LIST_MAIN"]),
+  },
+  methods: {
+    ...mapActions(["GET_DATA_FEEDBACK_LIST_MAIN"]),
+  },
+  mounted() {
+    this.GET_DATA_FEEDBACK_LIST_MAIN();
   },
 };
 </script>
@@ -151,8 +98,8 @@ export default {
 .swiper-slide-prev .slide-image {
   opacity: 0.7;
 }
-.swiper-slide .review>p{
-   font-size: calc(1px + 1vw);
+.swiper-slide .review > p {
+  font-size: calc(1px + 1vw);
 }
 .swiper-slide .review {
   display: none;
@@ -160,7 +107,7 @@ export default {
 .swiper-slide.swiper-slide-active .review {
   display: block;
 }
-.slide-image {
+.swiper-slide>.slide-image {
   width: 120px;
   height: 120px;
 }

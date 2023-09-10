@@ -13,7 +13,7 @@
           <div class="col-8">
             <div
               class="card mb-3"
-              v-for="item in BEWERYES_DATA"
+              v-for="item in breweriesData"
               :key="item.id"
               :data-id="item.id"
               :data-breweryId="item.breweryId"
@@ -40,6 +40,11 @@
                 </div>
               </div>
             </div>
+            <div class="row-btn">
+              <button class="btn-more"
+                @click="loadMore"
+              >Загрузить еще</button>
+            </div>
           </div>
           <div class="col-4">
             <div class="row mt-5">
@@ -52,24 +57,36 @@
   </section>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { computed, ref } from 'vue';
+import { useStore } from 'vuex';
+
 export default {
   name: "breweries-page",
   props: {},
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapGetters(["BEWERYES_DATA"]),
-  },
-  methods: {
-    ...mapActions(["GET_DATA_BREWERYES"]),
-  },
-  mounted() {
-    this.GET_DATA_BREWERYES();
+  setup() {
+    const store = useStore();
+    const limit = 45
+    const offset = ref(0)
+    const breweriesData = computed(() => store.getters.BEWERYES_DATA);
+
+    const getDataBreweries = () => {
+      store.dispatch('GET_DATA_BREWERYES', {limit, offset:offset.value});
+    };
+    const loadMore = () => {
+      offset.value += limit
+      getDataBreweries()
+    }
+    getDataBreweries();
+
+    return {
+      breweriesData,
+      loadMore,
+    };
   },
 };
 </script>
+
+
 
 <style scoped>
 section {
@@ -104,5 +121,10 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.row-btn{
+  margin-top: 345px;
+  display: flex;
+  justify-content: center;
 }
 </style>

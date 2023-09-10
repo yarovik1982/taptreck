@@ -1,46 +1,45 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid" v-if="newsList && newsList.length > 4">
     <h2 class="text-center " style="margin-bottom:35px;">
       <span class="section-title">Места</span>
     </h2>
     <div class="wrapper-swiper">
     <swiper
       :slidesPerView="1"
+      :centeredSlides= "true"
+      :watchOverflow= "true"
       :space-between="16"
       :auto-height="true"
       :loop="true"
       :autoplay="{
-         delay:1000,                            
+         delay:2500,                            
       }"
       :navigation="{
-        prevEl: '.swiper-button-prev',
-        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-next',
+        nextEl: '.swiper-button-prev',
       }"
       :modules="modules"
       class="mySwiper"
       :breakpoints="{
-    // when window width is >= 375px
     375: {
       slidesPerView: 1,
     },
-    // when window width is >= 585px
     585: {
       slidesPerView: 2,
     },
-    // when window width is >= 768px
     768: {
       slidesPerView: 3,
     },
-    // when window width is >= 992px
     992: {
       slidesPerView: 4,
     },
   }"
     >
-      <swiper-slide v-for="(item, index) in favoritePlices" :key="index">
-        <p class="slide-title">{{item.title}}</p>
+      <!-- <swiper-slide v-for="(item, index) in PLACE_ADD_BLOCK_DATA" :key="index"> -->
+      <swiper-slide v-for="(item, index) in newsList" :key="index">
+        <p class="slide-title">{{item.name}}</p>
         <div class="slide-img">
-          <img :src="item.img" />
+          <img :src="item.image" />
         </div>
       </swiper-slide>
     </swiper>
@@ -50,40 +49,56 @@
     </div>
   </div>
   </div>
+  <div v-else class="container-fluid">
+    <h2 class="text-center " style="margin-bottom:35px;">
+      <span class="section-title">Места</span>
+    </h2>
+    <div class="content">
+      <div class="content-item" v-for="(item, index) in newsList" :key="index">
+        <div class="content-slide">
+          <p class="slide-title">{{item.name}}</p>
+          <div class="slide-img">
+            <img :src="item.image" :alt="item.name">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
+// import "@/assets/css/swiper-plices.css"
+import {Autoplay, Navigation } from "swiper/modules";
 
-import { ref } from "vue";
-export default {
+import { mapActions, mapGetters } from "vuex";
+import {newsList} from '@/HelperFunctions/Lists.js'
+  export default{
   name: "app-slider-places",
   components: { Swiper, SwiperSlide },
-  setup() {
-    const favoritePlices = ref([
-      {title:'Пивоварня Василеостровская', img:require('@/assets/images/vasileostrovskay.png')},
-      {title:'Красное&Белое', img:require('@/assets/images/red-white.svg')},
-      {title:'Алкомаркет', img:require('@/assets/images/alchomarket.svg')},
-      {title:'Пивоварня Василеостровская', img:require('@/assets/images/vasileostrovskay.png')},
-      {title:'Красное&Белое', img:require('@/assets/images/red-white.svg')},
-      {title:'Алкомаркет', img:require('@/assets/images/alchomarket.svg')},
-      {title:'Пивоварня Василеостровская', img:require('@/assets/images/vasileostrovskay.png')},
-      {title:'Красное&Белое', img:require('@/assets/images/red-white.svg')},
-      {title:'Алкомаркет', img:require('@/assets/images/alchomarket.svg')},
-    ])
+  data() {
+    newsList
     return {
-      modules: [Navigation],
-      favoritePlices,
+      modules: [Autoplay,Navigation],
+      newsList
     };
+  },
+    computed: {
+    ...mapGetters(["PLACE_ADD_BLOCK_DATA"]),
+  },
+  methods: {
+    ...mapActions(["GET_DATA_PLACE_ADD_BLOCK"]),
+  },
+  mounted() {
+    this.GET_DATA_PLACE_ADD_BLOCK();
   },
 };
 </script>
 
 <style scoped>
-.wrapper-swiper {
+ .wrapper-swiper {
   position: relative;
 }
 .swiper {
@@ -91,13 +106,16 @@ export default {
   margin: 0 auto;
   min-height: 159px;
   padding: 16px 4px;
+  font-size: 20px;
+  /* display: flex;
+  justify-content: center; */
 }
-.swiper-slide {
+.swiper-slide,.content-slide{
   text-align: center;
-  padding: 8px 0;
+  padding: 8px ;
   display: flex;
   flex-direction: column;
-  /* box-shadow: 0 8px 2px 2px #FBFBFB; */
+
   box-shadow: 0 6px 4px 2px #ccc;
   border:1px solid #ccc;
   border-radius: 20px;
@@ -121,6 +139,7 @@ export default {
   width: 15px;
   height: 15px;
   cursor: pointer;
+  padding: 8px;
 }
 .swiper-button-prev::after {
   position: absolute;
@@ -149,5 +168,10 @@ export default {
   top: 0;
   left: 0;
   transform: rotate(-135deg);
+} 
+.content {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
 }
 </style>

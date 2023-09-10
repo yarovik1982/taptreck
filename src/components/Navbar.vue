@@ -1,4 +1,40 @@
 <template>
+  <teleport to="body">
+    <div
+      v-if="activeModal === 'login'"
+      class="appModal"
+      @click.self="activeModal = null"
+      @close-modal="activeModal = null"
+    >
+      <div class="appModal-content">
+        <button class="close" @click="activeModal = null">&times;</button>
+        <login-form></login-form>
+      </div>
+    </div>
+
+    <div
+      v-if="activeModal === 'register'"
+      class="appModal"
+      @click.self="activeModal = null"
+    >
+      <div class="appModal-content">
+        <button class="close" @click="activeModal = null">&times;</button>
+        <register-form></register-form>
+      </div>
+    </div>
+
+    <div
+      v-if="activeModal === 'feedback'"
+      class="appModal"
+      @click.self="activeModal = null"
+    >
+      <div class="appModal-content">
+        <button class="close" @click="activeModal = null">&times;</button>
+        <feedback-form></feedback-form>
+      </div>
+    </div>
+  </teleport>
+  <!-- ======================================== -->
   <header class="navbar">
     <div class="container-fluid">
       <div class="col-3">
@@ -9,6 +45,7 @@
       </div>
       <div class="col-6 d-flex justify-content-center">
         <div class="px-3 w-100">
+          <!-- Форма поиска -->
           <form
             role="search"
             class="d-flex justify-content-center align-items-center"
@@ -37,6 +74,7 @@
           </form>
         </div>
       </div>
+      <!-- Авторизация -->
       <div class="col-3 d-flex justify-content-end">
         <div class="user-btns d-flex" v-if="!isAuth">
           <button
@@ -46,46 +84,6 @@
           >
             Вход
           </button>
-          <teleport to="body">
-            <div
-              v-if="activeModal === 'login'"
-              class="appModal"
-              @click.self="activeModal = null"
-            >
-              <div class="appModal-content">
-                <button class="close" @click="activeModal = null">
-                  &times;
-                </button>
-                <login-form></login-form>
-              </div>
-            </div>
-
-            <div
-              v-if="activeModal === 'register'"
-              class="appModal"
-              @click.self="activeModal = null"
-            >
-              <div class="appModal-content">
-                <button class="close" @click="activeModal = null">
-                  &times;
-                </button>
-                <register-form></register-form>
-              </div>
-            </div>
-
-            <div
-              v-if="activeModal === 'feedback'"
-              class="appModal"
-              @click.self="activeModal = null"
-            >
-              <div class="appModal-content">
-                <button class="close" @click="activeModal = null">
-                  &times;
-                </button>
-                <feedback-form></feedback-form>
-              </div>
-            </div>
-          </teleport>
           <button
             class="btn btn-warning btn-sm d-none d-lg-block text-white"
             style="margin-left: 16px"
@@ -137,7 +135,7 @@
         <div
           class="row d-flex w-100 justify-content-between align-items-center"
         >
-          <ul class="navbar-list navbar-nav me-auto mb-2 mb-lg-0" v-if="isAuth">
+          <!-- <ul class="navbar-list navbar-nav me-auto mb-2 mb-lg-0" v-if="isAuth">
             <li class="navbar-list-item px-3">
               <router-link to="/" class="navbar-list-link">Главная</router-link>
             </li>
@@ -185,8 +183,8 @@
                 >Профиль</router-link
               >
             </li>
-          </ul>
-          <ul class="navbar-list navbar-nav me-auto mb-2 mb-lg-0" v-else>
+          </ul> -->
+          <ul class="navbar-list navbar-nav me-auto mb-2 mb-lg-0">
             <li class="navbar-list-item px-2">
               <router-link to="/" class="navbar-list-link">Главная</router-link>
             </li>
@@ -215,7 +213,7 @@
               v-show="isAuth"
               style="margin-left: auto"
             >
-              <router-link to="/profile" class="navbar-list-link"
+              <router-link to="/profile/profile-favorites" class="navbar-list-link"
                 >Профиль</router-link
               >
             </li>
@@ -229,7 +227,7 @@
 <script>
 import { ref, computed } from "vue";
 import { getCookie } from "@/HelperFunctions/isAuthenticated";
-import {ClearDataProfile} from '@/HelperFunctions/GetDataProfile'
+import { ClearDataProfile } from "@/HelperFunctions/GetDataProfile";
 import LoginForm from "@/components/LoginForm.vue";
 import RegisterForm from "@/components/RegisterForm.vue";
 import FeedbackForm from "@/components/FeedbackForm.vue";
@@ -254,10 +252,11 @@ export default {
         document.cookie = c
           .replace(/^ +/, "")
           .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+          location.reload()
       });
-          ClearDataProfile()
-          isAuth.value = false
-          isAgeConfirmed.value = false
+      ClearDataProfile();
+      isAuth.value = false;
+      isAgeConfirmed.value = false;
     };
     return {
       isShow,

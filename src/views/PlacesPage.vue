@@ -13,7 +13,7 @@
           <div class="col-8">
             <div
               class="card mb-3"
-              v-for="item in PLACE_DATA"
+              v-for="item in placeData"
               :key="item.placeId"
               :data-id="item.placeId"
             >
@@ -40,6 +40,11 @@
                 </div>
               </div>
             </div>
+            <div class="row-btn">
+              <button class="btn-more"
+                @click="loadMore"
+              >Загрузить еще</button>
+            </div>
           </div>
           <div class="col-4">
             <div class="row mt-5">
@@ -52,21 +57,32 @@
   </section>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { computed, ref } from 'vue';
+import { useStore } from 'vuex';
+
 export default {
-  name: "breweries-page",
+  name: "place-page",
   props: {},
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapGetters(["PLACE_DATA"]),
-  },
-  methods: {
-    ...mapActions(["GET_DATA_PLACE"]),
-  },
-  mounted() {
-    this.GET_DATA_PLACE();
+  setup() {
+    const store = useStore();
+    const limit = 45
+    const offset = ref(0)
+    const placeData = computed(() => store.getters.PLACE_DATA);
+
+      // console.log(beerData.length);
+    const getDataPlace = () => {
+      store.dispatch('GET_DATA_PLACE', {limit, offset:offset.value});
+    };
+    const loadMore = () => {
+      offset.value += limit
+      getDataPlace()
+    }
+    getDataPlace();
+
+    return {
+      placeData,
+      loadMore,
+    };
   },
 };
 </script>
@@ -104,6 +120,11 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.row-btn{
+  margin-top: 345px;
+  display: flex;
+  justify-content: center;
 }
 </style>
 

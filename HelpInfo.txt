@@ -15,3 +15,23 @@ user: {
    "totalFeedback":0,
    "userRole":0
    }
+
+   // <script>
+// import { mapActions, mapGetters } from "vuex";
+// export default {
+//   name: "breweries-page",
+//   props: {},
+//   data() {
+//     return {};
+//   },
+//   computed: {
+//     ...mapGetters(["BEWERYES_DATA"]),
+//   },
+//   methods: {
+//     ...mapActions(["GET_DATA_BREWERYES"]),
+//   },
+//   mounted() {
+//     this.GET_DATA_BREWERYES();
+//   },
+// };
+// </script>
