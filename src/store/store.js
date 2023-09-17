@@ -6,6 +6,8 @@ import {messages} from '@/HelperFunctions/Messages.js'
 
 export default createStore({
   state: {
+    api_key_dadata:"f28c978bf7b07afdef72df486e0336920a7f3bd8",
+    secret_key_dadata:'cf76bbc76e85df0b224a5054164edde6a47a3ec6',
     favoritesList,
     newsList,
     messages,
@@ -47,6 +49,9 @@ export default createStore({
     },
     USER_BREWERY_DATA(state){
       return state.userBreweryData
+    },
+    PLACE_IS_ADDED_LIST(state){
+      return state.pliceIsAddedList
     }
   },
   mutations: {
@@ -79,9 +84,24 @@ export default createStore({
     },
     setUserBreweryData(state, userBreweryData){
       state.userBreweryData = userBreweryData
+    },
+    setPliceIsAddedList(state, pliceIsAddedList){
+      state.pliceIsAddedList = pliceIsAddedList
     }
   },
   actions: {
+    GET_PLICE_IS_ADDED_LIST({commit},{userId,beerId}){
+      return axios(BASE_URL + `/place/isAdded/list?userId=${userId}&beerId=${beerId}`,{
+        method:'GET',
+      })
+      .then(response => {
+        commit('setPliceIsAddedList', response.data)
+        return response
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
     GET_USER_BREWERY_DATA({commit}, userId){
       return axios(BASE_URL + `/brewery/list/user?userId=${userId}`,{
         method:'GET',

@@ -1,8 +1,50 @@
 <template>
+  <teleport to="body">
+    <div
+      class="layout"
+      style="background: rgba(0, 0, 0, 0.7); z-index: 10"
+      v-if="isShowModalAddBeer === true"
+      @click.self="isShowModalAddBeer = false"
+    >
+      <div
+        class="layout-content"
+        v-if="isShowModalAddBeer === true"
+        :style="{top:scrollPosition + 'px'}"
+      >
+        <div class="plices">
+          <h3 class="text-center">{{nameBeer}}</h3>
+          <div
+            class="plice-item d-flex px-3 justify-content-between align-items-center mb-1"
+            v-for="place in placesData"
+            :key="place.placeId"
+            :id="place.placeId"
+            :data-place-added="place.isAdded"
+          >
+            <h5 class="plice-title">{{ place.name }}</h5>
+            <div class="btns-row d-flex align-items-center">
+              <button type="button" 
+                class="btn btn-warning text-white btn-sm"
+                style="width:100px;"
+                v-if="place.isAdded === false"
+                @click="setPlaceBuyBeer(place.placeId)"
+              >
+                Добавить
+            </button>
+            <button type="button" 
+              v-else
+              class="btn btn-danger btn-sm" 
+              style="margin-left:8px;width:100px;" 
+              @click="placeIsAddedRemove(place.placeId)"
+            >
+              Удалить
+            </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </teleport>
   <section id="beerPage">
-    <!-- <button id="addBeer" class="btn btn-warning text-white" v-if="isAuth">
-      Добавить пиво
-    </button> -->
     <h1 class="text-center">
       <span class="title fw-semibold">Пиво</span>
     </h1>
@@ -17,8 +59,9 @@
               :key="item.id"
               :data-id="item.id"
               :data-breweryId="item.breweryId"
+              :data-placeId="item.placeId"
             >
-              <div class="row g-0">
+              <div class="row g-0 d-flex align-items-center">
                 <div
                   class="col-md-4 d-flex justify-content-center align-items-center"
                 >
@@ -35,14 +78,25 @@
                     <p class="card-text">
                       Производитель: {{ item.breweryName }}
                     </p>
+                    <button
+                      id="addBeer"
+                      class="btn btn-warning text-white"
+                      :data-beer-id="item.id"
+                      :data-breweryId="item.breweryId"
+                      :data-beer-name="item.name"
+                      v-if="role === 2 || role === 3"
+                      @click="showModalAddBeer();
+                        renderPlacesAll(item.id, item.name);
+                      "
+                    >
+                      Добавить пиво
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
             <div class="row-btn">
-              <button class="btn-more"
-                @click="loadMore"
-              >Загрузить еще</button>
+              <button class="btn-more" @click="loadMore">Загрузить еще</button>
             </div>
           </div>
           <div class="col-4">
@@ -56,32 +110,104 @@
   </section>
 </template>
 <script>
-import { computed, ref } from 'vue';
-import { useStore } from 'vuex';
+import { computed, ref } from "vue";
+import { useStore } from "vuex";
+import { GetDataProfile } from "@/HelperFunctions/GetDataProfile";
+import {BASE_URL} from '@/HelperFunctions/BaseUrl'
+import axios from 'axios';
 
 export default {
   name: "beer-page",
   props: {},
   setup() {
+    const profile = GetDataProfile();
+    const role = profile.userRole;
+    const userId = profile.userId;
+    const isShowModalAddBeer = ref(null);
+    const scrollPosition = ref(0);
     const store = useStore();
-    const limit = 45
-    // const limit = 5
-    const offset = ref(0)
-    const beerData = computed(() => store.getters.BEER_DATA);
+    const limit = ref(45)
+    const offset = ref(0);
+    const nameBeer = ref('')
+    const beerId = ref('')
+    const placeId = ref('')
+    const placeAdded = ref(null)
 
-      console.log(beerData.length);
+    const showModalAddBeer = () => {
+      scrollPosition.value = window.pageYOffset || document.documentElement.scrollTop;
+      isShowModalAddBeer.value = true
+    }
+//-----------------------------------------------------------------------
+    const placeIsAddedRemove = async (place) => {
+      const data = {
+        placeId: place,
+        beerId : beerId.value
+      }
+      try{
+        const response = await axios(BASE_URL + `/place/isAdded/remove`, {
+          method:'DELETE',
+          data,
+        })
+        if(response.status){
+          console.log("Delete");
+          renderPlacesAll(beerId.value, nameBeer.value)
+        }
+      }catch(error){
+        console.log(error);
+      }
+    }
+
+//------------------------------------------------------------------------
+    const setPlaceBuyBeer = async (place) => {
+
+      const data = {
+        placeId : place,
+        beerId  : beerId.value
+      }
+      try{
+        const response = await axios(BASE_URL + `/place/buy/beer`,{
+          method:'POST',
+          data,
+        })
+        if(response.status){
+          renderPlacesAll(beerId.value, nameBeer.value)
+        }
+      }catch(error){
+        console.log(error);
+      }
+      
+    }
+//------------------------------------------------------------------------
+    const placesData = computed(() => store.getters.PLACE_IS_ADDED_LIST)
+    const renderPlacesAll = (id, name) => {
+      store.dispatch("GET_PLICE_IS_ADDED_LIST", {userId, beerId:id});
+      nameBeer.value = name
+      beerId.value = id
+    };
+//-------------------------------------------------------------------------
+    const beerData = computed(() => store.getters.BEER_DATA);
     const getDataBeer = () => {
-      store.dispatch('GET_DATA_BEER', {limit, offset:offset.value});
+      store.dispatch("GET_DATA_BEER", { limit:limit.value, offset: offset.value });
     };
     const loadMore = () => {
-      offset.value += limit
-      getDataBeer()
-    }
+      offset.value += limit;
+      getDataBeer();
+    };
     getDataBeer();
-
+//--------------------------------------------------------------------------
     return {
       beerData,
       loadMore,
+      role,
+      showModalAddBeer,
+      placesData,
+      renderPlacesAll,
+      nameBeer,
+      setPlaceBuyBeer, placeIsAddedRemove,
+      placeAdded,
+      placeId,
+      isShowModalAddBeer,
+      scrollPosition,
     };
   },
 };
@@ -92,10 +218,7 @@ section {
   position: relative;
 }
 #addBeer {
-  position: absolute;
-  top: 8px;
-  right: 40px;
-  width: 402px;
+  margin-top: auto;
 }
 .title {
   position: relative;
@@ -121,9 +244,17 @@ section {
   height: 100%;
   object-fit: cover;
 }
-.row-btn{
+.row-btn {
   margin-top: 345px;
   display: flex;
   justify-content: center;
+}
+.layout-content{
+  width: 600px;
+  padding: 24px;
+  border-radius: 16px;
+  background: #fff;
+  height: fit-content;
+  position: relative;
 }
 </style>

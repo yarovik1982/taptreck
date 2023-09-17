@@ -1,5 +1,7 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid"
+    v-if="FEEDBACK_LIST_MAIN && FEEDBACK_LIST_MAIN.length > 0"
+  >
     <h2 class="text-center" style="margin-bottom: 60px">
       <span class="section-title">Отзывы</span>
     </h2>
@@ -20,7 +22,6 @@
       class="reviewsSwiper"
     >
       <swiper-slide v-for="reviewItem in FEEDBACK_LIST_MAIN" :key="reviewItem.id">
-        <!-- <div class="slide-image" :style="{backgroundImage: 'url(' + reviewItem.image + ')', width: '120px', height: '120px'}"> -->
         <div class="slide-image" style="width:120px;height:120px;">
           <img :src="reviewItem.imageBeer" alt="BEER" style="width:100%;height:100%;object-fit:cover;"/>
         </div>

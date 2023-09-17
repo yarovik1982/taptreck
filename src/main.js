@@ -16,6 +16,7 @@ const app = createApp(App)
 
 app
 
+
 .use(store)
 .use(router)
 .mount('#app')

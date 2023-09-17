@@ -36,6 +36,12 @@
             <div>
               <span class="fw-semibold">{{ item.type }}</span>
             </div>
+            <div>
+              <span class="fw-semibold">{{ item.address }}</span>
+            </div>
+            <div>
+              <span class="fw-semibold">{{ item.geoLat }}</span>
+            </div>
           </div>
           <p
             class="card-text"
@@ -57,6 +63,7 @@
 </template>
 <script>
 import {ref, computed} from 'vue'
+import {useRouter} from 'vue-router'
 import {GetDataProfile} from '@/HelperFunctions/GetDataProfile.js'
 import store from '@/store/store'
 import FormPliceAdd from '@/components/FormPliceAdd.vue'
@@ -69,6 +76,7 @@ export default {
       const role = profile.userRole
       const userId = profile.userId
       const userSilesData = computed(() => store.getters.USER_SILES_DATA)
+      const router = useRouter()
 
       const getUserSilesData = () => {
          store.dispatch('GET_USER_SILES', userId)
@@ -78,6 +86,7 @@ export default {
          showFormShopAdd,
          profile, role,
          userSilesData, userId,
+         router,
       }
    },
 }
@@ -88,5 +97,9 @@ export default {
    position: absolute;
    top: -165px;
    right: 30px;
+}
+.row-btn {
+  display: flex;
+  justify-content: center;
 }
 </style>

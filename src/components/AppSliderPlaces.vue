@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid" v-if="newsList && newsList.length > 4">
+  <div class="container-fluid" v-if="PLACE_ADD_BLOCK_DATA && PLACE_ADD_BLOCK_DATA.length > 4">
     <h2 class="text-center " style="margin-bottom:35px;">
       <span class="section-title">Места</span>
     </h2>
@@ -35,8 +35,8 @@
     },
   }"
     >
-      <!-- <swiper-slide v-for="(item, index) in PLACE_ADD_BLOCK_DATA" :key="index"> -->
-      <swiper-slide v-for="(item, index) in newsList" :key="index">
+      <swiper-slide v-for="(item, index) in PLACE_ADD_BLOCK_DATA" :key="index">
+      <!-- <swiper-slide v-for="(item, index) in newsList" :key="index"> -->
         <p class="slide-title">{{item.name}}</p>
         <div class="slide-img">
           <img :src="item.image" />
@@ -48,21 +48,6 @@
       <div class="swiper-button-next"></div>
     </div>
   </div>
-  </div>
-  <div v-else class="container-fluid">
-    <h2 class="text-center " style="margin-bottom:35px;">
-      <span class="section-title">Места</span>
-    </h2>
-    <div class="content">
-      <div class="content-item" v-for="(item, index) in newsList" :key="index">
-        <div class="content-slide">
-          <p class="slide-title">{{item.name}}</p>
-          <div class="slide-img">
-            <img :src="item.image" :alt="item.name">
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 

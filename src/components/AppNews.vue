@@ -1,14 +1,16 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid" 
+    v-if="BEER_ADD_BLOCK_DATA && BEER_ADD_BLOCK_DATA.length > 0"
+  >
     <h2 class="text-center" style="margin-bottom: 60px">
       <span class="section-title">Новинки</span>
     </h2>
     <div class="row row-cols-1 row-cols-lg-2 g-4">
       <div class="col" v-for="item in BEER_ADD_BLOCK_DATA" :key="item.image">
         <div class="card mb-3 w-100 border-0">
-          <div class="row g-0">
-            <div class="col-md-4">
-              <img
+          <div class="row g-0 d-flex align-items-center">
+            <div class="col-md-4 ">
+                <img
                 :src="item.image"
                 class="img-fluid "
                 :alt="item.name"
