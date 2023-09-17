@@ -10,6 +10,7 @@ export const apiList = {
    placeAddBlock: '/place/adblock',
    feedbackListMain: '/feedback/list/main',
    breweryCreate: '/brewery/create',
+   placeCreate  : '/place/create',
    beerList  : {
       main : '/beer/list',
       queriedOptions : ['?limit=5&offset=0']
