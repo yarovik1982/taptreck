@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  app:
+    image: beer-front-app
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: taptreck
+    ports:
+      - "80:80"
+    environment:
+      - "SERVER_PORT=80"
+    restart: always
