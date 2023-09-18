@@ -63,14 +63,6 @@
             </select>
           </div>
           <div class="form-row" style="background: transparent; display: block">
-            <label for="city">Введите город</label>
-            <input type="text"
-              id="city"
-              v-model="city"
-              name="city"
-            >
-          </div>
-          <div class="form-row" style="background: transparent; display: block">
             <label for="addres">Введите адрес</label>
             <vue-dadata
               id="addres"
@@ -152,6 +144,7 @@ export default {
           const data = JSON.parse(result);
           geoLat.value = data.suggestions[0].data.geo_lat,
           geoLon.value = data.suggestions[0].data.geo_lon,
+          city.value = data.suggestions[0].data.city
           
           console.log(geoLat.value, geoLon.value);
           

@@ -39,9 +39,9 @@
             <div>
               <span class="fw-semibold">{{ item.address }}</span>
             </div>
-            <div>
-              <span class="fw-semibold">{{ item.geoLat }}</span>
-            </div>
+            <!-- <div>
+              <span class="fw-semibold">{{ item.city }}</span>
+            </div> -->
           </div>
           <p
             class="card-text"

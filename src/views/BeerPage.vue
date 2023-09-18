@@ -84,13 +84,14 @@
                       :data-beer-id="item.id"
                       :data-breweryId="item.breweryId"
                       :data-beer-name="item.name"
-                      v-if="role === 2 || role === 3"
+                      v-if="( role === 2) || ( role === 3)"
                       @click="showModalAddBeer();
                         renderPlacesAll(item.id, item.name);
                       "
                     >
                       Добавить пиво
                     </button>
+                    <span v-else></span>
                   </div>
                 </div>
               </div>
@@ -114,6 +115,7 @@ import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile";
 import {BASE_URL} from '@/HelperFunctions/BaseUrl'
+// import {getCookie} from '@/HelperFunctions/isAuthenticated.js'
 import axios from 'axios';
 
 export default {
@@ -121,8 +123,9 @@ export default {
   props: {},
   setup() {
     const profile = GetDataProfile();
-    const role = profile.userRole;
-    const userId = profile.userId;
+    // const isAuth = ref(getCookie("token="))
+    const role = profile?.userRole ?? null
+    const userId = profile?.userId ?? null;
     const isShowModalAddBeer = ref(null);
     const scrollPosition = ref(0);
     const store = useStore();

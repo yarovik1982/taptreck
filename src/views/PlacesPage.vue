@@ -17,7 +17,7 @@
               :key="item.placeId"
               :data-id="item.placeId"
             >
-              <div class="row g-0">
+              <div class="row g-0 align-items-center">
                 <div
                   class="col-md-4 d-flex justify-content-center align-items-center"
                 >
@@ -34,7 +34,7 @@
                     <p class="card-text">
                       {{ item.description }}
                     </p>
-                    <p class="card-text">Город: {{ item.city }}</p>
+                    <!-- <p class="card-text">Город: {{ item.city }}</p> -->
                     <p class="card-text">адрес: {{ item.address }}</p>
                   </div>
                 </div>
