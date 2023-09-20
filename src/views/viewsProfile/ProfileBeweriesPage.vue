@@ -10,6 +10,50 @@
         <form-brewery-add></form-brewery-add>
       </div>
     </div>
+
+    <div
+      class="layout"
+      style="background: rgba(0, 0, 0, 0.7); z-index: 10"
+      v-if="isShowModalAddBeer === true"
+      @click.self="isShowModalAddBeer = false"
+    >
+      <div
+        class="layout-content"
+        v-if="isShowModalAddBeer === true"
+        :style="{top:scrollPosition + 'px'}"
+      >
+        <div class="plices">
+          <h3 class="text-center">{{nameBeer}}</h3>
+          <div
+            class="plice-item d-flex px-3 justify-content-between align-items-center mb-1"
+            v-for="place in placesData"
+            :key="place.placeId"
+            :id="place.placeId"
+            :data-place-added="place.isAdded"
+          >
+            <h5 class="plice-title">{{ place.name }}</h5>
+            <div class="btns-row d-flex align-items-center">
+              <button type="button" 
+                class="btn btn-warning text-white btn-sm"
+                style="width:100px;"
+                v-if="place.isAdded === false"
+                @click="setPlaceBuyBeer(place.placeId)"
+              >
+                Добавить
+            </button>
+            <button type="button" 
+              v-else
+              class="btn btn-danger btn-sm" 
+              style="margin-left:8px;width:100px;" 
+              @click="placeIsAddedRemove(place.placeId)"
+            >
+              Удалить
+            </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </teleport>
   <button
     class="btn-big"
@@ -41,7 +85,7 @@
               style="margin-bottom: 21px"
             >
               <h3 class="card-title">{{ breweryItem.name }}</h3>
-              <img src="@/assets/images/favorites.svg" alt="ICON HEART" />
+              <!-- <img src="@/assets/images/favorites.svg" alt="ICON HEART" /> -->
             </div>
             <div>
               <p>{{ breweryItem.type }}</p>
@@ -53,10 +97,20 @@
           >
             {{ breweryItem.description }}
           </p>
-          <div class="d-flex justify-content-between align-items-center">
+          <!-- <div class="d-flex justify-content-between align-items-center">
             <a href="#">Смотреть на карте</a>
             <a href="#">Оставить отзыв</a>
-          </div>
+          </div> -->
+          <button
+            id="addBeer"
+            class="btn btn-warning text-white"
+            v-if="role === 2 || role === 3"
+            @click="
+              showModalAddBeer();
+            "
+          >
+            Добавить пиво
+          </button>
         </div>
       </div>
     </div>
@@ -67,7 +121,7 @@
 </template>
 <script>
 import { ref, computed } from "vue";
-import {useStore} from "vuex";
+import { useStore } from "vuex";
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile.js";
 import FormBreweryAdd from "@/components/FormBreweryAdd.vue";
 import axios from "axios";
@@ -76,17 +130,22 @@ export default {
   name: "profile-beweries-page",
   setup() {
     const showFormBewierAdd = ref(false);
-    const store = useStore()
+    const store = useStore();
     const profile = GetDataProfile();
     const role = profile.userRole;
     const userId = profile.userId;
+    const isShowModalAddBeer = ref(false)
 
-    const breweryData = computed(() => store.getters.USER_BREWERY_DATA)
+    const showModalAddBeer = () => {
+      isShowModalAddBeer.value = true
+    }
 
-   const getUserBreweryData = () => {
-      store.dispatch('GET_USER_BREWERY_DATA', userId)
-   }
-   getUserBreweryData()
+    const breweryData = computed(() => store.getters.USER_BREWERY_DATA);
+
+    const getUserBreweryData = () => {
+      store.dispatch("GET_USER_BREWERY_DATA", userId);
+    };
+    getUserBreweryData();
 
     return {
       showFormBewierAdd,
@@ -94,6 +153,7 @@ export default {
       role,
       userId,
       breweryData,
+      isShowModalAddBeer,showModalAddBeer,
     };
   },
 };

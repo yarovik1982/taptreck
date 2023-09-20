@@ -9,6 +9,28 @@ const routes = [
     component: HomePage
   },
   {
+    path:'/search-result',
+    name: 'search-result-page',
+    component: () => import('@/views/SearchResultPage.vue'),
+    children:[
+      {
+        path:'/search-result/search-result-breweries',
+        name:'search-result-breweries',
+        component:() => import('@/views/viewsSearch/SearchResultBreweriesPage.vue'),
+      },
+      {
+        path:'/search-result/search-result-beer',
+        name:'search-result-beer',
+        component:() => import('@/views/viewsSearch/SearchResultBeerPage.vue'),
+      },
+      {
+        path:'/search-result/search-result-places',
+        name:'search-result-places',
+        component:() => import('@/views/viewsSearch/SearchResultPlacesPage.vue'),
+      },
+    ],
+  },
+  {
     path: '/profile',
     name: 'profile',
     component: () => import('@/views/ProfilePage.vue'),

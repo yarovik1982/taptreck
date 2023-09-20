@@ -21,6 +21,7 @@ export default createStore({
     userSilesData:[],
     itemSileData:{},
     userBreweryData:[],
+    beerListByPlace:[],
   },
   getters: {
     BEER_DATA(state){
@@ -52,6 +53,9 @@ export default createStore({
     },
     PLACE_IS_ADDED_LIST(state){
       return state.pliceIsAddedList
+    },
+    BEER_LIST_BY_PLACE(state){
+      return state.beerListByPlace
     }
   },
   mutations: {
@@ -87,9 +91,24 @@ export default createStore({
     },
     setPliceIsAddedList(state, pliceIsAddedList){
       state.pliceIsAddedList = pliceIsAddedList
+    },
+    setBeerListByPlace(state, beerListByPlace){
+      state.beerListByPlace = beerListByPlace
     }
   },
   actions: {
+    GET_BEER_LIST_BY_PLACE({commit}, placeId){
+      return axios(BASE_URL + `/beer/place?id=${placeId}&limit=45&offset=0`, {
+        method:'GET',
+      })
+      .then(response => {
+        commit('setBeerListByPlace', response.data)
+        return response
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
     GET_PLICE_IS_ADDED_LIST({commit},{userId,beerId}){
       return axios(BASE_URL + `/place/isAdded/list?userId=${userId}&beerId=${beerId}`,{
         method:'GET',
@@ -108,7 +127,6 @@ export default createStore({
       })
       .then(response => {
         commit('setUserBreweryData', response.data)
-        console.log(response.data);
         return response
       })
       .catch(error => {
@@ -224,7 +242,7 @@ export default createStore({
       })
       .then(response => {
         commit('setFeedbackListMain', response.data)
-        console.log(response.data);
+        // console.log(response.data);
         return response
       })
       .catch(error => {

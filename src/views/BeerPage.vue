@@ -81,8 +81,8 @@
                     <button
                       id="addBeer"
                       class="btn btn-warning text-white"
-                      :data-beer-id="item.id"
-                      :data-breweryId="item.breweryId"
+                      :data-id="item.id"
+                      :data-beerId="item.beerId"
                       :data-beer-name="item.name"
                       v-if="( role === 2) || ( role === 3)"
                       @click="showModalAddBeer();

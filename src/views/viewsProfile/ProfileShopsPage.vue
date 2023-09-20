@@ -12,7 +12,7 @@
     style="padding: 40px 20px; border: 1px solid #000;cursor:pointer;"
     v-for="item in userSilesData"
     :key="item.placeId"
-    @click="router.push(`/profile/profile-shops/${item.placeId}`)"
+    @click="onCardClick(item)"
   >
     <div class="row g-0">
       <div class="col-md-4">
@@ -78,6 +78,13 @@ export default {
       const userSilesData = computed(() => store.getters.USER_SILES_DATA)
       const router = useRouter()
 
+      const onCardClick = (item) => {
+        router.push({
+          path:`/profile/profile-shops/${item.placeId}`,
+          query:{name:item.name},
+        })
+      }
+
       const getUserSilesData = () => {
          store.dispatch('GET_USER_SILES', userId)
       }
@@ -87,6 +94,7 @@ export default {
          profile, role,
          userSilesData, userId,
          router,
+         onCardClick,
       }
    },
 }

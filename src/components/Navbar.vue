@@ -27,10 +27,13 @@
       v-if="activeModal === 'feedback'"
       class="appModal"
       @click.self="activeModal = null"
+      
     >
       <div class="appModal-content">
         <button class="close" @click="activeModal = null">&times;</button>
-        <feedback-form></feedback-form>
+        <feedback-form
+          @close-contact-modal="activeModal = null"
+        ></feedback-form>
       </div>
     </div>
   </teleport>
@@ -61,16 +64,19 @@
                 box-shadow: none;
               "
             />
-            <button
+            <router-link to="/search-result/search-result-beer">
+              <button
               class="btn btn-warning btn-sm"
               type="submit"
               style="
                 border-radius: 0px 22px 22px 0px;
                 box-shadow: 0 0 0 1px #ffc107;
               "
+              @click="goTo"
             >
               <i class="bi bi-search" style="color: #fff"></i>
             </button>
+            </router-link>
           </form>
         </div>
       </div>
@@ -226,6 +232,7 @@
 
 <script>
 import { ref, computed } from "vue";
+import {useRouter} from 'vue-router'
 import { getCookie } from "@/HelperFunctions/isAuthenticated";
 import { ClearDataProfile } from "@/HelperFunctions/GetDataProfile";
 import LoginForm from "@/components/LoginForm.vue";
@@ -238,6 +245,7 @@ export default {
   setup(_, { emit }) {
     const activeModal = ref(null);
     const isShow = ref(false);
+    const toSearchResult = useRouter()
     const isAuth = ref(getCookie("token="));
     const isAgeConfirmed = ref(getCookie("ageConfirm="));
     const toggleValue = () => {
@@ -266,6 +274,7 @@ export default {
       handler,
       activeModal,
       logout,
+      toSearchResult,
     };
   },
 };

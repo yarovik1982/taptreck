@@ -1,4 +1,49 @@
 <template>
+<teleport to="body">
+    <div
+      class="layout"
+      style="background: rgba(0, 0, 0, 0.7); z-index: 10"
+      v-if="isShowModalAddBeer === true"
+      @click.self="isShowModalAddBeer = false"
+    >
+      <div
+        class="layout-content"
+        v-if="isShowModalAddBeer === true"
+        :style="{top:scrollPosition + 'px'}"
+      >
+        <div class="plices">
+          <h3 class="text-center">{{nameBeer}}</h3>
+          <div
+            class="plice-item d-flex px-3 justify-content-between align-items-center mb-1"
+            v-for="place in placesData"
+            :key="place.placeId"
+            :id="place.placeId"
+            :data-place-added="place.isAdded"
+          >
+            <h5 class="plice-title">{{ place.name }}</h5>
+            <div class="btns-row d-flex align-items-center">
+              <button type="button" 
+                class="btn btn-warning text-white btn-sm"
+                style="width:100px;"
+                v-if="place.isAdded === false"
+                @click="setPlaceBuyBeer(place.placeId)"
+              >
+                Добавить
+            </button>
+            <button type="button" 
+              v-else
+              class="btn btn-danger btn-sm" 
+              style="margin-left:8px;width:100px;" 
+              @click="placeIsAddedRemove(place.placeId)"
+            >
+              Удалить
+            </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </teleport>
   <section id="placePage">
     <!-- <button id="addBeer" class="btn btn-warning text-white">
       Добавить пиво
@@ -36,6 +81,19 @@
                     </p>
                     <!-- <p class="card-text">Город: {{ item.city }}</p> -->
                     <p class="card-text">адрес: {{ item.address }}</p>
+                    <button
+                      id="addPlace"
+                      class="btn btn-warning text-white"
+                      :data-id="item.id"
+                      :data-placeId="item.placeId"
+                      :data-beer-name="item.name"
+                      v-if="( role === 1) || ( role === 3)"
+                      @click="showModalAddBeer();
+                        renderPlacesAll(item.id, item.name);
+                      "
+                    >
+                      Добавить пиво
+                    </button>
                   </div>
                 </div>
               </div>
@@ -59,29 +117,57 @@
 <script>
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
+import {GetDataProfile} from '@/HelperFunctions/GetDataProfile.js'
 
 export default {
   name: "place-page",
   props: {},
   setup() {
     const store = useStore();
+    const profile = GetDataProfile()
+    const userId = profile?.userId ?? null
+    const role = profile?.userRole ?? null
+    const isShowModalAddBeer = ref(null);
+    const scrollPosition = ref(0);
     const limit = 45
     const offset = ref(0)
-    const placeData = computed(() => store.getters.PLACE_DATA);
+    const nameBeer = ref('')
+    const beerId = ref('')
+    const placeId = ref('')
+    const placeAdded = ref(null)
 
+    const showModalAddBeer = () => {
+      scrollPosition.value = window.pageYOffset || document.documentElement.scrollTop;
+      isShowModalAddBeer.value = true
+    }
+//------------------------------------------------------------------------------------
+    const placesData = computed(() => store.getters.PLACE_IS_ADDED_LIST)
+    const renderPlacesAll = (id, name) => {
+      store.dispatch("GET_PLICE_IS_ADDED_LIST", {userId, beerId:id});
+      nameBeer.value = name
+      beerId.value = id
+    };
+//----------------------------------------------------------------
+    const placeData = computed(() => store.getters.PLACE_DATA);
       // console.log(beerData.length);
     const getDataPlace = () => {
       store.dispatch('GET_DATA_PLACE', {limit, offset:offset.value});
     };
+//-----------------------------------------------------------------
     const loadMore = () => {
       offset.value += limit
       getDataPlace()
     }
+//-----------------------------------------------------------------
     getDataPlace();
 
     return {
+      userId,role,
       placeData,
       loadMore,
+      isShowModalAddBeer,scrollPosition,showModalAddBeer,
+      nameBeer,beerId,placeId,placeAdded,
+      placesData,renderPlacesAll,
     };
   },
 };

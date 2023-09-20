@@ -1,11 +1,14 @@
 <template>
-  <section id="oneSilePage" v-if="item">
+  <section id="oneSilePage" v-if="list">
     <h1 class="text-center mb-5">
-      <span class="title fw-semibold"> {{ item.name }}</span>
+      <span class="title fw-semibold">{{placeName}} </span>
     </h1>
     <div class="container">
-      <div class="card mb-3" style="padding: 40px 20px; border: 1px solid #000">
-        <div class="row g-0">
+      <div class="card mb-3" style="padding: 40px 20px; border: 1px solid #000"
+        v-for="item in list"
+        :key="item.id"
+      >
+        <div class="row g-0 d-flex align-items-center">
           <div class="col-md-4">
             <img
               :src="item.image"
@@ -54,18 +57,20 @@ export default {
   setup() {
     const route = useRoute();
     const store = useStore();
-    const item = ref({})
+    const list = ref({})
+    const placeName = ref('')
 
-    const getItemSile = async() => {
+    const getBeerListByplace = async() => {
       const placeId = route.params.placeId
-      await store.dispatch("GET_ITEM_SILE", placeId);
-      item.value = store.getters.GET_ITEM
+      placeName.value = route.query.name
+      await store.dispatch("GET_BEER_LIST_BY_PLACE", placeId);
+      list.value = store.getters.BEER_LIST_BY_PLACE
     };
 
-    onMounted(getItemSile);
+    onMounted(getBeerListByplace);
        
     return {
-      item,
+      list, placeName,
     };
   },
 };
