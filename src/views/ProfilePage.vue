@@ -1,16 +1,13 @@
 <template>
   <app-modal id="edit">
-   <app-form-edit-profile></app-form-edit-profile>
+    <app-form-edit-profile></app-form-edit-profile>
   </app-modal>
 
- 
   <div class="text-center mb-5">
     <span class="title position-relative py-1">Профиль</span>
   </div>
   <div class="container-fluid">
-    <div
-      class="row link-group d-flex align-items-center  px-5"
-    >
+    <div class="row link-group d-flex align-items-center px-5">
       <div class="col-12 d-flex justify-content-start py-1 col-lg-3 col-md-6">
         <div class="link-wrapper">
           <router-link to="/profile/profile-favorites" class="profile-link"
@@ -25,14 +22,20 @@
           >
         </div>
       </div>
-      <div class="col-12 d-flex justify-content-start py-1 col-lg-3 col-md-6" v-if="userRole === 3 || userRole === 1">
+      <div
+        class="col-12 d-flex justify-content-start py-1 col-lg-3 col-md-6"
+        v-if="userRole === 3 || userRole === 1"
+      >
         <div class="link-wrapper">
           <router-link to="/profile/profile-beweries" class="profile-link"
             >Мои пивоварни</router-link
           >
         </div>
       </div>
-      <div class="col-12 d-flex justify-content-start py-1 col-lg-3 col-md-6" v-if="userRole === 2 || userRole === 3">
+      <div
+        class="col-12 d-flex justify-content-start py-1 col-lg-3 col-md-6"
+        v-if="userRole === 2 || userRole === 3"
+      >
         <div class="link-wrapper">
           <router-link to="/profile/profile-shops" class="profile-link"
             >Мои точки продаж</router-link
@@ -41,7 +44,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="container-fluid">
     <div class="row position-relative">
       <i
@@ -63,34 +66,51 @@
         <router-view></router-view>
       </div>
 
-     
       <div class="col-4">
         <div class="d-flex flex-column align-items-center">
           <div class="avatar mt-5">
-            <img :src="image" alt="AVATAR">
-            <div class="pencil btn btn-warning btn-sm" 
-              title="Загрузить аватар"
-              @click="showModal = true"
-            >
-              <i class=" bi bi-pencil"></i>
+            <img :src="image" alt="AVATAR" />
+            <div class="avatar-actions">
+              <div
+                class="pencil btn btn-warning btn-sm"
+                title="Загрузить аватар"
+                @click="showModal = true"
+              >
+                <i class="bi bi-pencil"></i>
+              </div>
+              <div class="trash btn btn-danger btn-sm">
+                <i class="bi bi-trash"></i>
+              </div>
             </div>
             <teleport to="body">
-              <div v-if="showModal" class="appModal" @click.self="showModal = false">
+              <div
+                v-if="showModal"
+                class="appModal"
+                @click.self="showModal = false"
+              >
                 <div class="appModal-content">
-                  <form  id="formLoadPhoto" @submit.prevent="loadedPhoto">
+                  <form id="formLoadPhoto" @submit.prevent="loadedPhoto">
                     <div class="form-header">
-                      <span class="close"
-                        @click="showModal = false"
-                      >&times;</span>
+                      <span class="close" @click="showModal = false"
+                        >&times;</span
+                      >
                     </div>
                     <div class="form-body">
                       <div class="form-row">
-                        <input type="file" name="image" id="inpImage"
+                        <input
+                          type="file"
+                          name="image"
+                          id="inpImage"
                           @change="selectedImage"
-                        >
+                        />
                       </div>
                       <div class="form-row">
-                        <button type="submit" class="btn btn-warning btn-sm rounded rounded-4">Загрузить фото</button>
+                        <button
+                          type="submit"
+                          class="btn btn-warning btn-sm rounded rounded-4"
+                        >
+                          Загрузить фото
+                        </button>
                       </div>
                     </div>
                   </form>
@@ -137,7 +157,7 @@
 </template>
 <script>
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile.js";
-import { ref , nextTick} from "vue";
+import { ref, nextTick } from "vue";
 import AppFormEditProfile from "@/components/AppFormEditProfile.vue";
 import AppModal from "@/components/UI/AppModal.vue";
 export default {
@@ -151,21 +171,20 @@ export default {
     const email = ref(data?.mail ?? null);
     const image = ref(data?.image ?? null);
     const showModal = ref(false);
-    const userRole = data.userRole
-    
+    const userRole = data.userRole;
+
     const closeModal = () => {
       showModal.value = false;
-      nextTick(()=>{
-        document.body.classList.remove('unscroll') // Включить прокрутку
-      })
+      nextTick(() => {
+        document.body.classList.remove("unscroll"); // Включить прокрутку
+      });
     };
 
     const openModal = () => {
       showModal.value = true;
-      nextTick(()=>{
-        document.body.classList.add('unscroll') // Запретить прокрутку
-      })
-      
+      nextTick(() => {
+        document.body.classList.add("unscroll"); // Запретить прокрутку
+      });
     };
     return {
       name,
@@ -184,8 +203,8 @@ export default {
 };
 </script>
 <style scoped>
-@import '@/assets/css/popup.css';
-body.unscroll{
+@import "@/assets/css/popup.css";
+body.unscroll {
   overflow: hidden;
   padding-right: 25px;
 }
@@ -264,18 +283,26 @@ body.unscroll{
   object-fit: cover;
   border-radius: 50%;
 }
-.pencil {
+.avatar-actions {
   position: absolute;
+  top: 0;
+  left: -20px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: opacity 0.3s linear;
+}
+.pencil {
   color: #000;
   border-radius: 50%;
   border: 0;
-  top:0;
-  right: 25px;
   cursor: pointer;
-  opacity: 0;
-  transition: opacity .3s linear;
 }
-.avatar:hover .pencil{
+.trash{
+  border-radius: 50%;
+  margin-top: 4px;
+}
+.avatar:hover .avatar-actions {
   opacity: 1;
 }
 .verticalDotes {
@@ -300,5 +327,4 @@ body.unscroll{
   top: -25px;
   left: 16px;
 }
-
 </style>
