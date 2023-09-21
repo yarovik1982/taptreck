@@ -47,9 +47,10 @@
             </div>
           </div>
           <div class="col-4">
-            <div class="row mt-5">
+            <app-advert></app-advert>
+            <!-- <div class="row mt-5">
               <h3 class="text-center">Здесь может быть ваша реклама</h3>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -59,8 +60,10 @@
 <script>
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
+import AppAdvert from '@/components/AppAdvert.vue';
 
 export default {
+  components: { AppAdvert },
   name: "breweries-page",
   props: {},
   setup() {

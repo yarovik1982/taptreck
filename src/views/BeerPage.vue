@@ -101,9 +101,10 @@
             </div>
           </div>
           <div class="col-4">
-            <div class="row mt-5">
+            <!-- <div class="row mt-5">
               <h3 class="text-center">Здесь может быть ваша реклама</h3>
-            </div>
+            </div> -->
+            <app-advert></app-advert>
           </div>
         </div>
       </div>
@@ -115,11 +116,13 @@ import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile";
 import {BASE_URL} from '@/HelperFunctions/BaseUrl'
+import AppAdvert from '@/components/AppAdvert.vue'
 // import {getCookie} from '@/HelperFunctions/isAuthenticated.js'
 import axios from 'axios';
 
 export default {
   name: "beer-page",
+  components:{AppAdvert},
   props: {},
   setup() {
     const profile = GetDataProfile();

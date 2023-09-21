@@ -92,8 +92,7 @@
             </div>
           </div>
           <p
-            class="card-text"
-            style="color: #b8b8b8; font-size: 20px; letter-spacing: 3px"
+            class="card-text" title="Прокрутите, чтобы увидеть все."
           >
             {{ breweryItem.description }}
           </p>
@@ -169,5 +168,23 @@ export default {
   margin-top: 345px;
   display: flex;
   justify-content: center;
+}
+.card-text{
+  color: #b8b8b8; 
+  font-size: 20px; 
+  letter-spacing: 3px;
+  height:250px;
+  overflow:auto;
+  padding: 8px;
+  transition: box-shadow .3s linear;
+}
+#addBeer{
+  width: 170px;
+}
+.card-text:hover{
+  box-shadow: inset 0 0 12px 2px #ccc;
+}
+.card-text::-webkit-scrollbar{
+  width: 3px;
 }
 </style>

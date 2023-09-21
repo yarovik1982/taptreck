@@ -81,7 +81,7 @@
                     </p>
                     <!-- <p class="card-text">Город: {{ item.city }}</p> -->
                     <p class="card-text">адрес: {{ item.address }}</p>
-                    <button
+                    <!-- <button
                       id="addPlace"
                       class="btn btn-warning text-white"
                       :data-id="item.id"
@@ -93,7 +93,7 @@
                       "
                     >
                       Добавить пиво
-                    </button>
+                    </button> -->
                   </div>
                 </div>
               </div>
@@ -105,9 +105,7 @@
             </div>
           </div>
           <div class="col-4">
-            <div class="row mt-5">
-              <h3 class="text-center">Здесь может быть ваша реклама</h3>
-            </div>
+            <app-advert></app-advert>
           </div>
         </div>
       </div>
@@ -118,9 +116,11 @@
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import {GetDataProfile} from '@/HelperFunctions/GetDataProfile.js'
+import AppAdvert from '@/components/AppAdvert.vue';
 
 export default {
   name: "place-page",
+  components:{AppAdvert},
   props: {},
   setup() {
     const store = useStore();

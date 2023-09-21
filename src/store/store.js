@@ -22,6 +22,8 @@ export default createStore({
     itemSileData:{},
     userBreweryData:[],
     beerListByPlace:[],
+    placeAdblock:[],
+    breweryAdblockData:[],
   },
   getters: {
     BEER_DATA(state){
@@ -56,6 +58,12 @@ export default createStore({
     },
     BEER_LIST_BY_PLACE(state){
       return state.beerListByPlace
+    },
+    PLACE_ADBLOCK(state){
+      return state.placeAdblock
+    },
+    BREWERY_ADBLOCK(state){
+      return state.breweryAdblockData
     }
   },
   mutations: {
@@ -73,6 +81,9 @@ export default createStore({
     },
     setBeerAddBlockData(state, beerAddBlockData){
       state.beerAddBlockData = beerAddBlockData
+    },
+    setBreweryAddBlockData(state, breweryAdblockData){
+      state.breweryAdblockData = breweryAdblockData
     },
     setPlaceAddBlockData(state, placeAddBlockData){
       state.placeAddBlockData = placeAddBlockData
@@ -94,7 +105,10 @@ export default createStore({
     },
     setBeerListByPlace(state, beerListByPlace){
       state.beerListByPlace = beerListByPlace
-    }
+    },
+    setPlaceAdblock(state, placeAdblock){
+      state.placeAdblock = placeAdblock
+    },
   },
   actions: {
     GET_BEER_LIST_BY_PLACE({commit}, placeId){
@@ -211,6 +225,16 @@ export default createStore({
       .catch(error => {
         console.log(error);
       })
+    },
+    GET_DATA_BREWERY_ADD_BLOCK({commit}){
+      return axios(BASE_URL + '/brewery/adblock', {
+        method:'GET',
+      })
+      .then(response => {
+        commit('setBreweryAddBlockData', response.data)
+        return response
+      })
+      .catch(error => console.log(error))
     },
     GET_DATA_BEER_ADD_BLOCK({commit}){
       return axios(BASE_URL + apiList.berrAddBlock, {
