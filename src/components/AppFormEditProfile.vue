@@ -78,9 +78,6 @@
         <button class="btn-big radius-10" type="submit" style="margin: 40px 0">
           Сохранить
         </button>
-
-        <label for="file" class="btn-big radius-10"> Загрузить фото </label>
-        <input type="file" id="file" class="inpFile" @change="changeFile"  />
       </div>
     </div>
   </form>
@@ -103,11 +100,11 @@ export default {
     const userId = data?.userId ?? null;
     // console.log(userId);
 
-    const file = ref(null);
-    const changeFile = (e) => {
-      file.value = e.target.files[0];
-    console.log(file.value);
-    };
+    // const file = ref(null);
+    // const changeFile = (e) => {
+    //   file.value = e.target.files[0];
+    // console.log(file.value);
+    // };
 
     // Функция для отправки данных профиля
     const sendProfileData = async ( userId, userName, birthday, city, country, telephoneNumber, mail) => {
@@ -128,21 +125,21 @@ export default {
     };
 
     // Функция для отправки файла
-    const sendFile = async (userId, file) => {
-      const photoData = new FormData();
-      photoData.append("image", file);
+    // const sendFile = async (userId, file) => {
+    //   const photoData = new FormData();
+    //   photoData.append("image", file);
 
-      const response = await fetch( BASE_URL + apiList.userPhoto + `?userId=${userId}`,
-        {
-          method: "POST",
-          body: photoData,
-        }
-      );
+    //   const response = await fetch( BASE_URL + apiList.userPhoto + `?userId=${userId}`,
+    //     {
+    //       method: "POST",
+    //       body: photoData,
+    //     }
+    //   );
 
-      if (!response.ok) {
-        throw new Error(`Ошибка: ${response.statusText}`);
-      }
-    };
+    //   if (!response.ok) {
+    //     throw new Error(`Ошибка: ${response.statusText}`);
+    //   }
+    // };
 
     // Функция редактирования профиля
     const editProfile = async () => {
@@ -156,7 +153,7 @@ export default {
           telephoneNumber.value,
           mail.value
         );
-        await sendFile(userId, file.value);
+        // await sendFile(userId, file.value);
       } catch (error) {
         console.log(error);
       }
@@ -171,9 +168,9 @@ export default {
       country,
       telephoneNumber,
       mail,
-      file,
+      // file,
       editProfile,
-      changeFile,
+      // changeFile,
     };
   },
 };

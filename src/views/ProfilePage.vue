@@ -69,51 +69,33 @@
       <div class="col-4">
         <div class="d-flex flex-column align-items-center">
           <div class="avatar mt-5">
-            <img :src="image" alt="AVATAR" />
+            <img :src="image" alt="AVATAR" v-if="isDeleted === false" />
             <div class="avatar-actions">
               <div
                 class="pencil btn btn-warning btn-sm"
                 title="Загрузить аватар"
-                @click="showModal = true"
+                @click="openModal"
               >
                 <i class="bi bi-pencil"></i>
               </div>
-              <div class="trash btn btn-danger btn-sm">
+              <div class="trash btn btn-danger btn-sm" @click="deleteAvatar">
                 <i class="bi bi-trash"></i>
               </div>
             </div>
             <teleport to="body">
               <div
-                v-if="showModal"
+                v-if="isAvatarFormOpen"
                 class="appModal"
-                @click.self="showModal = false"
+                @click.self="isAvatarFormOpen = false"
               >
                 <div class="appModal-content">
-                  <form id="formLoadPhoto" @submit.prevent="loadedPhoto">
-                    <div class="form-header">
-                      <span class="close" @click="showModal = false"
-                        >&times;</span
-                      >
-                    </div>
-                    <div class="form-body">
-                      <div class="form-row">
-                        <input
-                          type="file"
-                          name="image"
-                          id="inpImage"
-                          @change="selectedImage"
-                        />
-                      </div>
-                      <div class="form-row">
-                        <button
-                          type="submit"
-                          class="btn btn-warning btn-sm rounded rounded-4"
-                        >
-                          Загрузить фото
-                        </button>
-                      </div>
-                    </div>
-                  </form>
+                  <span
+                    class="close"
+                    @click="closeAvatarForm"
+                    style="cursor: pointer"
+                    >&times;</span
+                  >
+                  <app-form-load-avatar></app-form-load-avatar>
                 </div>
               </div>
             </teleport>
@@ -158,46 +140,60 @@
 <script>
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile.js";
 import { ref, nextTick } from "vue";
+import { BASE_URL } from "@/HelperFunctions/BaseUrl";
 import AppFormEditProfile from "@/components/AppFormEditProfile.vue";
+import AppFormLoadAvatar from "@/components/AppFormLoadAvatar.vue";
 import AppModal from "@/components/UI/AppModal.vue";
+import axios from "axios";
+
 export default {
-  components: { AppFormEditProfile, AppModal },
+  components: { AppFormEditProfile, AppModal, AppFormLoadAvatar },
   name: "profile-page",
-  //   emits: ["toggle-modal"],
-  setup() {
+  emits: ["close-avatar-form"],
+  setup(_, { emit }) {
     const data = GetDataProfile();
     const name = ref(data?.userName ?? null);
     const login = ref(data?.login ?? null);
     const email = ref(data?.mail ?? null);
     const image = ref(data?.image ?? null);
-    const showModal = ref(false);
-    const userRole = data.userRole;
+    const userRole = data?.userRole ?? null;
+    const userId = data?.userId ?? null;
+    const isDeleted = ref(false);
+    const isAvatarFormOpen = ref(false);
 
-    const closeModal = () => {
-      showModal.value = false;
-      nextTick(() => {
-        document.body.classList.remove("unscroll"); // Включить прокрутку
-      });
+    const deleteAvatar = async () => {
+      try {
+        const response = await axios.delete(
+          BASE_URL + `/user/photo/remove?id=${userId}`
+        );
+        if (response.status) {
+          isDeleted.value = true;
+          GetDataProfile();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const closeAvatarForm = () => {
+      isAvatarFormOpen.value = false;
     };
 
     const openModal = () => {
-      showModal.value = true;
-      nextTick(() => {
-        document.body.classList.add("unscroll"); // Запретить прокрутку
-      });
+      isAvatarFormOpen.value = true;
     };
     return {
       name,
       login,
       email,
       image,
-      closeModal,
+      closeAvatarForm,
       openModal,
-      // isVisible,
-      // showProfile,
-      showModal,
-      // toggleModal,
+      isDeleted,
+      deleteAvatar,
+      isAvatarFormOpen,
       userRole,
+      userId,
     };
   },
 };
@@ -298,7 +294,7 @@ body.unscroll {
   border: 0;
   cursor: pointer;
 }
-.trash{
+.trash {
   border-radius: 50%;
   margin-top: 4px;
 }
