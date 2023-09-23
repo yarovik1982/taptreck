@@ -41,6 +41,7 @@
 import {ref, watchEffect} from 'vue'
 import {BASE_URL} from '@/HelperFunctions/BaseUrl'
 import {GetDataProfile, UpdateProfile} from '@/HelperFunctions/GetDataProfile'
+import {getCookie} from '@/HelperFunctions/isAuthenticated'
 import axios from 'axios';
 export default {
   name: "app-form-load-avatar",
@@ -48,7 +49,10 @@ export default {
     const profile = GetDataProfile()
     const userId = profile?.userId ?? null
     const image = ref(null)
-    const avatar = ref(JSON.parse(localStorage.getItem('user')).image)
+    // const isAuth = getCookie("token=")
+    const token = (document.cookie).split(';')[1].replace('token=', '')
+    // const avatar = ref(JSON.parse(localStorage.getItem('user')).image)
+    // console.log(token);
     const selectedImage = (e) => {
       const file = e.target.files[0]
       image.value = file
@@ -59,23 +63,24 @@ export default {
       // reader.readAsDataURL(file);
     }
     
-    watchEffect(()=>{
-      localStorage.setItem('avatar', avatar.value)
-    })
+    // watchEffect(()=>{
+    //   localStorage.setItem('avatar', avatar.value)
+    // })
 
     const downloadPhoto = async () => {
       const formData = new FormData()
       formData.append('image', image.value)
 
       try{
-        const response = await axios.post(BASE_URL + `/user/photo?userId=${userId}`, formData)
+        const response = await axios.post(BASE_URL + `/user/photo?userId=${userId}`, formData,{
+          headers:{
+            Authorization: `Bearer ${token}`,
+          }
+        })
         if(response.status){
-          const profileResponse = await axios.get(BASE_URL + '/user/profile', {
-            headers:{
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          // await UpdateProfile()
+          console.log(response.token);
+           
+           
           // GetDataProfile()
           // setTimeout(() => {GetDataProfile()}, 500)
           // setTimeout(() => {location.reload()},1000)

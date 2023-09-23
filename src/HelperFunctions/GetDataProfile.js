@@ -12,14 +12,20 @@ export const ClearDataProfile = () => {
    }else return
 }
 
-export const UpdateProfile = async () => {
-   try{
-      const response = await axios.get(BASE_URL + '/user/profile')
-      if(response.status){
-         const profile = response.data
-         localStorage.setItem('user',JSON.stringify(profile))
-         console.log(profile);
-         // return profile
-      }
-   }catch(error){console.log(error)}
+export const UpdateProfile = async (token) => {
+   if(token){
+      try{
+         const response = await axios.get(BASE_URL + '/user/profile',{
+            headers:{
+               Authorization: `Bearer ${token}`,
+            }
+         })
+         if(response.ok){
+            const profile = await response.JSON()
+            localStorage.setItem('user',JSON.stringify(profile))
+            console.log(profile);
+            // return profile
+         }
+      }catch(error){console.log(error)}
+   }
 }

@@ -118,6 +118,7 @@ export default {
         });
         if (response.ok) {
           const data = await response.json();
+          console.log(data);
           const token = data.token;
           document.cookie = `token=${token}; path=/`;
           const profileResponse = await fetch(BASE_URL + apiList.userProfile, {
@@ -130,11 +131,11 @@ export default {
 
             localStorage.setItem("user", JSON.stringify(profileData));
             // message.value = 'Вы авторизованы, можете закрыть форму.'
-              toProfile.push("/profile/profile-favorites");
             setTimeout(() => {
-              location.reload()
+              toProfile.push("/profile/profile-favorites");
+              // location.reload()
               message.value = ''
-            }, 3000)
+            }, 500)
           } else
             message.value = "Упс , что-то пошло не так. Попробуйте заново!";
         }

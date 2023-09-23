@@ -138,7 +138,6 @@ export default {
       type,
       city,
       description,
-      file,
       changeFile,
       breweryAdd,
       message,
