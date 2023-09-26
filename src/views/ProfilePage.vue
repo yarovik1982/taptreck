@@ -168,7 +168,7 @@ export default {
         );
         if (response.status) {
           isDeleted.value = true;
-          GetDataProfile();
+
         }
       } catch (error) {
         console.log(error);

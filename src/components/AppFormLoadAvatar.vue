@@ -49,23 +49,12 @@ export default {
     const profile = GetDataProfile()
     const userId = profile?.userId ?? null
     const image = ref(null)
-    // const isAuth = getCookie("token=")
-    const token = (document.cookie).split(';')[1].replace('token=', '')
-    // const avatar = ref(JSON.parse(localStorage.getItem('user')).image)
-    // console.log(token);
+    // const token = getCookie('token=')
+    
     const selectedImage = (e) => {
       const file = e.target.files[0]
       image.value = file
-      // const reader = new FileReader();
-      // reader.onload = (e) => {
-      //   image.value = e.target.result;
-      // };
-      // reader.readAsDataURL(file);
     }
-    
-    // watchEffect(()=>{
-    //   localStorage.setItem('avatar', avatar.value)
-    // })
 
     const downloadPhoto = async () => {
       const formData = new FormData()
@@ -73,18 +62,27 @@ export default {
 
       try{
         const response = await axios.post(BASE_URL + `/user/photo?userId=${userId}`, formData,{
-          headers:{
-            Authorization: `Bearer ${token}`,
-          }
+          
         })
-        if(response.status){
-          console.log(response.token);
-           
-           
-          // GetDataProfile()
-          // setTimeout(() => {GetDataProfile()}, 500)
-          // setTimeout(() => {location.reload()},1000)
-      }
+        if(response.ok){
+          const data = await response.json();
+          // console.log(data);
+          const token = data.token;
+          console.log(token);
+          document.cookie = `token=${token}; path=/`;
+          const profileResponse = await fetch(BASE_URL + apiList.userProfile, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (profileResponse.ok) {
+            const profileData = await profileResponse.json()
+              localStorage.setItem("user", JSON.stringify(profileData))
+              setTimeout(() => {
+                location.reload()
+              }, 1000)
+          }
+        }
         }catch(error){console.log(error);}
     }
 

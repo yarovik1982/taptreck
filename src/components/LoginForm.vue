@@ -129,7 +129,7 @@ export default {
           if (profileResponse.ok) {
             const profileData = await profileResponse.json();
 
-            localStorage.setItem("user", JSON.stringify(profileData));
+            localStorage.setItem("user", JSON.stringify(profileData))
             // message.value = 'Вы авторизованы, можете закрыть форму.'
             setTimeout(() => {
               toProfile.push("/profile/profile-favorites");
