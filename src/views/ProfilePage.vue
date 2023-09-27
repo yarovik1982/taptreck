@@ -141,6 +141,7 @@
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile.js";
 import { ref, nextTick } from "vue";
 import { BASE_URL } from "@/HelperFunctions/BaseUrl";
+import {getAll} from '@/HelperFunctions/isAuthenticated'
 import AppFormEditProfile from "@/components/AppFormEditProfile.vue";
 import AppFormLoadAvatar from "@/components/AppFormLoadAvatar.vue";
 import AppModal from "@/components/UI/AppModal.vue";
@@ -168,7 +169,7 @@ export default {
         );
         if (response.status) {
           isDeleted.value = true;
-
+          getAll()
         }
       } catch (error) {
         console.log(error);

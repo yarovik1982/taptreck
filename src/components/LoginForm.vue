@@ -84,6 +84,7 @@ import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import LoginBySocial from "./LoginBySocial.vue";
 import { BASE_URL, apiList } from "@/HelperFunctions/BaseUrl";
+import {getAll} from '@/HelperFunctions/isAuthenticated'
 export default {
   components: { LoginBySocial },
   name: "login-form",
@@ -121,6 +122,7 @@ export default {
           console.log(data);
           const token = data.token;
           document.cookie = `token=${token}; path=/`;
+          localStorage.setItem('token', JSON.stringify(token))
           const profileResponse = await fetch(BASE_URL + apiList.userProfile, {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -128,8 +130,9 @@ export default {
           });
           if (profileResponse.ok) {
             const profileData = await profileResponse.json();
-
+            console.log(profileData);
             localStorage.setItem("user", JSON.stringify(profileData))
+            
               toProfile.push("/profile/profile-favorites");
             setTimeout(() => {
               location.reload(true)
@@ -144,7 +147,6 @@ export default {
         console.log(error);
       }
     };
-
     return {
       marker,
       isChecked,
