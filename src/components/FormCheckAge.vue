@@ -62,8 +62,8 @@
 import {ref} from 'vue'
 export default {
    name:"form-cneck-age",
-  //  emits:['ageConfirmed'],
-   setup(props,{emit}) {
+   emits:['ageConfirmed'],
+   setup(_,{emit}) {
       ;
       const checkAge = () => {
          const ageConfirm = 'confirm'

@@ -93,6 +93,10 @@ const routes = [
     name: 'feedback',
     component: () => import('@/views/FeedbackPage.vue')
   },
+  {
+    path:'/profile/*',
+    redirect:'/'
+  },
 ]
 
 const router = createRouter({
