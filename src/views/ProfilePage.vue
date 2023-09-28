@@ -95,7 +95,9 @@
                     style="cursor: pointer"
                     >&times;</span
                   >
-                  <app-form-load-avatar></app-form-load-avatar>
+                  <app-form-load-avatar
+                    @close-modal="isAvatarFormOpen = false"
+                  ></app-form-load-avatar>
                 </div>
               </div>
             </teleport>
@@ -139,7 +141,7 @@
 </template>
 <script>
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile.js";
-import { ref, nextTick } from "vue";
+import { ref, watchEffect } from "vue";
 import { BASE_URL } from "@/HelperFunctions/BaseUrl";
 import {getAll} from '@/HelperFunctions/isAuthenticated'
 import AppFormEditProfile from "@/components/AppFormEditProfile.vue";
@@ -150,8 +152,8 @@ import axios from "axios";
 export default {
   components: { AppFormEditProfile, AppModal, AppFormLoadAvatar },
   name: "profile-page",
-  emits: ["close-avatar-form"],
-  setup(_, { emit }) {
+  emits: ["close-modal"],
+  setup(_,emit) {
     const data = GetDataProfile();
     const name = ref(data?.userName ?? null);
     const login = ref(data?.login ?? null);
@@ -179,6 +181,18 @@ export default {
     const closeAvatarForm = () => {
       isAvatarFormOpen.value = false;
     };
+
+
+
+
+watchEffect(() => {
+  const data = GetDataProfile();
+  name.value = data?.userName ?? null;
+  login.value = data?.login ?? null;
+  email.value = data?.mail ?? null;
+  image.value = data?.image ?? null;
+});
+
 
     const openModal = () => {
       isAvatarFormOpen.value = true;

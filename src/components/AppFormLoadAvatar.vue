@@ -44,11 +44,11 @@ import { getAll } from "@/HelperFunctions/isAuthenticated";
 import axios from "axios";
 export default {
   name: "app-form-load-avatar",
+  emits:['upDateAvatar', 'close-avatar-form'],
   setup(_, { emit }) {
     const profile = GetDataProfile();
     const userId = profile?.userId ?? null;
     const image = ref(null);
-    // const token = getCookie('token=')
 
     const selectedImage = (e) => {
       const file = e.target.files[0];
@@ -65,7 +65,7 @@ export default {
           formData
         );
         if (response.status === 200) {
-          location.reload(true);
+          // location.reload(true);
           setTimeout(() => {
             getAll();
           }, 1000);

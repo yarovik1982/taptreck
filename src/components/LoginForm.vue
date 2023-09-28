@@ -84,7 +84,7 @@ import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import LoginBySocial from "./LoginBySocial.vue";
 import { BASE_URL, apiList } from "@/HelperFunctions/BaseUrl";
-import {getAll} from '@/HelperFunctions/isAuthenticated'
+// import {getAll} from '@/HelperFunctions/isAuthenticated'
 export default {
   components: { LoginBySocial },
   name: "login-form",

@@ -17,11 +17,12 @@ export const getAll = async () => {
       })
       if(response.ok){
          const user = await response.json()
-         console.log(user);
          localStorage.setItem("user", JSON.stringify(user))
       }
    }catch(error){console.log(error)}
 
-   
+   finally{
+      location.reload(true)
+   }
    
 }
