@@ -38,8 +38,13 @@
                 {{ item.description }}
               </p>
               <div class="d-flex justify-content-between align-items-center">
-                <a href="#">Смотреть на карте</a>
-                <a href="#">Оставить отзыв</a>
+               <qrcode-vue
+                class="btn btn-warning btn-sm" 
+                :value ="item.name " 
+                :level =" level " 
+                :render-as =" renderAs"
+                @click="downloadQR"
+                >Скачать QR-код</qrcode-vue>
               </div>
             </div>
           </div>
@@ -50,10 +55,13 @@
 </template>
 <script>
 import { ref, onMounted } from "vue";
+import QrcodeVue, { Level, RenderAs } from 'qrcode.vue'
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
+
 export default {
   name: "one-sile-page",
+  components:{QrcodeVue},
   setup() {
     const route = useRoute();
     const store = useStore();
@@ -61,6 +69,18 @@ export default {
     const breweryName = ref('')
     const limit = 45
     const offset= 0
+    const level = ref('M')
+    const renderAs = ref('svg')
+
+
+   const downloadQR = () => {
+      const canvas = document.querySelector('canvas')
+      const img = canvas.toDataURL('image/svg')
+      const link = document.createElement('a')
+      link.href = img
+      link.download = `${value.value.replace(/ /g, "_")}.svg`
+      link.click()
+   }
 
     const getBeerListByBrewery = async() => {
       const breweryId = route.params.breweryId
@@ -73,7 +93,23 @@ export default {
        
     return {
       list, breweryName,
+      level, renderAs,
+      downloadQR,
     };
   },
 };
 </script>
+<style scoped>
+.title{
+   position: relative;
+}
+.title::before{
+   width: 50%;
+   position: absolute;
+   content: "";
+   left: 0;
+   top: 100%;
+   height: 6px;
+   background-color: #fbcc04;
+}
+</style>
