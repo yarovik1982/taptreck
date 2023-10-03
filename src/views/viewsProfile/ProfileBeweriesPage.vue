@@ -1,4 +1,68 @@
 <template>
+  
+  <button
+    class="btn-big"
+    @click="showFormBewierAdd = true"
+    v-if="role === 1 || role === 3"
+  >
+    Добавить пивоварню
+  </button>
+  <div
+    class="card mb-3"
+    style="padding: 40px 20px; border: 1px solid #000"
+    v-for="breweryItem in breweryData"
+    :key="breweryItem.id"
+    :data-breweryId="breweryItem.id"
+  >
+    <div class="row g-0">
+      <div class="col-md-4 d-flex justify-content-center align-items-center">
+        <img
+          :src="breweryItem.image"
+          class="img-fluid"
+          alt="IMAGE"
+          style="border-radius: 16px"
+        />
+      </div>
+      <div class="col-md-8 d-flex">
+        <div class="card-body py-0 d-flex flex-column justify-content-between">
+          <div>
+            <div
+              class="d-flex justify-content-between align-items-center"
+              style="margin-bottom: 21px"
+            >
+              <h3 class="card-title">{{ breweryItem.name }}</h3>
+              <!-- <img src="@/assets/images/favorites.svg" alt="ICON HEART" /> -->
+            </div>
+            <div>
+              <p>{{ breweryItem.type }}</p>
+            </div>
+          </div>
+          <p
+            class="card-text" title="Прокрутите, чтобы увидеть все."
+          >
+            {{ breweryItem.description }}
+          </p>
+          <!-- <div class="d-flex justify-content-between align-items-center">
+            <a href="#">Смотреть на карте</a>
+            <a href="#">Оставить отзыв</a>
+          </div> -->
+          <button
+            id="addBeer"
+            class="btn btn-warning text-white"
+            v-if="role === 1 || role === 3"
+            @click="
+              showModalAddBeer(breweryItem.id)
+            "
+          >
+            Добавить пиво
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row-btn">
+    <button class="btn-more">Загрузить еще</button>
+  </div>
   <teleport to="body">
     <div
       class="layout"
@@ -54,78 +118,29 @@
         </div>
       </div>
     </div>
-  </teleport>
-  <button
-    class="btn-big"
-    @click="showFormBewierAdd = true"
-    v-if="role === 1 || role === 3"
-  >
-    Добавить пивоварню
-  </button>
-  <div
-    class="card mb-3"
-    style="padding: 40px 20px; border: 1px solid #000"
-    v-for="breweryItem in breweryData"
-    :key="breweryItem.id"
-  >
-    <div class="row g-0">
-      <div class="col-md-4 d-flex justify-content-center align-items-center">
-        <img
-          :src="breweryItem.image"
-          class="img-fluid"
-          alt="IMAGE"
-          style="border-radius: 16px"
-        />
-      </div>
-      <div class="col-md-8 d-flex">
-        <div class="card-body py-0 d-flex flex-column justify-content-between">
-          <div>
-            <div
-              class="d-flex justify-content-between align-items-center"
-              style="margin-bottom: 21px"
-            >
-              <h3 class="card-title">{{ breweryItem.name }}</h3>
-              <!-- <img src="@/assets/images/favorites.svg" alt="ICON HEART" /> -->
-            </div>
-            <div>
-              <p>{{ breweryItem.type }}</p>
-            </div>
-          </div>
-          <p
-            class="card-text" title="Прокрутите, чтобы увидеть все."
-          >
-            {{ breweryItem.description }}
-          </p>
-          <!-- <div class="d-flex justify-content-between align-items-center">
-            <a href="#">Смотреть на карте</a>
-            <a href="#">Оставить отзыв</a>
-          </div> -->
-          <button
-            id="addBeer"
-            class="btn btn-warning text-white"
-            v-if="role === 2 || role === 3"
-            @click="
-              showModalAddBeer();
-            "
-          >
-            Добавить пиво
-          </button>
-        </div>
+
+    <div
+      class="layout"
+      v-if="isShowModalAddBeer === true"
+      @click.self="isShowModalAddBeer = false"
+      style="background: rgba(0, 0, 0, 0.7); z-index: 10"
+    >
+      <div class="layout-content" style="width: 992px">
+        <form-beer-add :breweryId="selectedBreweryId"></form-beer-add>
       </div>
     </div>
-  </div>
-  <div class="row-btn">
-    <button class="btn-more">Загрузить еще</button>
-  </div>
+  </teleport>
 </template>
 <script>
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile.js";
 import FormBreweryAdd from "@/components/FormBreweryAdd.vue";
+import FormBeerAdd from '@/components/FormBeerAdd.vue'
 import axios from "axios";
+
 export default {
-  components: { FormBreweryAdd },
+  components: { FormBreweryAdd, FormBeerAdd },
   name: "profile-beweries-page",
   setup() {
     const showFormBewierAdd = ref(false);
@@ -134,9 +149,11 @@ export default {
     const role = profile.userRole;
     const userId = profile.userId;
     const isShowModalAddBeer = ref(false)
+    const selectedBreweryId = ref(null)
 
-    const showModalAddBeer = () => {
+    const showModalAddBeer = (breweryId) => {
       isShowModalAddBeer.value = true
+      selectedBreweryId.value = breweryId
     }
 
     const breweryData = computed(() => store.getters.USER_BREWERY_DATA);
@@ -153,6 +170,7 @@ export default {
       userId,
       breweryData,
       isShowModalAddBeer,showModalAddBeer,
+      selectedBreweryId,
     };
   },
 };

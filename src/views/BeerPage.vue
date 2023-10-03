@@ -43,6 +43,16 @@
         </div>
       </div>
     </div>
+    <div class="layout" v-if="isQRCode === true">
+      <div class="layout-content">
+       <qrcode-vue :value="valueQR" :level="level" :render-as="renderAs" />
+        <div class="mt-2 d-flex justify-content-center">
+          <button class="btn btn-warning btn-sm" @click="saveQRCode">
+            Сохранить
+          </button>
+        </div>
+      </div>
+    </div>
   </teleport>
   <section id="beerPage">
     <h1 class="text-center">
@@ -78,20 +88,25 @@
                     <p class="card-text">
                       Производитель: {{ item.breweryName }}
                     </p>
-                    <button
+                    <div class="d-flex justify-content-between align-items-center" v-if="( role === 1) || role === 3">
+                      <button
                       id="addBeer"
                       class="btn btn-warning text-white"
                       :data-id="item.id"
                       :data-beerId="item.beerId"
                       :data-beer-name="item.name"
-                      v-if="( role === 2) || ( role === 3)"
+                      
                       @click="showModalAddBeer();
                         renderPlacesAll(item.id, item.name);
                       "
                     >
                       Добавить пиво
                     </button>
-                    <span v-else></span>
+
+                    <span class="qrcodetAdd"
+                      @click="showQRCode(item)"
+                    >QR-code</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -100,10 +115,9 @@
               <button class="btn-more" @click="loadMore">Загрузить еще</button>
             </div>
           </div>
+         
           <div class="col-4">
-            <!-- <div class="row mt-5">
-              <h3 class="text-center">Здесь может быть ваша реклама</h3>
-            </div> -->
+            
             <app-advert></app-advert>
           </div>
         </div>
@@ -117,12 +131,12 @@ import { useStore } from "vuex";
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile";
 import {BASE_URL} from '@/HelperFunctions/BaseUrl'
 import AppAdvert from '@/components/AppAdvert.vue'
-// import {getCookie} from '@/HelperFunctions/isAuthenticated.js'
+// import QrcodeVue, { Level, RenderAs } from 'qrcode.vue'
 import axios from 'axios';
 
 export default {
   name: "beer-page",
-  components:{AppAdvert},
+  components:{AppAdvert, QrcodeVue},
   props: {},
   setup() {
     const profile = GetDataProfile();
@@ -138,6 +152,17 @@ export default {
     const beerId = ref('')
     const placeId = ref('')
     const placeAdded = ref(null)
+
+    
+
+    const showQRCode = (item) => {
+      isQRCode.value = true
+      const qRCodeInfo = `Наименование: ${item.name}\n
+                        Стиль: ${item.style} \n
+                        Горечь: ${item.adv}\n
+                        Крепость: ${item.ibu}\n`
+      valueQR.value = item.name
+    }
 
     const showModalAddBeer = () => {
       scrollPosition.value = window.pageYOffset || document.documentElement.scrollTop;
@@ -214,6 +239,7 @@ export default {
       placeId,
       isShowModalAddBeer,
       scrollPosition,
+      showQRCode, isQRCode, valueQR, level, renderAs
     };
   },
 };
@@ -262,5 +288,12 @@ section {
   background: #fff;
   height: fit-content;
   position: relative;
+}
+.qrcodetAdd {
+  cursor: pointer;
+  transition: all 0.3s linear;
+}
+.qrcodetAdd:hover {
+  color:#ccc;
 }
 </style>

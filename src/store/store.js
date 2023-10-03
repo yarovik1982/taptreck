@@ -141,6 +141,7 @@ export default createStore({
       })
       .then(response => {
         commit('setUserBreweryData', response.data)
+        console.log(response.data);
         return response
       })
       .catch(error => {
@@ -194,7 +195,7 @@ export default createStore({
       })
       .then(response => {
         commit('setBeerData', response.data)
-        // console.log(response.data);
+        console.log(response.data);
         return response
       })
       .catch(error => {

@@ -141,55 +141,6 @@
         <div
           class="row d-flex w-100 justify-content-between align-items-center"
         >
-          <!-- <ul class="navbar-list navbar-nav me-auto mb-2 mb-lg-0" v-if="isAuth">
-            <li class="navbar-list-item px-3">
-              <router-link to="/" class="navbar-list-link">Главная</router-link>
-            </li>
-            <li class="navbar-list-item px-3">
-              <router-link to="/places" class="navbar-list-link"
-                >Места</router-link
-              >
-            </li>
-            <li class="navbar-list-item px-3">
-              <router-link to="/news" class="navbar-list-link"
-                >Новинки</router-link
-              >
-            </li>
-            <li class="navbar-list-item px-3">
-              <router-link to="/reviews" class="navbar-list-link"
-                >Отзывы</router-link
-              >
-            </li>
-            <li class="navbar-list-item px-3">
-              <router-link to="/beer" class="navbar-list-link"
-                >Пиво</router-link
-              >
-            </li>
-            <li class="navbar-list-item px-3">
-              <router-link to="/breweries" class="navbar-list-link"
-                >Пивоварни</router-link
-              >
-            </li>
-            <li class="navbar-list-item px-3">
-              <router-link to="/breweries" class="navbar-list-link"
-                >Карта</router-link
-              >
-            </li>
-            <li class="navbar-list-item px-3" @click="activeModal = 'feedback'">
-              <span class="navbar-list-link" style="cursor: pointer"
-                >Написать нам</span
-              >
-            </li>
-            <li
-              class="navbar-list-item px-3"
-              v-show="isAuth"
-              style="margin-left: auto"
-            >
-              <router-link to="/profile" class="navbar-list-link"
-                >Профиль</router-link
-              >
-            </li>
-          </ul> -->
           <ul class="navbar-list navbar-nav me-auto mb-2 mb-lg-0">
             <li class="navbar-list-item px-2">
               <router-link to="/" class="navbar-list-link">Главная</router-link>

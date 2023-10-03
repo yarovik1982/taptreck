@@ -1,3 +1,6 @@
+
+
+yandexMapApiKey : 8ed9cf42-8bef-4985-916b-2465b3642ed5
 testUser : madbad_o
 testPassword : 8dC96IOm
 token : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5YXJvdmlrIiwiaXNzIjoiYXBwIiwiZXhwIjoxNjkyOTA1NjEwLCJpYXQiOjE2OTI5MDM4MTB9.5uxIcXbLA1Ycd9Z1X3iKPIpsLSBmkcgbOYk8UtL29ltIkJo6gGPYcnnpIm47WtSA-IJgddGOdP2QPsGMxUMQhA"
