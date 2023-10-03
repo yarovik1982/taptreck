@@ -62,6 +62,11 @@ const routes = [
     name: 'one-sile-page',
     component: () => import('@/views/viewsProfile/OneSilePage.vue')
   },
+  {
+    path: '/profile/profile-beweries/:breweryId',
+    name: 'one-brewery-page',
+    component: () => import('@/views/viewsProfile/OneBreweryPage.vue')
+  },
   
   {
     path: '/places',

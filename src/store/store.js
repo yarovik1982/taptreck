@@ -24,6 +24,7 @@ export default createStore({
     beerListByPlace:[],
     placeAdblock:[],
     breweryAdblockData:[],
+    beersBrewery: null,
   },
   getters: {
     BEER_DATA(state){
@@ -64,7 +65,11 @@ export default createStore({
     },
     BREWERY_ADBLOCK(state){
       return state.breweryAdblockData
-    }
+    },
+    BEERS_BREWERY(state){
+      return state.beersBrewery
+    },
+
   },
   mutations: {
     setMessage(state, message){
@@ -72,6 +77,9 @@ export default createStore({
     },
     setBeerData(state, data){
       state.beerData = [...state.beerData, ...data]
+    },
+    setBeersBrewery(state, data){
+      state.beersBrewery = [...state.beersBrewery, ...data]
     },
     setBeweryesData(state, data){
       state.beweryData = [...state.beweryData, ...data]
@@ -195,12 +203,22 @@ export default createStore({
       })
       .then(response => {
         commit('setBeerData', response.data)
-        console.log(response.data);
         return response
       })
       .catch(error => {
         console.log(error);
       })
+    },
+    GET_BEERS_BY_BREWERY({commit},{limit, offset, breweryId}){
+      return axios(BASE_URL + `/beer/list/brewery?breweryId=${breweryId}&limit=${limit}&offset=${offset}`,{
+        method:'GET',
+      })
+      .then(response => {
+        commit('setBeersBrewery', response.data)
+        console.log(response.data)
+        return response
+      })
+      .catch(error => console.log(error))
     },
     GET_DATA_BREWERYES({commit}, {limit, offset}){
       return axios(BASE_URL + apiList.breweryList.main + `?limit=${limit}&offset=${offset}`,{

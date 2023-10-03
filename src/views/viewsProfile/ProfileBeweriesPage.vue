@@ -13,6 +13,7 @@
     v-for="breweryItem in breweryData"
     :key="breweryItem.id"
     :data-breweryId="breweryItem.id"
+    @click="onCardClick(breweryItem)"
   >
     <div class="row g-0">
       <div class="col-md-4 d-flex justify-content-center align-items-center">
@@ -42,10 +43,6 @@
           >
             {{ breweryItem.description }}
           </p>
-          <!-- <div class="d-flex justify-content-between align-items-center">
-            <a href="#">Смотреть на карте</a>
-            <a href="#">Оставить отзыв</a>
-          </div> -->
           <button
             id="addBeer"
             class="btn btn-warning text-white"
@@ -134,6 +131,7 @@
 <script>
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from 'vue-router'
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile.js";
 import FormBreweryAdd from "@/components/FormBreweryAdd.vue";
 import FormBeerAdd from '@/components/FormBeerAdd.vue'
@@ -145,11 +143,19 @@ export default {
   setup() {
     const showFormBewierAdd = ref(false);
     const store = useStore();
+    const router = useRouter()
     const profile = GetDataProfile();
     const role = profile.userRole;
     const userId = profile.userId;
     const isShowModalAddBeer = ref(false)
     const selectedBreweryId = ref(null)
+
+    const onCardClick = (item) => {
+      router.push({
+        path:`/profile/profile-beweries/${item.breweryId}`,
+        query:{name:item.name}
+        })
+    }
 
     const showModalAddBeer = (breweryId) => {
       isShowModalAddBeer.value = true
