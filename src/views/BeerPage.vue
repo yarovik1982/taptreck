@@ -9,10 +9,10 @@
       <div
         class="layout-content"
         v-if="isShowModalAddBeer === true"
-        :style="{top:scrollPosition + 'px'}"
+        :style="{ top: scrollPosition + 'px' }"
       >
         <div class="plices">
-          <h3 class="text-center">{{nameBeer}}</h3>
+          <h3 class="text-center">{{ nameBeer }}</h3>
           <div
             class="plice-item d-flex px-3 justify-content-between align-items-center mb-1"
             v-for="place in placesData"
@@ -22,30 +22,32 @@
           >
             <h5 class="plice-title">{{ place.name }}</h5>
             <div class="btns-row d-flex align-items-center">
-              <button type="button" 
+              <button
+                type="button"
                 class="btn btn-warning text-white btn-sm"
-                style="width:100px;"
+                style="width: 100px"
                 v-if="place.isAdded === false"
                 @click="setPlaceBuyBeer(place.placeId)"
               >
                 Добавить
-            </button>
-            <button type="button" 
-              v-else
-              class="btn btn-danger btn-sm" 
-              style="margin-left:8px;width:100px;" 
-              @click="placeIsAddedRemove(place.placeId)"
-            >
-              Удалить
-            </button>
+              </button>
+              <button
+                type="button"
+                v-else
+                class="btn btn-danger btn-sm"
+                style="margin-left: 8px; width: 100px"
+                @click="placeIsAddedRemove(place.placeId)"
+              >
+                Удалить
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="layout" v-if="isQRCode === true">
+    <div class="layout" v-if="isQRCode === true" @click.self="isQRCode = null">
       <div class="layout-content">
-       <qrcode-vue :value="valueQR" :level="level" :render-as="renderAs" />
+        <qrcode-vue :value="value" :level="level" :render-as="renderAs" />
         <div class="mt-2 d-flex justify-content-center">
           <button class="btn btn-warning btn-sm" @click="saveQRCode">
             Сохранить
@@ -88,24 +90,27 @@
                     <p class="card-text">
                       Производитель: {{ item.breweryName }}
                     </p>
-                    <div class="d-flex justify-content-between align-items-center" v-if="( role === 1) || role === 3">
-                      <button
-                      id="addBeer"
-                      class="btn btn-warning text-white"
-                      :data-id="item.id"
-                      :data-beerId="item.beerId"
-                      :data-beer-name="item.name"
-                      
-                      @click="showModalAddBeer();
-                        renderPlacesAll(item.id, item.name);
-                      "
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                      v-if="role === 1 || role === 3"
                     >
-                      Добавить пиво
-                    </button>
+                      <button
+                        id="addBeer"
+                        class="btn btn-warning text-white"
+                        :data-id="item.id"
+                        :data-beerId="item.beerId"
+                        :data-beer-name="item.name"
+                        @click="
+                          showModalAddBeer();
+                          renderPlacesAll(item.id, item.name);
+                        "
+                      >
+                        Добавить пиво
+                      </button>
 
-                    <span class="qrcodetAdd"
-                      @click="showQRCode(item)"
-                    >QR-code</span>
+                      <span class="qrcodetAdd" @click="showQRCode(item)"
+                        >QR-code</span
+                      >
                     </div>
                   </div>
                 </div>
@@ -115,9 +120,8 @@
               <button class="btn-more" @click="loadMore">Загрузить еще</button>
             </div>
           </div>
-         
+
           <div class="col-4">
-            
             <app-advert></app-advert>
           </div>
         </div>
@@ -129,103 +133,120 @@
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile";
-import {BASE_URL} from '@/HelperFunctions/BaseUrl'
-import AppAdvert from '@/components/AppAdvert.vue'
-// import QrcodeVue, { Level, RenderAs } from 'qrcode.vue'
-import axios from 'axios';
+import { BASE_URL } from "@/HelperFunctions/BaseUrl";
+import AppAdvert from "@/components/AppAdvert.vue";
+import QrcodeVue, { Level, RenderAs } from "qrcode.vue";
+import axios from "axios";
+import html2canvas from "html2canvas";
 
 export default {
   name: "beer-page",
-  components:{AppAdvert, QrcodeVue},
+  components: { AppAdvert, QrcodeVue },
   props: {},
   setup() {
     const profile = GetDataProfile();
     // const isAuth = ref(getCookie("token="))
-    const role = profile?.userRole ?? null
+    const role = profile?.userRole ?? null;
     const userId = profile?.userId ?? null;
     const isShowModalAddBeer = ref(null);
     const scrollPosition = ref(0);
     const store = useStore();
-    const limit = ref(45)
+    const limit = ref(45);
     const offset = ref(0);
-    const nameBeer = ref('')
-    const beerId = ref('')
-    const placeId = ref('')
-    const placeAdded = ref(null)
-
-    
+    const nameBeer = ref("");
+    const beerId = ref("");
+    const placeId = ref("");
+    const placeAdded = ref(null);
+    const isQRCode = ref(null);
+    const value = ref("");
+    const level = ref("M");
+    const renderAs = ref("svg");
 
     const showQRCode = (item) => {
-      isQRCode.value = true
-      const qRCodeInfo = `Наименование: ${item.name}\n
-                        Стиль: ${item.style} \n
-                        Горечь: ${item.adv}\n
-                        Крепость: ${item.ibu}\n`
-      valueQR.value = item.name
-    }
+      isQRCode.value = true;
+      value.value = item.name;
+    };
+
+    const saveQRCode = () => {
+      const svg = document.querySelector(".layout-content svg");
+      if (!svg) {
+        return;
+      } else {
+        const serializer = new XMLSerializer();
+        const svgStr = serializer.serializeToString(svg);
+        const link = document.createElement("a");
+        link.href = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgStr);
+        link.download = (value.value).replace(/ /g, "_") + ".svg"
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    };
 
     const showModalAddBeer = () => {
-      scrollPosition.value = window.pageYOffset || document.documentElement.scrollTop;
-      isShowModalAddBeer.value = true
-    }
-//-----------------------------------------------------------------------
+      scrollPosition.value =
+        window.pageYOffset || document.documentElement.scrollTop;
+      isShowModalAddBeer.value = true;
+    };
+    //-----------------------------------------------------------------------
     const placeIsAddedRemove = async (place) => {
       const data = {
         placeId: place,
-        beerId : beerId.value
-      }
-      try{
+        beerId: beerId.value,
+      };
+      try {
         const response = await axios(BASE_URL + `/place/isAdded/remove`, {
-          method:'DELETE',
+          method: "DELETE",
           data,
-        })
-        if(response.status){
+        });
+        if (response.status) {
           console.log("Delete");
-          renderPlacesAll(beerId.value, nameBeer.value)
+          renderPlacesAll(beerId.value, nameBeer.value);
         }
-      }catch(error){
+      } catch (error) {
         console.log(error);
       }
-    }
-
-//------------------------------------------------------------------------
-    const setPlaceBuyBeer = async (place) => {
-
-      const data = {
-        placeId : place,
-        beerId  : beerId.value
-      }
-      try{
-        const response = await axios(BASE_URL + `/place/buy/beer`,{
-          method:'POST',
-          data,
-        })
-        if(response.status){
-          renderPlacesAll(beerId.value, nameBeer.value)
-        }
-      }catch(error){
-        console.log(error);
-      }
-      
-    }
-//------------------------------------------------------------------------
-    const placesData = computed(() => store.getters.PLACE_IS_ADDED_LIST)
-    const renderPlacesAll = (id, name) => {
-      store.dispatch("GET_PLICE_IS_ADDED_LIST", {userId, beerId:id});
-      nameBeer.value = name
-      beerId.value = id
     };
-//-------------------------------------------------------------------------
+
+    //------------------------------------------------------------------------
+    const setPlaceBuyBeer = async (place) => {
+      const data = {
+        placeId: place,
+        beerId: beerId.value,
+      };
+      try {
+        const response = await axios(BASE_URL + `/place/buy/beer`, {
+          method: "POST",
+          data,
+        });
+        if (response.status) {
+          renderPlacesAll(beerId.value, nameBeer.value);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    //------------------------------------------------------------------------
+    const placesData = computed(() => store.getters.PLACE_IS_ADDED_LIST);
+    const renderPlacesAll = (id, name) => {
+      store.dispatch("GET_PLICE_IS_ADDED_LIST", { userId, beerId: id });
+      nameBeer.value = name;
+      beerId.value = id;
+    };
+    //-------------------------------------------------------------------------
     const beerData = computed(() => store.getters.BEER_DATA);
     const getDataBeer = () => {
-      store.dispatch("GET_DATA_BEER", { limit:limit.value, offset: offset.value });
+      store.dispatch("GET_DATA_BEER", {
+        limit: limit.value,
+        offset: offset.value,
+      });
     };
     const loadMore = () => {
       offset.value += limit;
       getDataBeer();
     };
     getDataBeer();
-//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     return {
       beerData,
       loadMore,
@@ -234,12 +255,18 @@ export default {
       placesData,
       renderPlacesAll,
       nameBeer,
-      setPlaceBuyBeer, placeIsAddedRemove,
+      setPlaceBuyBeer,
+      placeIsAddedRemove,
       placeAdded,
       placeId,
       isShowModalAddBeer,
       scrollPosition,
-      showQRCode, isQRCode, valueQR, level, renderAs
+      showQRCode,
+      isQRCode,
+      value,
+      level,
+      renderAs,
+      saveQRCode,
     };
   },
 };
@@ -281,7 +308,7 @@ section {
   display: flex;
   justify-content: center;
 }
-.layout-content{
+.layout-content {
   width: 600px;
   padding: 24px;
   border-radius: 16px;
@@ -294,6 +321,6 @@ section {
   transition: all 0.3s linear;
 }
 .qrcodetAdd:hover {
-  color:#ccc;
+  color: #ccc;
 }
 </style>

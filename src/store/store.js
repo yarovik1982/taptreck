@@ -209,8 +209,8 @@ export default createStore({
         console.log(error);
       })
     },
-    GET_BEERS_BY_BREWERY({commit},{limit, offset, breweryId}){
-      return axios(BASE_URL + `/beer/list/brewery?breweryId=${breweryId}&limit=${limit}&offset=${offset}`,{
+    GET_BEERS_BY_BREWERY({commit}, breweryId){
+      return axios(BASE_URL + `/beer/list/brewery?breweryId=${breweryId}&limit=45&offset=0`,{
         method:'GET',
       })
       .then(response => {

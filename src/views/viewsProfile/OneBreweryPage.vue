@@ -5,7 +5,7 @@
     </h1>
     <div class="container">
       <div class="card mb-3" style="padding: 40px 20px; border: 1px solid #000"
-        v-for="item in list"
+        v-for="item in list.value"
         :key="item.id"
       >
         <div class="row g-0 d-flex align-items-center">
@@ -54,7 +54,7 @@
   </section>
 </template>
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import QrcodeVue, { Level, RenderAs } from 'qrcode.vue'
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
@@ -65,7 +65,7 @@ export default {
   setup() {
     const route = useRoute();
     const store = useStore();
-    const list = ref({})
+    const list = ref([])
     const breweryName = ref('')
     const limit = 45
     const offset= 0
@@ -84,9 +84,11 @@ export default {
 
     const getBeerListByBrewery = async() => {
       const breweryId = route.params.breweryId
+      console.log(breweryId);
       breweryName.value = route.query.name
-      await store.dispatch("GET_BEERS_BY_BREWERY", breweryId,limit,offset);
+      await store.dispatch("GET_BEERS_BY_BREWERY",4);
       list.value = store.getters.BEERS_BREWERY
+      console.log(list.value);
     };
 
     onMounted(getBeerListByBrewery);

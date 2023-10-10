@@ -10,15 +10,15 @@
   <div
     class="card mb-3"
     style="padding: 40px 20px; border: 1px solid #000"
-    v-for="breweryItem in breweryData"
-    :key="breweryItem.id"
-    :data-breweryId="breweryItem.id"
-    @click="onCardClick(breweryItem)"
+    v-for="item in breweryData"
+    :key="item.id"
+    :data-breweryId="item.id"
+    @click="onCardClick(item)"
   >
     <div class="row g-0">
       <div class="col-md-4 d-flex justify-content-center align-items-center">
         <img
-          :src="breweryItem.image"
+          :src="item.image"
           class="img-fluid"
           alt="IMAGE"
           style="border-radius: 16px"
@@ -31,24 +31,24 @@
               class="d-flex justify-content-between align-items-center"
               style="margin-bottom: 21px"
             >
-              <h3 class="card-title">{{ breweryItem.name }}</h3>
+              <h3 class="card-title">{{ item.name }}</h3>
               <!-- <img src="@/assets/images/favorites.svg" alt="ICON HEART" /> -->
             </div>
             <div>
-              <p>{{ breweryItem.type }}</p>
+              <p>{{ item.type }}</p>
             </div>
           </div>
           <p
             class="card-text" title="Прокрутите, чтобы увидеть все."
           >
-            {{ breweryItem.description }}
+            {{ item.description }}
           </p>
           <button
             id="addBeer"
             class="btn btn-warning text-white"
             v-if="role === 1 || role === 3"
             @click="
-              showModalAddBeer(breweryItem.id)
+              showModalAddBeer(item.id)
             "
           >
             Добавить пиво
@@ -176,7 +176,7 @@ export default {
       userId,
       breweryData,
       isShowModalAddBeer,showModalAddBeer,
-      selectedBreweryId,
+      selectedBreweryId, onCardClick
     };
   },
 };

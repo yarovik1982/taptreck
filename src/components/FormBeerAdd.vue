@@ -121,7 +121,7 @@ export default {
                params:beerData
             })
             if(response.status === 200){
-               location.reload()
+               console.log(response);
             }
          }catch(error){console.log(error)}
       }

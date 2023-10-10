@@ -61,7 +61,7 @@ export default {
   min-height: 100vh;
   padding-top: 24px;
   z-index: 1;
-  background: rgb(0, 253, 0);
+  background: rgba(0,0,0,.7);
   display: flex;
   justify-content: center;
 }
