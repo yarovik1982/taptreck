@@ -46,7 +46,9 @@
       </div>
     </div>
     <div class="layout" v-if="isQRCode === true" @click.self="isQRCode = null">
-      <div class="layout-content">
+      <div class="layout-content"
+        :style="{ top: scrollPosition + 'px' }"
+      >
         <qrcode-vue :value="value" :level="level" :render-as="renderAs" />
         <div class="mt-2 d-flex justify-content-center">
           <button class="btn btn-warning btn-sm" @click="saveQRCode">
@@ -108,7 +110,7 @@
                         Добавить пиво
                       </button>
 
-                      <span class="qrcodetAdd" @click="showQRCode(item)"
+                      <span class="qrcodetAdd" @click="showQRCode(item);showModalQRCode()"
                         >QR-code</span
                       >
                     </div>
@@ -187,6 +189,11 @@ export default {
       scrollPosition.value =
         window.pageYOffset || document.documentElement.scrollTop;
       isShowModalAddBeer.value = true;
+    };
+    const showModalQRCode = () => {
+      scrollPosition.value =
+        window.pageYOffset || document.documentElement.scrollTop;
+      isQRCode.value = true;
     };
     //-----------------------------------------------------------------------
     const placeIsAddedRemove = async (place) => {
@@ -267,6 +274,7 @@ export default {
       level,
       renderAs,
       saveQRCode,
+      showModalQRCode
     };
   },
 };
