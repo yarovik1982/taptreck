@@ -151,8 +151,9 @@ export default {
     const selectedBreweryId = ref(null)
 
     const onCardClick = (item) => {
+      console.log(item.id);
       router.push({
-        path:`/profile/profile-beweries/${item.Id}`,
+        path:`/profile/profile-beweryes/${item.Id}`,
         query:{name:item.name}
         })
     }

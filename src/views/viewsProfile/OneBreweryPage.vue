@@ -65,7 +65,7 @@ export default {
   setup() {
     const route = useRoute();
     const store = useStore();
-    const list = ref([])
+    const list = ref({})
     const breweryName = ref('')
     const limit = 45
     const offset= 0
@@ -83,12 +83,11 @@ export default {
    }
 
     const getBeerListByBrewery = async() => {
-      const breweryId = route.params.id
-      console.log(breweryId);
+      const id = route.params.breweryId
+      console.log(id);
       breweryName.value = route.query.name
-      await store.dispatch("GET_BEERS_BY_BREWERY",4);
+      await store.dispatch("GET_BEERS_BY_BREWERY", id);
       list.value = store.getters.BEERS_BREWERY
-      console.log(list.value);
     };
 
     onMounted(getBeerListByBrewery);

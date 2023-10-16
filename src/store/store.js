@@ -149,7 +149,7 @@ export default createStore({
       })
       .then(response => {
         commit('setUserBreweryData', response.data)
-        console.log(response.data);
+        // console.log(response.data);
         return response
       })
       .catch(error => {
@@ -210,7 +210,7 @@ export default createStore({
       })
     },
     GET_BEERS_BY_BREWERY({commit}, breweryId){
-      return axios(BASE_URL + `/beer/list/brewery?breweryId=${breweryId}&limit=45&offset=0`,{
+      return axios(BASE_URL + `/beer/list/brewery/?breweyId=${breweryId}&limit=45&offset=0`,{
         method:'GET',
       })
       .then(response => {
