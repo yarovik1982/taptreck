@@ -27,7 +27,7 @@
         v-if="userRole === 3 || userRole === 1"
       >
         <div class="link-wrapper">
-          <router-link to="/profile/profile-beweryes" class="profile-link"
+          <router-link to="/profile/profile-breweryes" class="profile-link"
             >Мои пивоварни</router-link
           >
         </div>

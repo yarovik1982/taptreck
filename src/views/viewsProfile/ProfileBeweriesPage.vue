@@ -139,7 +139,7 @@ import axios from "axios";
 
 export default {
   components: { FormBreweryAdd, FormBeerAdd },
-  name: "profile-beweries-page",
+  name: "profile-breweryes-page",
   setup() {
     const showFormBewierAdd = ref(false);
     const store = useStore();
@@ -151,9 +151,8 @@ export default {
     const selectedBreweryId = ref(null)
 
     const onCardClick = (item) => {
-      console.log(item.id);
       router.push({
-        path:`/profile/profile-beweryes/${item.Id}`,
+        path:`/profile/profile-breweryes/${item.id}`,
         query:{name:item.name}
         })
     }

@@ -24,7 +24,7 @@ export default createStore({
     beerListByPlace:[],
     placeAdblock:[],
     breweryAdblockData:[],
-    beersBrewery: null,
+    beersBrewery: [],
   },
   getters: {
     BEER_DATA(state){
@@ -210,7 +210,7 @@ export default createStore({
       })
     },
     GET_BEERS_BY_BREWERY({commit}, breweryId){
-      return axios(BASE_URL + `/beer/list/brewery/?breweyId=${breweryId}&limit=45&offset=0`,{
+      return axios(BASE_URL + `/beer/list/brewery/?breweryId=${breweryId}&limit=45&offset=0`,{
         method:'GET',
       })
       .then(response => {

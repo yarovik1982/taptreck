@@ -46,8 +46,8 @@ const routes = [
         component: () => import('@/views/viewsProfile/ProfileReviewsPage.vue')
       },
       {
-        path:'/profile/profile-beweryes',
-        name:'profile-beweries',
+        path:'/profile/profile-breweryes',
+        name:'profile-breweryes-page',
         component:() => import('@/views/viewsProfile/ProfileBeweriesPage.vue')
       },
       {
@@ -63,7 +63,7 @@ const routes = [
     component: () => import('@/views/viewsProfile/OneSilePage.vue')
   },
   {
-    path: '/profile/profile-beweryes/:id',
+    path: '/profile/profile-breweryes/:breweryId',
     name: 'one-brewery-page',
     component: () => import('@/views/viewsProfile/OneBreweryPage.vue')
   },
