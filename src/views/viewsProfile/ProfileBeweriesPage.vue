@@ -47,7 +47,7 @@
             id="addBeer"
             class="btn btn-warning text-white"
             v-if="role === 1 || role === 3"
-            @click="
+            @click.stop="
               showModalAddBeer(item.id)
             "
           >
@@ -152,7 +152,7 @@ export default {
 
     const onCardClick = (item) => {
       router.push({
-        path:`/profile/profile-beweries/${item.breweryId}`,
+        path:`/profile/profile-beweries/${item.Id}`,
         query:{name:item.name}
         })
     }

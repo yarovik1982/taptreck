@@ -83,7 +83,7 @@ export default {
    }
 
     const getBeerListByBrewery = async() => {
-      const breweryId = route.params.breweryId
+      const breweryId = route.params.id
       console.log(breweryId);
       breweryName.value = route.query.name
       await store.dispatch("GET_BEERS_BY_BREWERY",4);

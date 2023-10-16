@@ -45,8 +45,9 @@
         </div>
       </div>
     </div>
-    <div class="layout" v-if="isQRCode === true" @click.self="isQRCode = null">
+    <div class="layout" v-if="isQRCode === true" @click.self="isQRCode = null; scrollBody()">
       <div class="layout-content"
+        style="width:fit-content"
         :style="{ top: scrollPosition + 'px' }"
       >
         <qrcode-vue :value="value" :level="level" :render-as="renderAs" />
@@ -110,7 +111,7 @@
                         Добавить пиво
                       </button>
 
-                      <span class="qrcodetAdd" @click="showQRCode(item);showModalQRCode()"
+                      <span class="qrcodetAdd" @click="showQRCode(item);showModalQRCode();scrollBody()"
                         >QR-code</span
                       >
                     </div>
@@ -136,6 +137,8 @@ import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile";
 import { BASE_URL } from "@/HelperFunctions/BaseUrl";
+import { SAVE_QR } from '@/HelperFunctions/saveQR'
+import { removeBodyScroll } from '@/HelperFunctions/bodyScroll'
 import AppAdvert from "@/components/AppAdvert.vue";
 import QrcodeVue, { Level, RenderAs } from "qrcode.vue";
 import axios from "axios";
@@ -163,6 +166,13 @@ export default {
     const value = ref("");
     const level = ref("M");
     const renderAs = ref("svg");
+    const scroll = ref(null)
+
+    const scrollBody = () => {
+      scroll.value = removeBodyScroll(isQRCode.value)
+      // document.querySelector('body').removeAttribute('style')
+      
+    }
 
     const showQRCode = (item) => {
       isQRCode.value = true;
@@ -170,19 +180,7 @@ export default {
     };
 
     const saveQRCode = () => {
-      const svg = document.querySelector(".layout-content svg");
-      if (!svg) {
-        return;
-      } else {
-        const serializer = new XMLSerializer();
-        const svgStr = serializer.serializeToString(svg);
-        const link = document.createElement("a");
-        link.href = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgStr);
-        link.download = (value.value).replace(/ /g, "_") + ".svg"
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
+      SAVE_QR(value.value)
     };
 
     const showModalAddBeer = () => {
@@ -274,7 +272,8 @@ export default {
       level,
       renderAs,
       saveQRCode,
-      showModalQRCode
+      showModalQRCode,
+      scrollBody,scroll
     };
   },
 };
