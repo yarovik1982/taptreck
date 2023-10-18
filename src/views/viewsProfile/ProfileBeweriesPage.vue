@@ -8,7 +8,7 @@
     Добавить пивоварню
   </button>
   <div
-    class="card mb-3"
+    class="card mb-3 border-1 border-warning"
     style="padding: 40px 20px; border: 1px solid #000"
     v-for="item in breweryData"
     :key="item.id"
@@ -19,9 +19,8 @@
       <div class="col-md-4 d-flex justify-content-center align-items-center">
         <img
           :src="item.image"
-          class="img-fluid"
+          class="image"
           alt="IMAGE"
-          style="border-radius: 16px"
         />
       </div>
       <div class="col-md-8 d-flex">
@@ -39,7 +38,7 @@
             </div>
           </div>
           <p
-            class="card-text" title="Прокрутите, чтобы увидеть все."
+            class="card-descr" title="Прокрутите, чтобы увидеть все."
           >
             {{ item.description }}
           </p>
@@ -193,7 +192,7 @@ export default {
   display: flex;
   justify-content: center;
 }
-.card-text{
+/* .card-text{
   color: #b8b8b8; 
   font-size: 20px; 
   letter-spacing: 3px;
@@ -201,14 +200,27 @@ export default {
   overflow:auto;
   padding: 8px;
   transition: box-shadow .3s linear;
+} */
+.image{
+  width: 80%;
+  height: 80%;
+  object-fit: cover;
 }
 #addBeer{
   width: 170px;
 }
-.card-text:hover{
-  box-shadow: inset 0 0 12px 2px #ccc;
+.card-descr{
+  color: rgb(184, 184, 184);
+  max-height: 200px;
+  padding: 8px;
+  overflow-y: auto;
+  transition: all .3s linear;
+  cursor: url('~@/assets/images/cursor-scroll.png'), auto;
 }
-.card-text::-webkit-scrollbar{
-  width: 3px;
+.card:hover .card-descr{
+  box-shadow: #faca10 0px 0px 8px 2px;
+}
+.card-descr::-webkit-scrollbar{
+  width: 0;
 }
 </style>

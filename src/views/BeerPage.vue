@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div class="layout" v-if="isQRCode === true" @click.self="isQRCode = null; scrollBody()">
+    <!-- <div class="layout" v-if="isQRCode === true" @click.self="isQRCode = null; scrollBody()">
       <div class="layout-content"
         style="width:fit-content"
         :style="{ top: scrollPosition + 'px' }"
@@ -57,7 +57,7 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
   </teleport>
   <section id="beerPage">
     <h1 class="text-center">
@@ -69,7 +69,7 @@
         <div class="row">
           <div class="col-8">
             <div
-              class="card mb-3"
+              class="card mb-3 border-1 border-warning"
               v-for="item in beerData"
               :key="item.id"
               :data-id="item.id"
@@ -78,21 +78,24 @@
             >
               <div class="row g-0 d-flex align-items-center">
                 <div
-                  class="col-md-4 d-flex justify-content-center align-items-center"
+                  class="col-md-4 d-flex justify-content-center align-items-center px-2"
                 >
-                  <div class="card-img">
-                    <img :src="item.image" :alt="item.name" />
-                  </div>
+                    <img class="image" :src="item.image" :alt="item.name" />
                 </div>
                 <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="card-title">{{ item.name }}</h5>
-                    <p class="card-text">
-                      {{ item.description }}
-                    </p>
-                    <p class="card-text">
-                      Производитель: {{ item.breweryName }}
-                    </p>
+                  <div class="card-content p-2">
+                    <div class="cart-header p-0 border-0 bg-transparent">
+                      <h5 class="card-title">{{ item.name }}</h5>
+                    </div>
+                    <div class="card-body p-0">
+                      <p class="card-descr">
+                        {{ item.description }}
+                      </p>
+                      <p class="card-text">
+                        Производитель: {{ item.breweryName }}
+                      </p>
+                    </div>
+                    <div class="card-footer p-0 border-0 bg-transparent">
                     <div
                       class="d-flex justify-content-between align-items-center"
                       v-if="role === 1 || role === 3"
@@ -110,11 +113,8 @@
                       >
                         Добавить пиво
                       </button>
-
-                      <span class="qrcodetAdd" @click="showQRCode(item);showModalQRCode();scrollBody()"
-                        >QR-code</span
-                      >
                     </div>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -138,15 +138,15 @@ import { useStore } from "vuex";
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile";
 import { BASE_URL } from "@/HelperFunctions/BaseUrl";
 import { SAVE_QR } from '@/HelperFunctions/saveQR'
-import { removeBodyScroll } from '@/HelperFunctions/bodyScroll'
+// import { removeBodyScroll } from '@/HelperFunctions/bodyScroll'
 import AppAdvert from "@/components/AppAdvert.vue";
-import QrcodeVue, { Level, RenderAs } from "qrcode.vue";
+// import QrcodeVue, { Level, RenderAs } from "qrcode.vue";
 import axios from "axios";
-import html2canvas from "html2canvas";
+// import html2canvas from "html2canvas";
 
 export default {
   name: "beer-page",
-  components: { AppAdvert, QrcodeVue },
+  components: { AppAdvert },
   props: {},
   setup() {
     const profile = GetDataProfile();
@@ -162,36 +162,11 @@ export default {
     const beerId = ref("");
     const placeId = ref("");
     const placeAdded = ref(null);
-    const isQRCode = ref(null);
-    const value = ref("");
-    const level = ref("M");
-    const renderAs = ref("svg");
-    const scroll = ref(null)
-
-    const scrollBody = () => {
-      scroll.value = removeBodyScroll(isQRCode.value)
-      // document.querySelector('body').removeAttribute('style')
-      
-    }
-
-    const showQRCode = (item) => {
-      isQRCode.value = true;
-      value.value = item.name;
-    };
-
-    const saveQRCode = () => {
-      SAVE_QR(value.value)
-    };
 
     const showModalAddBeer = () => {
       scrollPosition.value =
         window.pageYOffset || document.documentElement.scrollTop;
       isShowModalAddBeer.value = true;
-    };
-    const showModalQRCode = () => {
-      scrollPosition.value =
-        window.pageYOffset || document.documentElement.scrollTop;
-      isQRCode.value = true;
     };
     //-----------------------------------------------------------------------
     const placeIsAddedRemove = async (place) => {
@@ -205,7 +180,7 @@ export default {
           data,
         });
         if (response.status) {
-          console.log("Delete");
+          // console.log("Delete");
           renderPlacesAll(beerId.value, nameBeer.value);
         }
       } catch (error) {
@@ -253,27 +228,13 @@ export default {
     getDataBeer();
     //--------------------------------------------------------------------------
     return {
-      beerData,
-      loadMore,
-      role,
-      showModalAddBeer,
-      placesData,
-      renderPlacesAll,
-      nameBeer,
-      setPlaceBuyBeer,
-      placeIsAddedRemove,
-      placeAdded,
-      placeId,
-      isShowModalAddBeer,
+      beerData, loadMore,
+      role, showModalAddBeer,
+      placesData, renderPlacesAll,
+      nameBeer, setPlaceBuyBeer,
+      placeIsAddedRemove, placeAdded,
+      placeId, isShowModalAddBeer,
       scrollPosition,
-      showQRCode,
-      isQRCode,
-      value,
-      level,
-      renderAs,
-      saveQRCode,
-      showModalQRCode,
-      scrollBody,scroll
     };
   },
 };
@@ -301,11 +262,7 @@ section {
 .content {
   margin-top: 80px;
 }
-.card-img {
-  max-width: 380px;
-  height: 380px;
-}
-.card-img img {
+.image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -323,11 +280,19 @@ section {
   height: fit-content;
   position: relative;
 }
-.qrcodetAdd {
-  cursor: pointer;
-  transition: all 0.3s linear;
+
+.card-descr{
+  color: rgb(184, 184, 184);
+  max-height: 200px;
+  padding: 8px;
+  overflow-y: auto;
+  transition: all .3s linear;
+  cursor: url('~@/assets/images/cursor-scroll.png'), auto;
 }
-.qrcodetAdd:hover {
-  color: #ccc;
+.card:hover .card-descr{
+  box-shadow: #faca10 0px 0px 8px 2px;
+}
+.card-descr::-webkit-scrollbar{
+  width: 0;
 }
 </style>

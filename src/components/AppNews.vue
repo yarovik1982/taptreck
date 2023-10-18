@@ -78,6 +78,7 @@ export default {
   box-shadow: #faca10 0px 0px 8px 2px;
 }
 .card-descr {
+  color: rgb(184, 184, 184);
   max-height: 150px;
   overflow-y: auto;
   padding: 8px;
