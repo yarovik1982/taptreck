@@ -49,35 +49,8 @@
       <div class="col-6 d-flex justify-content-center">
         <div class="px-3 w-100">
           <!-- Форма поиска -->
-          <form
-            role="search"
-            class="d-flex justify-content-center align-items-center"
-          >
-            <input
-              class="form-control form-control-sm"
-              type="search"
-              placeholder="Поиск"
-              style="
-                border: 2px solid yellow;
-                border-radius: 22px 0 0 22px;
-                outline: none;
-                box-shadow: none;
-              "
-            />
-            <router-link to="/search-result/search-result-beer">
-              <button
-              class="btn btn-warning btn-sm"
-              type="submit"
-              style="
-                border-radius: 0px 22px 22px 0px;
-                box-shadow: 0 0 0 1px #ffc107;
-              "
-              @click="goTo"
-            >
-              <i class="bi bi-search" style="color: #fff"></i>
-            </button>
-            </router-link>
-          </form>
+          <FormSearch/>
+          
         </div>
       </div>
       <!-- Авторизация -->
@@ -183,17 +156,23 @@
 
 <script>
 import { ref, computed } from "vue";
-import {useRouter} from 'vue-router'
+// import { useStore } from "vuex";
+import { useRouter } from 'vue-router'
+// import { GetDataProfile } from "@/HelperFunctions/GetDataProfile.js";
 import { getCookie } from "@/HelperFunctions/isAuthenticated";
 import { ClearDataProfile } from "@/HelperFunctions/GetDataProfile";
 import LoginForm from "@/components/LoginForm.vue";
 import RegisterForm from "@/components/RegisterForm.vue";
 import FeedbackForm from "@/components/FeedbackForm.vue";
+import FormSearch from '@/components/FormSearch.vue'
 export default {
-  components: { LoginForm, RegisterForm, FeedbackForm },
+  components: { LoginForm, RegisterForm, FeedbackForm, FormSearch },
   name: "navbar",
   emits: ["toggle-modal"],
   setup(_, { emit }) {
+//------------------------------
+    
+//------------------------------------
     const activeModal = ref(null);
     const isShow = ref(false);
     const toSearchResult = useRouter()
@@ -218,6 +197,7 @@ export default {
       isAgeConfirmed.value = false;
     };
     return {
+      // searchData,
       isShow,
       toggleValue,
       setValue,

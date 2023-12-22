@@ -13,10 +13,11 @@ import 'bootstrap/dist/js/bootstrap.js';
 
 
 const app = createApp(App)
-
 app
-
-
-.use(store)
 .use(router)
+.use(store)
 .mount('#app')
+
+
+
+ 

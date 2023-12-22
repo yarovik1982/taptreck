@@ -1,19 +1,78 @@
 <template>
-   <h3 class="text-center">
+   <!-- <h3 class="text-center">
       Search Result Breweries
       <small style="font-size:12px;display:block; margin-right:16px;margin-top:-25px;text-align:right;"> {{amount}} items found</small>
-   </h3>
+   </h3> -->
+   <div class="container" v-if="data.brewery?.length">
+      <h3 class="text-center">
+         Найдено {{ data.brewery.length }}
+      </h3>
+      <div
+        class="card mb-3"
+        style="padding: 40px 20px; border: 1px solid rgb(255, 193, 7)"
+        v-for="item in data.brewery"
+        :key="item.id"
+      >
+        <div class="row g-0 d-flex ">
+          <div class="col-md-4 px-2">
+            <img
+              :src="item.image"
+              class="image"
+              alt="IMAGE"
+              style="border-radius: 16px"
+            />
+          </div>
+          <div class="col-md-8 d-flex">
+            <div
+              class="card-body py-0 d-flex flex-column justify-content-between"
+            >
+              <div>
+                <div
+                  class="d-flex justify-content-between align-items-center"
+                  style="margin-bottom: 21px"
+                >
+                  <h3 class="card-title">{{ item.name }}</h3>
+                  
+                </div>
+                <div></div>
+              </div>
+              <p class="card-descr">
+                {{ item.description }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+   </div>
 </template>
-<script>
-import {ref} from 'vue'
-export default {
-   name:'search-result-breweries',
-   setup() {
-      const amount = ref(10)
+<script setup>
+import { useStore } from 'vuex';
 
-      return{
-         amount
-      }
-   },
-}
+// import { getAll } from "@/HelperFunctions/useSearch";
+import {ref, computed} from 'vue'
+
+// const data = getAll()
+const store = useStore()
+const data = computed(() => store.getters.GET_SEARH_RESULT)
 </script>
+<style scoped>
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card-descr{
+  color: rgb(184, 184, 184);
+  max-height: 200px;
+  padding: 8px;
+  overflow-y: auto;
+  transition: all .3s linear;
+  cursor: url('~@/assets/images/cursor-scroll.png'), auto;
+}
+.card:hover .card-descr{
+  box-shadow: #faca10 0px 0px 8px 2px;
+}
+.card-descr::-webkit-scrollbar{
+  width: 0;
+}
+</style>

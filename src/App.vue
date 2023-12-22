@@ -11,6 +11,7 @@
     </div>
   </teleport>
   <div class="app">
+    <!-- <test-component/> -->
     <navbar></navbar>
     <router-view />
     <app-footer></app-footer>
@@ -18,16 +19,24 @@
 </template>
 
 <script>
+
+
 import { ref, watchEffect } from "vue";
+
+import { getAll } from "@/HelperFunctions/useSearch.js";
+
 import {getCookie} from '@/HelperFunctions/isAuthenticated.js'
 import AppFooter from "./components/AppFooter.vue";
 import Navbar from "./components/Navbar.vue";
 import FormCheckAge from './components/FormCheckAge.vue';
+// import TestComponent from "./components/TestComponent.vue";
 export default {
-  components: { Navbar, AppFooter, FormCheckAge },
+  components: { Navbar, AppFooter, FormCheckAge},
 
   name: "app",
   setup() {
+    const searchData = getAll()
+    console.log(searchData);
     const isAuth = ref(getCookie('token='))
     const isAgeConfirmed = ref(getCookie('ageConfirm='))
     watchEffect(() => {
@@ -41,6 +50,7 @@ export default {
       isAuth,
       isAgeConfirmed,
       onAgeConfirmed,
+      searchData
     }
   },
 };

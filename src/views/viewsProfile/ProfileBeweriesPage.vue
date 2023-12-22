@@ -118,7 +118,7 @@
     <div
       class="layout"
       v-if="isShowModalAddBeer === true"
-      @click.self="isShowModalAddBeer = false"
+      @click.self="closeModalAddBeer"
       style="background: rgba(0, 0, 0, 0.7); z-index: 10"
     >
       <div class="layout-content" style="width: 992px">
@@ -159,6 +159,14 @@ export default {
     const showModalAddBeer = (breweryId) => {
       isShowModalAddBeer.value = true
       selectedBreweryId.value = breweryId
+      document.querySelector('body').style.position = 'fixed'
+      
+    }
+
+    const closeModalAddBeer = () => {
+      isShowModalAddBeer.value = false
+      document.querySelector('body').removeAttribute('style')
+      
     }
 
     const breweryData = computed(() => store.getters.USER_BREWERY_DATA);
@@ -171,7 +179,7 @@ export default {
     return {
       showFormBewierAdd,
       profile,
-      role,
+      role, closeModalAddBeer,
       userId,
       breweryData,
       isShowModalAddBeer,showModalAddBeer,
@@ -192,15 +200,6 @@ export default {
   display: flex;
   justify-content: center;
 }
-/* .card-text{
-  color: #b8b8b8; 
-  font-size: 20px; 
-  letter-spacing: 3px;
-  height:250px;
-  overflow:auto;
-  padding: 8px;
-  transition: box-shadow .3s linear;
-} */
 .image{
   width: 80%;
   height: 80%;

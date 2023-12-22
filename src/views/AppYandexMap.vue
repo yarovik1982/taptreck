@@ -1,6 +1,8 @@
 <template>
    <div class="container-fluid">
-      <div id="appMap" class="appMap"></div>
+      <div id="appMap" class="appMap">
+         
+      </div>
    </div>
 </template>
 <style scoped>

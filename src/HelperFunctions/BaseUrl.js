@@ -11,6 +11,10 @@ export const apiList = {
    feedbackListMain: '/feedback/list/main',
    breweryCreate: '/brewery/create',
    placeCreate  : '/place/create',
+   searchResult: {
+      main: '/search/beer',
+      queriedOptions: ['?']
+   },
    beerList  : {
       main : '/beer/list',
       queriedOptions : ['?limit=5&offset=0']

@@ -25,6 +25,7 @@ export default createStore({
     placeAdblock:[],
     breweryAdblockData:[],
     beersBrewery: [],
+    searchResult: [],
   },
   getters: {
     BEER_DATA(state){
@@ -69,6 +70,9 @@ export default createStore({
     BEERS_BREWERY(state){
       return state.beersBrewery
     },
+    GET_SEARH_RESULT(state){
+      return state.searchResult
+    }
 
   },
   mutations: {
@@ -117,8 +121,23 @@ export default createStore({
     setPlaceAdblock(state, placeAdblock){
       state.placeAdblock = placeAdblock
     },
+    setSearchResult(state, searchResult){
+      state.searchResult = searchResult
+    }
   },
   actions: {
+    GET_SEARCH_DATA({commit}, {userId = '', name}){
+      return axios(BASE_URL + `${apiList.searchResult.main}?userId=${userId}&name=${name}`, {
+        method:'GET',
+      })
+      .then(response => {
+        commit('setSearchResult', response.data)
+        return response
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
     GET_BEER_LIST_BY_PLACE({commit}, placeId){
       return axios(BASE_URL + `/beer/place?id=${placeId}&limit=45&offset=0`, {
         method:'GET',
