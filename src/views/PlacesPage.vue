@@ -81,19 +81,7 @@
                     </p>
                     <!-- <p class="card-text">Город: {{ item.city }}</p> -->
                     <p class="card-text">адрес: {{ item.address }}</p>
-                    <!-- <button
-                      id="addPlace"
-                      class="btn btn-warning text-white"
-                      :data-id="item.id"
-                      :data-placeId="item.placeId"
-                      :data-beer-name="item.name"
-                      v-if="( role === 1) || ( role === 3)"
-                      @click="showModalAddBeer();
-                        renderPlacesAll(item.id, item.name);
-                      "
-                    >
-                      Добавить пиво
-                    </button> -->
+                    
                   </div>
                 </div>
               </div>

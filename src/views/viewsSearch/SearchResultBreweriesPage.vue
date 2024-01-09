@@ -4,9 +4,9 @@
       <small style="font-size:12px;display:block; margin-right:16px;margin-top:-25px;text-align:right;"> {{amount}} items found</small>
    </h3> -->
    <div class="container" v-if="data.brewery?.length">
-      <h3 class="text-center">
+      <!-- <h3 class="text-center">
          Найдено {{ data.brewery.length }}
-      </h3>
+      </h3> -->
       <div
         class="card mb-3"
         style="padding: 40px 20px; border: 1px solid rgb(255, 193, 7)"

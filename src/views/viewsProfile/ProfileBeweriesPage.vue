@@ -8,8 +8,8 @@
     Добавить пивоварню
   </button>
   <div
-    class="card mb-3 border-1 border-warning"
-    style="padding: 40px 20px; border: 1px solid #000"
+    class="card mb-3 border border-warning"
+    style="padding: 40px 20px;"
     v-for="item in breweryData"
     :key="item.id"
     :data-breweryId="item.id"

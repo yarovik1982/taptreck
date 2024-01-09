@@ -1,9 +1,9 @@
 <template>
    <!-- <h3 class="text-center">Seach Result Beer</h3> -->
    <div class="container" v-if="data.beer?.length">
-      <h3 class="text-center">
+      <!-- <h3 class="text-center">
          Найдено {{ data.beer.length }}
-      </h3>
+      </h3> -->
       <div
         class="card mb-3"
         style="padding: 40px 20px; border: 1px solid rgb(255, 193, 7)"

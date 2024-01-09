@@ -8,8 +8,8 @@
    </teleport>
    <button class="btn-big" @click="showFormShopAdd = true" v-if="role === 2 || role === 3">Добавить точку продажи</button>
    <div
-    class="card mb-3"
-    style="padding: 40px 20px; border: 1px solid #000;cursor:pointer;"
+    class="card mb-3 border border-warning"
+    style="padding: 40px 20px;cursor:pointer;"
     v-for="item in userSilesData"
     :key="item.placeId"
     @click="onCardClick(item)"
@@ -31,7 +31,8 @@
               style="margin-bottom: 21px"
             >
               <h3 class="card-title">{{ item.name }}</h3>
-              <img src="@/assets/images/favorites.svg" alt="ICON HEART" />
+              <i class="bi bi-heart" style="color:red;font-size: 32px;" v-if="!item.setAvailabilityOfSpaceForTheUser"></i>
+              <i class="bi bi-heart-fill" style="color:red;font-size: 32px;" v-else></i>
             </div>
             <div>
               <span class="fw-semibold">{{ item.type }}</span>
@@ -39,9 +40,7 @@
             <div>
               <span class="fw-semibold">{{ item.address }}</span>
             </div>
-            <!-- <div>
-              <span class="fw-semibold">{{ item.city }}</span>
-            </div> -->
+            
           </div>
           <p
             class="card-text"

@@ -138,6 +138,13 @@
                 >Написать нам</span
               >
             </li>
+            <!-- Не забыть удалить -->
+            <li class="navbar-list-item px-2">
+              <router-link to="/test" class="navbar-list-link"
+                >Тестовая страница</router-link
+              >
+            </li>
+            <!-- ========================== -->
             <li
               class="navbar-list-item px-2"
               v-show="isAuth"
@@ -156,9 +163,9 @@
 
 <script>
 import { ref, computed } from "vue";
-// import { useStore } from "vuex";
+
 import { useRouter } from 'vue-router'
-// import { GetDataProfile } from "@/HelperFunctions/GetDataProfile.js";
+
 import { getCookie } from "@/HelperFunctions/isAuthenticated";
 import { ClearDataProfile } from "@/HelperFunctions/GetDataProfile";
 import LoginForm from "@/components/LoginForm.vue";

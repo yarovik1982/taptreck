@@ -9,16 +9,17 @@ const profile = GetDataProfile();
 const userId = profile?.userId || "";
 const name = ref("");
 
-// const searchData = computed(() => store.getters.GET_SEARH_RESULT);
+
 const getSearchResult = () => {
   store.dispatch("GET_SEARCH_DATA", { userId, name: name.value });
+  router.push('/search-result')
 };
 </script>
 <template>
   <form
     role="search"
     class="d-flex justify-content-center align-items-center"
-    @submit.prevent="getSearchResult"
+    
   >
     <input
       class="form-control form-control-sm"
@@ -31,9 +32,9 @@ const getSearchResult = () => {
         box-shadow: none;
       "
       v-model="name"
-      @change="getSearchResult"
+      @input="getSearchResult"
     />
-    <router-link to="/search-result/search-result-beer">
+    <!-- <router-link to="/search-result"> -->
       <button
         class="btn btn-warning btn-sm"
         type="submit"
@@ -41,7 +42,7 @@ const getSearchResult = () => {
       >
         <i class="bi bi-search" style="color: #fff"></i>
       </button>
-    </router-link>
+    <!-- </router-link> -->
   </form>
 </template>
 <style scoped></style>
