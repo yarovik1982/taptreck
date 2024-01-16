@@ -87,6 +87,7 @@
 <script>
 import {ref} from 'vue'
 import {BASE_URL} from '@/HelperFunctions/BaseUrl'
+import { replaceQuotes } from '@/HelperFunctions/replaceQuotes'
 import axios from 'axios'
 export default {
    name:'form-beer-add',
@@ -113,7 +114,10 @@ export default {
             style: style.value,
             abv:abv.value,
             ibu:ibu.value,
-            description:description.value,
+            description:function(){
+              const value = replaceQuotes(description.value)
+              return value
+            },
             breweryId,
          }
          try{

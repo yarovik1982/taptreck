@@ -102,11 +102,6 @@ const routes = [
     path:'/profile/*',
     redirect:'/'
   },
-  {
-    path:'/test',
-    name:"test-page",
-    component: () => import('@/views/TestPage.vue')
-  },
 ]
 
 const router = createRouter({

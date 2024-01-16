@@ -98,6 +98,7 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile.js";
 import {BASE_URL, apiList} from '@/HelperFunctions/BaseUrl'
+import { replaceQuotes } from "@/HelperFunctions/replaceQuotes";
 import axios from 'axios';
 
 export default {
@@ -160,7 +161,10 @@ export default {
       const placeData = {
         name: name.value,
         typePlace: typePlace.value,
-        description: description.value,
+        description: function(){
+          const value = replaceQuotes(description.value)
+              return value
+            },
         address: addres.value,
         city: city.value,
         userId: userId,

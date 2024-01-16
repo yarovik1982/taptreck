@@ -86,6 +86,7 @@ import { ref } from "vue";
 import axios from "axios";
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile";
 import { BASE_URL, apiList } from "@/HelperFunctions/BaseUrl";
+import { replaceQuotes } from "@/HelperFunctions/replaceQuotes";
 export default {
   name: "form-brewery-add",
   setup() {
@@ -111,7 +112,10 @@ export default {
           type:type.value,
           city:city.value,
           userId:userId,
-          description:description.value
+          description:function(){
+              const value = replaceQuotes(description.value)
+              return value
+            },
         }
 
          try{

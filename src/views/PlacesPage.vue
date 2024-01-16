@@ -72,7 +72,13 @@
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
-                    <h5 class="card-title">{{ item.name }}</h5>
+                    <div class="row justify-content-between">
+                      <h5 class="card-title">{{ item.name }}</h5>
+                      <div class="card-favorite">
+                        <i class="bi bi-heart" v-if="!item.setAvailabilityOfSpaceForTheUser"></i>
+                        <i class="bi bi-heart-fill" v-else></i>
+                      </div>
+                    </div>
                     <p class="card-text">
                       {{ item.type }}
                     </p>
@@ -194,6 +200,10 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.card-favorite i{
+  color:#ff0000;
+  font-size: 32px;
 }
 .row-btn{
   margin-top: 345px;

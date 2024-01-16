@@ -138,12 +138,6 @@
                 >Написать нам</span
               >
             </li>
-            <!-- Не забыть удалить -->
-            <li class="navbar-list-item px-2">
-              <router-link to="/test" class="navbar-list-link"
-                >Тестовая страница</router-link
-              >
-            </li>
             <!-- ========================== -->
             <li
               class="navbar-list-item px-2"

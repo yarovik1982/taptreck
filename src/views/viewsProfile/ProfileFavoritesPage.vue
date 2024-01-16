@@ -55,17 +55,36 @@
   </div>
 </template>
 <script>
-import { ref } from "vue";
+import axios from "axios";
+import { ref, onMounted } from "vue";
+import { GetDataProfile } from "@/HelperFunctions/GetDataProfile";
 import {useStore} from "vuex"
 export default {
   name: "profile-favorites-page",
   setup() {
     const srore = useStore()
-    const cardList = srore.state.favoritesList
+    const cardList = ref([])
+    const userProfile = GetDataProfile()
+    const userId = userProfile.userId
+    console.log(userId);
     // const isFavorites = ref(true)
+
+    const getFavorites = async() => {
+      try{
+        const response = await axios.get(`https://taptrack.ru/user/favorite/place?id=${userId}`)
+        if(response.status === 200){
+          cardList.value = await response.data
+        }
+      }catch(e){
+        console.log(e);
+      }
+    }
+    onMounted(() => {
+       getFavorites()
+    })
     return {
       cardList,
-      // isFavorites
+      
     };
   },
 };

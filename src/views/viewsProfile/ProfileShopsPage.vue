@@ -12,7 +12,7 @@
     style="padding: 40px 20px;cursor:pointer;"
     v-for="item in userSilesData"
     :key="item.placeId"
-    @click="onCardClick(item)"
+    @click.self="onCardClick(item)"
   >
     <div class="row g-0">
       <div class="col-md-4">
