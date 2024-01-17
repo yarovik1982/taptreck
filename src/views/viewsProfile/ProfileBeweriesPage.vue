@@ -37,9 +37,7 @@
               <p>{{ item.type }}</p>
             </div>
           </div>
-          <p
-            class="card-descr" title="Прокрутите, чтобы увидеть все."
-          >
+          <p class="card-descr" title="Прокрутите, чтобы увидеть все.">
             {{ item.description }}
           </p>
           <button

@@ -161,10 +161,7 @@ export default {
       const placeData = {
         name: name.value,
         typePlace: typePlace.value,
-        description: function(){
-          const value = replaceQuotes(description.value)
-              return value
-            },
+        description: replaceQuotes(description.value),
         address: addres.value,
         city: city.value,
         userId: userId,

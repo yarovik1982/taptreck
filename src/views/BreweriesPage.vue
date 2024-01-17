@@ -12,7 +12,7 @@
         <div class="row">
           <div class="col-8">
             <div
-              class="card mb-3"
+              class="card mb-3 border-warning"
               v-for="item in breweriesData"
               :key="item.id"
               :data-id="item.id"
@@ -22,9 +22,7 @@
                 <div
                   class="col-md-4 d-flex justify-content-center align-items-center"
                 >
-                  <div class="card-img">
-                    <img :src="item.image" :alt="item.name" />
-                  </div>
+                  <img :src="item.image" class="image" alt="IMAGE" />
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
@@ -32,7 +30,7 @@
                     <p class="card-text">
                       {{ item.type }}
                     </p>
-                    <p class="card-text">
+                    <p class="card-descr">
                       {{ item.description }}
                     </p>
                     <p class="card-text">Город: {{ item.city }}</p>
@@ -116,7 +114,26 @@ section {
 .content {
   margin-top: 80px;
 }
-.card-img {
+.image{
+  width: 80%;
+  height: 80%;
+  object-fit: cover;
+}
+.card-descr {
+  color: rgb(184, 184, 184);
+  max-height: 200px;
+  padding: 8px;
+  overflow-y: auto;
+  transition: all 0.3s linear;
+  cursor: url("~@/assets/images/cursor-scroll.png"), auto;
+}
+.card:hover .card-descr {
+  box-shadow: #faca10 0px 0px 8px 2px;
+}
+.card-descr::-webkit-scrollbar {
+  width: 0;
+}
+/* .card-img {
   max-width: 380px;
   height: 380px;
 }
@@ -124,7 +141,7 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
+} */
 .row-btn{
   margin-top: 345px;
   display: flex;

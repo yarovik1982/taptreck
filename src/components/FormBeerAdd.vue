@@ -114,10 +114,7 @@ export default {
             style: style.value,
             abv:abv.value,
             ibu:ibu.value,
-            description:function(){
-              const value = replaceQuotes(description.value)
-              return value
-            },
+            description:replaceQuotes(description.value),
             breweryId,
          }
          try{

@@ -80,16 +80,20 @@ export default createStore({
       state.currentMessage = message
     },
     setBeerData(state, data){
-      state.beerData = [...state.beerData, ...data]
+      // state.beerData = [...state.beerData, ...data]
+      state.beerData = data
     },
     setBeersBrewery(state, data){
-      state.beersBrewery = [...state.beersBrewery, ...data]
+      // state.beersBrewery = [...state.beersBrewery, ...data]
+      state.beersBrewery = data
     },
     setBeweryesData(state, data){
-      state.beweryData = [...state.beweryData, ...data]
+      // state.beweryData = [...state.beweryData, ...data]
+      state.beweryData = data
     },
     setPlaceData(state, data){
-      state.placeData = [...state.placeData, ...data]
+      // state.placeData = [...state.placeData, ...data]
+      state.placeData = data
     },
     setBeerAddBlockData(state, beerAddBlockData){
       state.beerAddBlockData = beerAddBlockData

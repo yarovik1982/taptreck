@@ -112,10 +112,7 @@ export default {
           type:type.value,
           city:city.value,
           userId:userId,
-          description:function(){
-              const value = replaceQuotes(description.value)
-              return value
-            },
+          description:replaceQuotes(description.value),
         }
 
          try{

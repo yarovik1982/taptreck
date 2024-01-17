@@ -1,7 +1,7 @@
 <template>
   <div
-    class="card mb-3"
-    style="padding: 40px 20px; border: 1px solid #000"
+    class="card mb-3 border-warning"
+    style="padding: 40px 20px;"
     v-for="card in cardList"
     :key="card.id"
   >
@@ -21,8 +21,8 @@
               class="d-flex justify-content-between align-items-center"
               style="margin-bottom: 21px"
             >
-              <h3 class="card-title">{{ card.title }}</h3>
-              <img src="@/assets/images/favorites.svg" alt="ICON HEART" />
+              <h3 class="card-title">{{ card.name }}</h3>
+              <i class="icon-heart bi bi-heart-fill"></i>
             </div>
             <div>
               <a
@@ -36,12 +36,12 @@
               }}</a>
             </div>
           </div>
-          <p
+          <!-- <p
             class="card-text"
             style="color: #b8b8b8; font-size: 20px; letter-spacing: 3px"
           >
             {{ card.description }}
-          </p>
+          </p> -->
           <div class="d-flex justify-content-between align-items-center">
             <a href="#">Смотреть на карте</a>
             <a href="#">Оставить отзыв</a>
@@ -66,8 +66,6 @@ export default {
     const cardList = ref([])
     const userProfile = GetDataProfile()
     const userId = userProfile.userId
-    console.log(userId);
-    // const isFavorites = ref(true)
 
     const getFavorites = async() => {
       try{
@@ -97,5 +95,9 @@ export default {
   margin-top: 345px;
   display: flex;
   justify-content: center;
+}
+.icon-heart{
+  font-size: 32px;
+  color: #ff0000;
 }
 </style>
