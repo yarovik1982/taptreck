@@ -47,9 +47,7 @@
     </div>
   </teleport>
   <section id="placePage">
-    <!-- <button id="addBeer" class="btn btn-warning text-white">
-      Добавить пиво
-    </button> -->
+    
     <h1 class="text-center">
       <span class="title fw-semibold">Места</span>
     </h1>
@@ -147,7 +145,6 @@ export default {
     };
     //----------------------------------------------------------------
     const placeData = computed(() => store.getters.PLACE_DATA);
-    // console.log(beerData.length);
     const getDataPlace = () => {
       store.dispatch("GET_DATA_PLACE", { limit, offset: offset.value });
     };
@@ -208,15 +205,7 @@ section {
   height: 80%;
   object-fit: cover;
 }
-/* .card-img {
-  max-width: 380px;
-  height: 380px;
-}
-.card-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-} */
+
 .card-favorite i {
   color: #ff0000;
   font-size: 32px;

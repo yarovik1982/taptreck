@@ -69,7 +69,9 @@
             {{ item.description }}
           </p>
           <div class="d-flex justify-content-between align-items-center">
-            <a href="#">Смотреть на карте</a>
+            <!--Уточнить, нужно ли это-->
+            <!-- <a href="#">Смотреть на карте</a> -->
+            <!--КонецУточнить-->
             <a href="#">Оставить отзыв</a>
           </div>
         </div>

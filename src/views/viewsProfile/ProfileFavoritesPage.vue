@@ -42,8 +42,8 @@
           >
             {{ card.description }}
           </p> -->
-          <div class="d-flex justify-content-between align-items-center">
-            <a href="#">Смотреть на карте</a>
+          <div class="d-flex justify-content-end align-items-center">
+            <!-- <a href="#">Смотреть на карте</a> -->
             <a href="#">Оставить отзыв</a>
           </div>
         </div>

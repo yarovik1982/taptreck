@@ -31,7 +31,7 @@
               style="margin-bottom: 21px"
             >
               <h3 class="card-title">{{ item.name }}</h3>
-              <!-- <img src="@/assets/images/favorites.svg" alt="ICON HEART" /> -->
+              
             </div>
             <div>
               <p>{{ item.type }}</p>
