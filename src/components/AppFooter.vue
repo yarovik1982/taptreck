@@ -6,10 +6,12 @@
         style="margin-top: 32px"
       >
         <div class="col-6 col-md-3 mb-1">
-          <img src="@/assets/images/Layer1.svg" alt="BEER" />
-          <strong style="margin-left: 20px">Tap</strong><span>Treck</span>
+          <router-link to="/" class="navbar-brand">
+            <img src="@/assets/images/Layer1.svg" alt="BEER" />
+            <strong style="margin-left: 20px">Tap</strong><span>Treck</span>
+          </router-link>
           <p class="text-body-secondary mt-4" style="font-size: 12px">
-            Copyrights ©2023 TapTreck
+            Copyrights ©2024 TapTreck
           </p>
         </div>
         <div class="col-6 mb-1 text-end text-md-center">

@@ -41,10 +41,10 @@
   <header class="navbar">
     <div class="container-fluid">
       <div class="col-3">
-        <a class="navbar-brand" href="#">
+        <router-link class="navbar-brand" to="/">
           <img src="@/assets/images/Layer1.svg" alt="BEER" />
           <strong style="margin-left: 20px">Tap</strong><span>Treck</span>
-        </a>
+        </router-link>
       </div>
       <div class="col-6 d-flex justify-content-center">
         <div class="px-3 w-100">
