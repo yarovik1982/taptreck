@@ -9,7 +9,9 @@ const profile = GetDataProfile();
 const userId = profile?.userId || "";
 const name = ref("");
 
-
+const searchStarted = () => {
+  if(name.value.length >= 3) getSearchResult()
+}
 const getSearchResult = () => {
   store.dispatch("GET_SEARCH_DATA", { userId, name: name.value });
   router.push('/search-result')
@@ -32,7 +34,7 @@ const getSearchResult = () => {
         box-shadow: none;
       "
       v-model="name"
-      @input="getSearchResult"
+      @input="searchStarted"
     />
     <!-- <router-link to="/search-result"> -->
       <button

@@ -4,6 +4,19 @@
     <div
       class="row link-group d-flex align-items-center px-5 justify-content-center mb-4"
     >
+    <div
+      class="col-12 d-flex justify-content-start justify-content-sm-center py-1 col-sm-4"
+    >
+      <div class="link-wrapper">
+        <router-link
+          to="/search-result/search-result-beer"
+          class="profile-link"
+          :data-length="data.beer?.length"
+          >Пиво</router-link
+        >
+      </div>
+    </div>
+
       <div
         class="col-12 d-flex justify-content-start justify-content-sm-center py-1 col-sm-4"
       >
@@ -16,18 +29,8 @@
           >
         </div>
       </div>
-      <div
-        class="col-12 d-flex justify-content-start justify-content-sm-center py-1 col-sm-4"
-      >
-        <div class="link-wrapper">
-          <router-link
-            to="/search-result/search-result-beer"
-            class="profile-link"
-            :data-length="data.beer?.length"
-            >Пиво</router-link
-          >
-        </div>
-      </div>
+
+
       <div
         class="col-12 d-flex justify-content-start justify-content-sm-center py-1 col-sm-4"
       >
