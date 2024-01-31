@@ -6,7 +6,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    container_name: taptreck
+    container_name: taptrack
     ports:
       - "80:80"
     environment:
