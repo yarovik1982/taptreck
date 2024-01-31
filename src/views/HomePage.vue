@@ -65,6 +65,7 @@
   </section>
 
   <section id="places">
+    
     <app-slider-places></app-slider-places>
   </section>
 

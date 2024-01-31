@@ -19,25 +19,7 @@ user: {
    "userRole":0
    }
 
-   // <script>
-// import { mapActions, mapGetters } from "vuex";
-// export default {
-//   name: "breweries-page",
-//   props: {},
-//   data() {
-//     return {};
-//   },
-//   computed: {
-//     ...mapGetters(["BEWERYES_DATA"]),
-//   },
-//   methods: {
-//     ...mapActions(["GET_DATA_BREWERYES"]),
-//   },
-//   mounted() {
-//     this.GET_DATA_BREWERYES();
-//   },
-// };
-// </script>
+  
 
 29fe2cf90498d9fe6beabce26458d6badaa143e3 — API-ключ.
 cf76bbc76e85df0b224a5054164edde6a47a3ec6 — секретный ключ
@@ -54,79 +36,4 @@ cf76bbc76e85df0b224a5054164edde6a47a3ec6 — секретный ключ
 3-пивовария&точка
 
 
-searchData
-
-
-<template>
-  <div class="container">
-    <h3 class="text-center">Найдено {{ data.place.length }}</h3>
-    <div
-      class="card mb-3"
-      style="padding: 40px 20px; border: 1px solid rgb(255, 193, 7)"
-      v-for="(item, index) in data.place"
-      :key="item.id"
-    >
-      <div class="row g-0 d-flex align-items-center">
-        <div class="col-md-4 px-2">
-          <img
-            :src="item.image"
-            class="image"
-            alt="IMAGE"
-            style="border-radius: 16px"
-          />
-        </div>
-        <div class="col-md-8 d-flex">
-          <div
-            class="card-body py-0 d-flex flex-column justify-content-between"
-          >
-            <div>
-              <div
-                class="d-flex justify-content-between align-items-center"
-                style="margin-bottom: 21px"
-              >
-                <h3 class="card-title">{{ item.name }}</h3>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                 
-                  viewBox="0 0 31 30"
-                  fill="none"
-                  class="icon-heart"
-                  @click="selectedFavorite(item, index)"
-                >
-                  <path
-                  v-if="!item.setAvailabilityOfSpaceForTheUser"
-                    ...
-                    
-                  />
-                  <path
-                     v-if="!item.setAvailabilityOfSpaceForTheUser"
-                    ...
-                  />
-                  <path v-else .../>
-                </svg>
-              </div>
-              <div></div>
-            </div>
-            <p class="card-descr">
-              {{ item.description }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script setup>
-import { getAll } from "@/HelperFunctions/useSearch";
-import { ref } from "vue";
-
-const isFavorite = ref(false)
-const data = getAll();
-
-const selectedFavorite = (item, index) => {
-   // const fullData = JSON.parse(localStorage.getItem('searchData'))
-   // console.log(fullData.place);
-   // item.setAvailabilityOfSpaceForTheUser = !item.setAvailabilityOfSpaceForTheUser
-}
-</script>
+http://taptrack.ru:7777/

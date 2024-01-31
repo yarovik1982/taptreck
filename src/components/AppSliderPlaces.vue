@@ -1,18 +1,19 @@
 <template>
-  <div class="container-fluid" v-if="PLACE_ADD_BLOCK_DATA && PLACE_ADD_BLOCK_DATA.length > 4">
+  <div class="container-fluid" >
     <h2 class="text-center " style="margin-bottom:35px;">
       <span class="section-title">Места</span>
+      {{ PLACE_ADD_BLOCK_DATA }}
     </h2>
     <div class="wrapper-swiper">
     <swiper
       :slidesPerView="1"
-      :centeredSlides= "true"
+      
       :watchOverflow= "true"
       :space-between="16"
       :auto-height="true"
       :loop="true"
       :autoplay="{
-         delay:2500,                            
+         delay:1000,                            
       }"
       :navigation="{
         prevEl: '.swiper-button-next',
@@ -35,8 +36,14 @@
     },
   }"
     >
-      <swiper-slide v-for="(item, index) in PLACE_ADD_BLOCK_DATA" :key="index">
-      <!-- <swiper-slide v-for="(item, index) in newsList" :key="index"> -->
+    <!-- <swiper-slide>Slide 1</swiper-slide>
+    <swiper-slide>Slide 2</swiper-slide><swiper-slide>Slide 3</swiper-slide>
+    <swiper-slide>Slide 4</swiper-slide><swiper-slide>Slide 5</swiper-slide>
+    <swiper-slide>Slide 6</swiper-slide>
+   <swiper-slide>Slide 7</swiper-slide>
+    <swiper-slide>Slide 8</swiper-slide><swiper-slide>Slide 9</swiper-slide>  -->
+      <!-- <swiper-slide v-for="(item, index) in PLACE_ADD_BLOCK_DATA" :key="index"> -->
+      <swiper-slide v-for="(item, index) in newsList" :key="index">
         <p class="slide-title">{{item.name}}</p>
         <div class="slide-img">
           <img :src="item.image" />
@@ -85,22 +92,20 @@ import {newsList} from '@/HelperFunctions/Lists.js'
 <style scoped>
  .wrapper-swiper {
   position: relative;
+  min-height: 400px;
 }
 .swiper {
   width: 83.3333%;
   margin: 0 auto;
-  min-height: 159px;
+  height: 100%;
   padding: 16px 4px;
   font-size: 20px;
-  /* display: flex;
-  justify-content: center; */
 }
-.swiper-slide,.content-slide{
+.swiper-slide{
   text-align: center;
   padding: 8px ;
   display: flex;
   flex-direction: column;
-
   box-shadow: 0 6px 4px 2px #ccc;
   border:1px solid #ccc;
   border-radius: 20px;
@@ -109,6 +114,12 @@ import {newsList} from '@/HelperFunctions/Lists.js'
 .slide-title {
   margin-bottom: 8px;
   flex:1 1 auto;
+}
+.slide-img {
+}
+.slide-img img{
+  width: 100%;
+  object-fit: cover;
 }
 .row-button {
   display: flex;
@@ -158,5 +169,8 @@ import {newsList} from '@/HelperFunctions/Lists.js'
   display: flex;
   justify-content: center;
   gap: 16px;
+}
+.mySwiper{
+  height: 100%;
 }
 </style>
