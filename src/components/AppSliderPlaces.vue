@@ -2,9 +2,12 @@
   <div class="container-fluid" >
     <h2 class="text-center " style="margin-bottom:35px;">
       <span class="section-title">Места</span>
-      {{ PLACE_ADD_BLOCK_DATA }}
     </h2>
-    <div class="wrapper-swiper">
+    
+      
+        <Loader v-if="!PLACE_ADD_BLOCK_DATA"/>
+      
+    <div class="wrapper-swiper" v-else>
     <swiper
       :slidesPerView="1"
       
@@ -28,16 +31,21 @@
     585: {
       slidesPerView: 2,
     },
-    768: {
+    
+    1200: {
       slidesPerView: 3,
     },
-    992: {
+    1400: {
       slidesPerView: 4,
+    },
+    1800: {
+      slidesPerView: 5,
     },
   }"
     >
     
       <swiper-slide v-for="(item, index) in PLACE_ADD_BLOCK_DATA" :key="index">
+      <!-- <swiper-slide v-for="(item, index) in newsList" :key="index"> -->
      
         <p class="slide-title">{{item.name}}</p>
         <div class="slide-img">
@@ -54,20 +62,21 @@
 </template>
 
 <script>
+import Loader from '@/components/Loader.vue'
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 import {Autoplay, Navigation } from "swiper/modules";
 import { mapActions, mapGetters } from "vuex";
-// import {newsList} from '@/HelperFunctions/Lists.js'
+import {newsList} from '@/HelperFunctions/Lists.js'
   export default{
   name: "app-slider-places",
-  components: { Swiper, SwiperSlide },
+  components: { Swiper, SwiperSlide, Loader },
   data() {
-    // newsList
+    newsList
     return {
       modules: [Autoplay,Navigation],
-      // newsList
+      newsList
     };
   },
     computed: {
@@ -85,7 +94,7 @@ import { mapActions, mapGetters } from "vuex";
 <style scoped>
  .wrapper-swiper {
   position: relative;
-  min-height: 400px;
+  height: 450px;
 }
 .swiper {
   width: 83.3333%;
@@ -103,6 +112,7 @@ import { mapActions, mapGetters } from "vuex";
   border:1px solid #ccc;
   border-radius: 20px;
   min-height: 100%;
+  
 }
 .slide-title {
   margin-bottom: 8px;
@@ -112,6 +122,9 @@ import { mapActions, mapGetters } from "vuex";
 border-radius: 50%;
 overflow: hidden;
 border: 1px solid #ffd700;
+width: 100%;
+aspect-ratio: 1/1;
+background-color: rgba(255, 215, 0, 0.7);
 }
 .slide-img img{
   width: 100%;
