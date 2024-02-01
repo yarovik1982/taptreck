@@ -1,0 +1,39 @@
+
+
+yandexMapApiKey : 8ed9cf42-8bef-4985-916b-2465b3642ed5
+testUser : madbad_o
+testPassword : 8dC96IOm
+token : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ5YXJvdmlrIiwiaXNzIjoiYXBwIiwiZXhwIjoxNjkyOTA1NjEwLCJpYXQiOjE2OTI5MDM4MTB9.5uxIcXbLA1Ycd9Z1X3iKPIpsLSBmkcgbOYk8UtL29ltIkJo6gGPYcnnpIm47WtSA-IJgddGOdP2QPsGMxUMQhA"
+user: {
+   "userId":261,
+   "userName":"Oleg",
+   "login":"yarovik",
+   "mail":"yarovik@yandex.ru",
+   "telephoneNumber":null,
+   "birthday":null,
+   "country":null,
+   "city":null,
+   "image":null,
+   "dateReg":"09-08-2023",
+   "totalFeedback":0,
+   "userRole":0
+   }
+
+  
+
+29fe2cf90498d9fe6beabce26458d6badaa143e3 — API-ключ.
+cf76bbc76e85df0b224a5054164edde6a47a3ec6 — секретный ключ
+ const region = ref("");
+    const city = ref("");
+    const street = ref("");
+    const house = ref("");
+    const addressfull = ref({});
+
+
+0-обычный пользователь, зарегистрированый
+1-пивоварня
+2-точка продаж
+3-пивовария&точка
+
+
+http://taptrack.ru:7777/

@@ -4,23 +4,31 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "postinstall": "npm run build"
   },
   "dependencies": {
+    "axios": "^1.5.0",
     "bootstrap": "^5.3.1",
     "bootstrap-icons": "^1.10.5",
     "core-js": "^3.8.3",
+    "html2canvas": "^1.4.1",
+    "qrcode-vue3": "^1.6.8",
+    "qrcode.vue": "^3.4.1",
     "register-service-worker": "^1.7.2",
+    "swiper": "^10.1.0",
     "vue": "^3.2.13",
+    "vue-dadata": "^3.0.0-beta.13",
     "vue-router": "^4.0.3",
+    "vue-star-rating": "^2.1.0",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-pwa": "~5.0.0",
-    "@vue/cli-plugin-router": "~5.0.0",
-    "@vue/cli-plugin-vuex": "~5.0.0",
-    "@vue/cli-service": "~5.0.0"
+    "@vue/cli-plugin-babel": "^5.0.0",
+    "@vue/cli-plugin-pwa": "^5.0.0",
+    "@vue/cli-plugin-router": "^5.0.0",
+    "@vue/cli-plugin-vuex": "^5.0.0",
+    "@vue/cli-service": "^5.0.0"
   },
   "browserslist": [
     "> 1%",

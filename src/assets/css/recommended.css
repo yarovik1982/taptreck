@@ -1,0 +1,25 @@
+.advert-item {
+   /* border: 1px solid #ccc; */
+   border: 1px solid rgb(255, 193, 7);
+}
+
+.advert-body .item{
+   background-color: #e1ecf0;
+   padding: 8px;
+   border-radius: 8px;
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+}
+.item-img {
+   width: 70px;
+   height: 70px;
+}
+.item-img img{
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+}
+.item-name {
+   margin-left: 16px;
+}
