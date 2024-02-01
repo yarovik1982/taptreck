@@ -2,7 +2,7 @@
   <div class="container-fluid" >
     <h2 class="text-center " style="margin-bottom:35px;">
       <span class="section-title">Места</span>
-      {{ PLACE_ADD_BLOCK_DATA }}
+      
     </h2>
     <div class="wrapper-swiper">
     <swiper
@@ -13,7 +13,7 @@
       :auto-height="true"
       :loop="true"
       :autoplay="{
-         delay:1000,                            
+         delay:2500,                            
       }"
       :navigation="{
         prevEl: '.swiper-button-next',
@@ -36,14 +36,9 @@
     },
   }"
     >
-    <!-- <swiper-slide>Slide 1</swiper-slide>
-    <swiper-slide>Slide 2</swiper-slide><swiper-slide>Slide 3</swiper-slide>
-    <swiper-slide>Slide 4</swiper-slide><swiper-slide>Slide 5</swiper-slide>
-    <swiper-slide>Slide 6</swiper-slide>
-   <swiper-slide>Slide 7</swiper-slide>
-    <swiper-slide>Slide 8</swiper-slide><swiper-slide>Slide 9</swiper-slide>  -->
-      <!-- <swiper-slide v-for="(item, index) in PLACE_ADD_BLOCK_DATA" :key="index"> -->
-      <swiper-slide v-for="(item, index) in newsList" :key="index">
+    
+      <swiper-slide v-for="(item, index) in PLACE_ADD_BLOCK_DATA" :key="index">
+     
         <p class="slide-title">{{item.name}}</p>
         <div class="slide-img">
           <img :src="item.image" />
@@ -62,19 +57,17 @@
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
-// import "@/assets/css/swiper-plices.css"
 import {Autoplay, Navigation } from "swiper/modules";
-
 import { mapActions, mapGetters } from "vuex";
-import {newsList} from '@/HelperFunctions/Lists.js'
+// import {newsList} from '@/HelperFunctions/Lists.js'
   export default{
   name: "app-slider-places",
   components: { Swiper, SwiperSlide },
   data() {
-    newsList
+    // newsList
     return {
       modules: [Autoplay,Navigation],
-      newsList
+      // newsList
     };
   },
     computed: {
@@ -106,7 +99,7 @@ import {newsList} from '@/HelperFunctions/Lists.js'
   padding: 8px ;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 6px 4px 2px #ccc;
+  box-shadow: 0 6px 4px 2px #ffd700;
   border:1px solid #ccc;
   border-radius: 20px;
   min-height: 100%;
@@ -116,10 +109,14 @@ import {newsList} from '@/HelperFunctions/Lists.js'
   flex:1 1 auto;
 }
 .slide-img {
+border-radius: 50%;
+overflow: hidden;
+border: 1px solid #ffd700;
 }
 .slide-img img{
   width: 100%;
   object-fit: cover;
+  aspect-ratio: 1/1;
 }
 .row-button {
   display: flex;
