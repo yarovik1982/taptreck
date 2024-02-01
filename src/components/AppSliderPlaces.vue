@@ -2,7 +2,7 @@
   <div class="container-fluid" >
     <h2 class="text-center " style="margin-bottom:35px;">
       <span class="section-title">Места</span>
-      
+      {{ PLACE_ADD_BLOCK_DATA }}
     </h2>
     <div class="wrapper-swiper">
     <swiper
