@@ -14,7 +14,7 @@ const searchStarted = () => {
 }
 const getSearchResult = () => {
   store.dispatch("GET_SEARCH_DATA", { userId, name: name.value });
-  router.push('/search-result')
+  router.push('/search-result/search-result-beer')
 };
 </script>
 <template>

@@ -5,9 +5,7 @@
     </h2>
     
       
-        <Loader v-if="!PLACE_ADD_BLOCK_DATA"/>
-      
-    <div class="wrapper-swiper" v-else>
+    <div class="wrapper-swiper">
     <swiper
       :slidesPerView="1"
       
@@ -83,11 +81,20 @@ import {newsList} from '@/HelperFunctions/Lists.js'
     ...mapGetters(["PLACE_ADD_BLOCK_DATA"]),
   },
   methods: {
-    ...mapActions(["GET_DATA_PLACE_ADD_BLOCK"]),
+     ...mapActions(["GET_DATA_PLACE_ADD_BLOCK"]),
   },
   mounted() {
     this.GET_DATA_PLACE_ADD_BLOCK();
+    // this.swiper = new Swiper('.mySwiper',
+    //   this.modules
+    // )
   },
+  // beforeDestroy() {
+  //   // Уничтожение Swiper перед удалением компонента
+  //   if (this.swiper) {
+  //     this.swiper.destroy();
+  //   }
+  // },
 };
 </script>
 
@@ -124,7 +131,7 @@ overflow: hidden;
 border: 1px solid #ffd700;
 width: 100%;
 aspect-ratio: 1/1;
-background-color: rgba(255, 215, 0, 0.7);
+background-color: transparent;
 }
 .slide-img img{
   width: 100%;
