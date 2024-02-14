@@ -1,44 +1,49 @@
 <template>
-  <div class="container" v-if="data.place?.length">
-    <!-- <h3 class="text-center">Найдено {{ data.place.length }}</h3> -->
-    <div
-      class="card mb-3"
-      style="padding: 40px 20px; border: 1px solid rgb(255, 193, 7)"
-      v-for="(item) in data.place"
-      :key="item.placeId"
-    >
-      <div class="row g-0 d-flex ">
-        <div class="col-md-4 px-2">
-          <img
-            :src="item.image"
-            class="image"
-            alt="IMAGE"
-            style="border-radius: 16px"
-          />
-        </div>
-        <div class="col-md-8 d-flex">
-          <div
-            class="card-body py-0 d-flex flex-column justify-content-between"
-          >
-            <div>
+  <div class="container-fluid" v-if="data?.length">
+    <div class="row">
+      <div class="col-8">
+        <div
+          class="card mb-3"
+          style="padding: 40px 20px; border: 1px solid rgb(255, 193, 7)"
+          v-for="(item) in data"
+          :key="item.placeId"
+        >
+          <div class="row g-0 d-flex ">
+            <div class="col-md-4 px-2 d-flex justify-content-center align-items-center">
+              <img
+                :src="item.image"
+                class="image"
+                alt="IMAGE"
+                style="border-radius: 16px;width: 200px;height: 200px;"
+              />
+            </div>
+            <div class="col-md-8 d-flex">
               <div
-                class="d-flex justify-content-between align-items-center"
-                style="margin-bottom: 21px"
+                class="card-body py-0 d-flex flex-column justify-content-between"
               >
-                <h3 class="card-title">{{ item.name }}</h3>
-                <!-- <div class="icon-heart" @click="setFaforite(item)"> -->
-                  <!-- <i class="bi bi-heart" style="color:red;font-size: 32px;" ></i>
-                  <i class="bi bi-heart-fill" style="color:red;font-size: 32px;"></i> -->
-                  <i class="bi bi-heart" style="color:red;font-size: 32px;" v-if="!setAvailabilityOfSpaceForTheUser"></i>
-                  <i class="bi bi-heart-fill" style="color:red;font-size: 32px;" v-else></i>
-                <!-- </div> -->
+                <div>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                    style="margin-bottom: 21px"
+                  >
+                    <h3 class="card-title">{{ item.name }}</h3>
+                   
+                      <i class="bi bi-heart" style="color:red;font-size: 32px;" ></i>
+                      <!-- <i class="bi bi-heart" style="color:red;font-size: 32px;" v-if="!setAvailabilityOfSpaceForTheUser"></i> -->
+                      <!-- <i class="bi bi-heart-fill" style="color:red;font-size: 32px;" v-else></i> -->
+                    
+                  </div>
+                </div>
+                <p class="card-descr">
+                  {{ item.description }}
+                </p>
               </div>
             </div>
-            <p class="card-descr">
-              {{ item.description }}
-            </p>
           </div>
         </div>
+      </div>
+      <div class="col-4">
+        <AppAdvert/>
       </div>
     </div>
   </div>
@@ -50,34 +55,35 @@ import { GetDataProfile } from "@/HelperFunctions/GetDataProfile";
 import { toggleClass } from "@/HelperFunctions/addClass";
 import { ref , onMounted, computed} from "vue";
 import {useStore} from 'vuex'
+import AppAdvert from "@/components/AppAdvert.vue";
 
 const store = useStore()
 const profileData = GetDataProfile()
 const userId = profileData.userId
-const data = computed(() => store.getters.GET_SEARH_RESULT)
+const data = computed(() => store.getters.GET_SEARH_RESULT.place)
 
-const setFaforite = async (item) => {
-  const bodyData = {
-    userId: userId,
-    placeId: item.placeId
-  }
-  try{
-    const response = await fetch(BASE_URL + '/place/favorite', {
-      method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(bodyData),
-    })
-    if(response.ok){
-      const data = await response.json()
-      console.log(data);
-    }
+// const setFaforite = async (item) => {
+//   const bodyData = {
+//     userId: userId,
+//     placeId: item.placeId
+//   }
+//   try{
+//     const response = await fetch(BASE_URL + '/place/favorite', {
+//       method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify(bodyData),
+//     })
+//     if(response.ok){
+//       const data = await response.json()
+//       console.log(data);
+//     }
 
-  }catch(e){
-    console.log(e);
-  }
-}
+//   }catch(e){
+//     console.log(e);
+//   }
+// }
 onMounted(() => {
    toggleClass('.icon-heart')
 })

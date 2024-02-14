@@ -80,7 +80,7 @@
                 <div
                   class="col-md-4 d-flex justify-content-center align-items-center px-2"
                 >
-                    <img class="image" :src="item.image" :alt="item.name" />
+                    <img class="image" :src="item.image" :alt="item.name" style="border-radius: 16px;width: 200px;height: 200px;" />
                 </div>
                 <div class="col-md-8">
                   <div class="card-content p-2">

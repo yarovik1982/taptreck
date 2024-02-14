@@ -1,46 +1,47 @@
 <template>
-   <!-- <h3 class="text-center">
-      Search Result Breweries
-      <small style="font-size:12px;display:block; margin-right:16px;margin-top:-25px;text-align:right;"> {{amount}} items found</small>
-   </h3> -->
-   <div class="container" v-if="data.brewery?.length">
-      <!-- <h3 class="text-center">
-         Найдено {{ data.brewery.length }}
-      </h3> -->
-      <div
-        class="card mb-3"
-        style="padding: 40px 20px; border: 1px solid rgb(255, 193, 7)"
-        v-for="item in data.brewery"
-        :key="item.id"
-      >
-        <div class="row g-0 d-flex ">
-          <div class="col-md-4 px-2">
-            <img
-              :src="item.image"
-              class="image"
-              alt="IMAGE"
-              style="border-radius: 16px"
-            />
-          </div>
-          <div class="col-md-8 d-flex">
-            <div
-              class="card-body py-0 d-flex flex-column justify-content-between"
-            >
-              <div>
-                <div
-                  class="d-flex justify-content-between align-items-center"
-                  style="margin-bottom: 21px"
-                >
-                  <h3 class="card-title">{{ item.name }}</h3>
-                  
-                </div>
-                <div></div>
+  
+   <div class="container-fluid" v-if="data?.length">
+      <div class="row">
+        <div class="col-8">
+          <div
+            class="card mb-3"
+            style="padding: 40px 20px; border: 1px solid rgb(255, 193, 7)"
+            v-for="item in data"
+            :key="item.id"
+          >
+            <div class="row g-0 d-flex ">
+              <div class="col-md-4 px-2 d-flex justify-content-center align-items-center">
+                <img
+                  :src="item.image"
+                  class="image"
+                  alt="IMAGE"
+                  style="border-radius: 16px;width: 200px;height: 200px;"
+                />
               </div>
-              <p class="card-descr">
-                {{ item.description }}
-              </p>
+              <div class="col-md-8 d-flex">
+                <div
+                  class="card-body py-0 d-flex flex-column justify-content-between"
+                >
+                  <div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                      style="margin-bottom: 21px"
+                    >
+                      <h3 class="card-title">{{ item.name }}</h3>
+                      
+                    </div>
+                    <div></div>
+                  </div>
+                  <p class="card-descr">
+                    {{ item.description }}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+        <div class="col-4">
+          <AppAdvert/>
         </div>
       </div>
    </div>
@@ -50,10 +51,11 @@ import { useStore } from 'vuex';
 
 // import { getAll } from "@/HelperFunctions/useSearch";
 import {ref, computed} from 'vue'
+import AppAdvert from '@/components/AppAdvert.vue';
 
 // const data = getAll()
 const store = useStore()
-const data = computed(() => store.getters.GET_SEARH_RESULT)
+const data = computed(() => store.getters.GET_SEARH_RESULT.brewery)
 </script>
 <style scoped>
 .image {

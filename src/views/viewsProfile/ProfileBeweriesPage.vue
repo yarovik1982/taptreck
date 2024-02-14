@@ -8,7 +8,7 @@
     Добавить пивоварню
   </button>
   <div
-    class="card mb-3 border border-warning"
+    class="card mb-3 border border-warning overflow-hidden"
     style="padding: 40px 20px;"
     v-for="item in breweryData"
     :key="item.id"
@@ -16,14 +16,14 @@
     @click="onCardClick(item)"
   >
     <div class="row g-0">
-      <div class="col-md-4 d-flex justify-content-center align-items-center">
+      <div class="col-md-4 d-flex justify-content-center align-items-center ">
         <img
           :src="item.image"
           class="image"
           alt="IMAGE"
         />
       </div>
-      <div class="col-md-8 d-flex">
+      <div class="col-md-8 d-flex ">
         <div class="card-body py-0 d-flex flex-column justify-content-between">
           <div>
             <div
