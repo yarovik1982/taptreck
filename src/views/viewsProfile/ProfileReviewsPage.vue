@@ -4,8 +4,11 @@
       :key="item.id"
    >
   <div class="row g-0">
-    <div class="col-md-4">
-      <img :src="item.image" class="img-fluid rounded-start" alt="...">
+    <div class="col-md-4 p-2 d-flex justify-content-center align-items-center">
+      <!-- <img :src="item.image" class="img-fluid rounded-start" alt="..."> -->
+      <img :src="item.image"  alt="..."
+      style="border-radius: 16px;width: 200px;height: 200px;" 
+      >
     </div>
     <div class="col-md-8">
       <div class="card-body">

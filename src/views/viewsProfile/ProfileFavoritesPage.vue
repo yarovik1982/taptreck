@@ -6,12 +6,12 @@
     :key="card.id"
   >
     <div class="row g-0">
-      <div class="col-md-4">
+      <div class="col-md-4 p-2 d-flex justify-content-center align-items-center">
         <img
           :src="card.image"
           class="img-fluid"
           alt="IMAGE"
-          style="border-radius: 16px"
+          style="border-radius: 16px;width: 200px;height: 200px;" 
         />
       </div>
       <div class="col-md-8 d-flex">

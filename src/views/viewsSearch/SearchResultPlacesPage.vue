@@ -9,7 +9,7 @@
           :key="item.placeId"
         >
           <div class="row g-0 d-flex ">
-            <div class="col-md-4 px-2 d-flex justify-content-center align-items-center">
+            <div class="col-md-4 p-2 d-flex justify-content-center align-items-center">
               <img
                 :src="item.image"
                 class="image"

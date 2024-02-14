@@ -77,9 +77,7 @@
               :data-placeId="item.placeId"
             >
               <div class="row g-0 d-flex align-items-center">
-                <div
-                  class="col-md-4 d-flex justify-content-center align-items-center px-2"
-                >
+                <div class="col-md-4 p-2 d-flex justify-content-center align-items-center">
                     <img class="image" :src="item.image" :alt="item.name" style="border-radius: 16px;width: 200px;height: 200px;" />
                 </div>
                 <div class="col-md-8">
