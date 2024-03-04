@@ -7,6 +7,8 @@ COPY . .
 RUN npm run build
 
 # production stage
-FROM nginx AS production-stage
+FROM nginx:alpine AS production-stage
+# Установка сертификата SSL
 COPY --from=build-stage /taptrack/dist /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 CMD ["nginx", "-g", "daemon off;"]

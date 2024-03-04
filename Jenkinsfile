@@ -26,7 +26,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 bat 'docker build -t beer-front-app .'
-                bat 'docker run -d -p 80:80 --name taptrack beer-front-app'
+                bat 'docker run -d -p 443:443 --name taptrack beer-front-app'
             }
         }
     }
