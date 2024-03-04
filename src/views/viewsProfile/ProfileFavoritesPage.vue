@@ -58,6 +58,7 @@
 import axios from "axios";
 import { ref, onMounted } from "vue";
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile";
+import { BASE_URL, apiList } from "@/HelperFunctions/BaseUrl";
 import {useStore} from "vuex"
 export default {
   name: "profile-favorites-page",
@@ -69,7 +70,7 @@ export default {
 
     const getFavorites = async() => {
       try{
-        const response = await axios.get(`https://taptrack.ru/user/favorite/place?id=${userId}`)
+        const response = await axios.get(`${BASE_URL}${apiList.userFavoritePlace}?id=${userId}`)
         if(response.status === 200){
           cardList.value = await response.data
         }

@@ -142,7 +142,7 @@
 <script>
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile.js";
 import { ref, watchEffect } from "vue";
-import { BASE_URL } from "@/HelperFunctions/BaseUrl";
+import { BASE_URL , apiList} from "@/HelperFunctions/BaseUrl";
 import {getAll} from '@/HelperFunctions/isAuthenticated'
 import AppFormEditProfile from "@/components/AppFormEditProfile.vue";
 import AppFormLoadAvatar from "@/components/AppFormLoadAvatar.vue";
@@ -167,7 +167,7 @@ export default {
     const deleteAvatar = async () => {
       try {
         const response = await axios.delete(
-          BASE_URL + `/user/photo/remove?id=${userId}`
+          BASE_URL + `${apiList.userPhotoRemove}?id=${userId}`
         );
         if (response.status) {
           isDeleted.value = true;

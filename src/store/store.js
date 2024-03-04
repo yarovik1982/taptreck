@@ -143,7 +143,7 @@ export default createStore({
       })
     },
     GET_BEER_LIST_BY_PLACE({commit}, placeId){
-      return axios(BASE_URL + `/beer/place?id=${placeId}&limit=45&offset=0`, {
+      return axios(BASE_URL + `${apiList.beerPlace}?id=${placeId}&limit=45&offset=0`, {
         method:'GET',
       })
       .then(response => {
@@ -155,7 +155,7 @@ export default createStore({
       })
     },
     GET_PLICE_IS_ADDED_LIST({commit},{userId,beerId}){
-      return axios(BASE_URL + `/place/isAdded/list?userId=${userId}&beerId=${beerId}`,{
+      return axios(BASE_URL + `${apiList.placeIsAddedList}?userId=${userId}&beerId=${beerId}`,{
         method:'GET',
       })
       .then(response => {
@@ -167,7 +167,7 @@ export default createStore({
       })
     },
     GET_USER_BREWERY_DATA({commit}, userId){
-      return axios(BASE_URL + `/brewery/list/user?userId=${userId}`,{
+      return axios(BASE_URL + `${apiList.breweryListUser}?userId=${userId}`,{
         method:'GET',
       })
       .then(response => {
@@ -180,7 +180,7 @@ export default createStore({
       })
     },
     GET_ITEM_SILE({commit},placeId){
-      return axios(BASE_URL + `/place/profile/${placeId}`, {
+      return axios(BASE_URL + `${apiList.placeProfile}/${placeId}`, {
         method:'GET',
       })
       .then(response => {
@@ -193,7 +193,7 @@ export default createStore({
     },
     GET_USER_SILES({commit}, userId){
       // return axios(BASE_URL + apiList.placesList + `/user?userId=${userId}`, {
-      return axios(`https://taptrack.ru/place/list/user?userId=${userId}`, {
+      return axios(`${BASE_URL}${apiList.placeListUser}?userId=${userId}`, {
         method:'GET',
       })
       .then(response => {
@@ -233,7 +233,8 @@ export default createStore({
       })
     },
     GET_BEERS_BY_BREWERY({commit}, breweryId){
-      return axios(BASE_URL + `/beer/list/brewery/?breweryId=${breweryId}&limit=45&offset=0`,{
+      return axios(BASE_URL + `${apiList.beerListBrewery}/?breweryId=${breweryId}&limit=45&offset=0`,{
+        // /beer/list/brewery
         method:'GET',
       })
       .then(response => {
@@ -269,7 +270,7 @@ export default createStore({
       })
     },
     GET_DATA_BREWERY_ADD_BLOCK({commit}){
-      return axios(BASE_URL + '/brewery/adblock', {
+      return axios(BASE_URL + apiList.breweryAddBlock, {
         method:'GET',
       })
       .then(response => {

@@ -134,7 +134,7 @@
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { GetDataProfile } from "@/HelperFunctions/GetDataProfile";
-import { BASE_URL } from "@/HelperFunctions/BaseUrl";
+import { BASE_URL , apiList} from "@/HelperFunctions/BaseUrl";
 import { SAVE_QR } from '@/HelperFunctions/saveQR'
 // import { removeBodyScroll } from '@/HelperFunctions/bodyScroll'
 import AppAdvert from "@/components/AppAdvert.vue";
@@ -173,7 +173,7 @@ export default {
         beerId: beerId.value,
       };
       try {
-        const response = await axios(BASE_URL + `/place/isAdded/remove`, {
+        const response = await axios(`${BASE_URL}${apiList.placeIsAddedRemove}`, {
           method: "DELETE",
           data,
         });
@@ -193,7 +193,7 @@ export default {
         beerId: beerId.value,
       };
       try {
-        const response = await axios(BASE_URL + `/place/buy/beer`, {
+        const response = await axios(`${BASE_URL}${apiList.placeBuyBeer}`, {
           method: "POST",
           data,
         });
