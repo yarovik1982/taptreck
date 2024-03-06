@@ -10,23 +10,23 @@ pipeline {
 
         stage('Clean') {
             steps {
-                bat 'docker container stop taptrack'
-                bat 'docker rm taptrack'
-                bat 'docker rmi images beer-front-app -f'
+                sh 'docker container stop taptrack || true'
+                sh 'docker rm taptrack || true'
+                sh 'docker rmi images beer-front-app -f || true'
             }
         }
 
         stage('Build') {
             steps {
-                bat 'npm install'
-                bat 'npm run build'
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
 
         stage('Deploy') {
             steps {
-                bat 'docker build -t beer-front-app .'
-                bat 'docker run -d -p 443:443 --name taptrack beer-front-app'
+                sh 'docker build -t beer-front-app .'
+                sh 'docker run -d -p 3000:3000 --name taptrack beer-front-app'
             }
         }
     }
