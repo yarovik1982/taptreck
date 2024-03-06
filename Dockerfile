@@ -1,9 +1,8 @@
-FROM node:14-alpine AS build-stage
+FROM node:14-alpine
+RUN npm install -g http-server
 WORKDIR /taptrack
-COPY package.json ./
+COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
-FROM nginx:alpine
-COPY --from=build-stage /taptrack/dist /usr/share/nginx/html
-CMD ["nginx", "-g", "daemon off;"]
+CMD [ "http-server", "dist" ]
