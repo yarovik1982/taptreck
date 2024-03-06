@@ -8,7 +8,11 @@ services:
       dockerfile: Dockerfile
     container_name: taptrack
     ports:
-      - "443:443"
-    environment:
-      - "SERVER_PORT=443"
+      - "80:80"
     restart: always
+    networks:
+      - "my-network"
+
+networks:
+  my-network:
+    name: network
