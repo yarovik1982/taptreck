@@ -3,9 +3,11 @@ import axios from 'axios'
 import {favoritesList, newsList} from '@/HelperFunctions/Lists.js'
 import { BASE_URL, apiList } from '@/HelperFunctions/BaseUrl.js'
 import {messages} from '@/HelperFunctions/Messages.js'
+import { GetToken , ClearDataProfile} from '@/HelperFunctions/GetDataProfile'
 
 export default createStore({
   state: {
+    jwt:GetToken(),
     api_key_dadata:"f28c978bf7b07afdef72df486e0336920a7f3bd8",
     secret_key_dadata:'cf76bbc76e85df0b224a5054164edde6a47a3ec6',
     favoritesList,
@@ -133,12 +135,16 @@ export default createStore({
     GET_SEARCH_DATA({commit}, {userId = '', name}){
       return axios(BASE_URL + `${apiList.searchResult.main}?userId=${userId}&name=${name}`, {
         method:'GET',
+        headers:{Authorization:`Bearer ${this.state.jwt}`},
       })
       .then(response => {
         commit('setSearchResult', response.data)
         return response
       })
       .catch(error => {
+        if(error.response.status === 401){
+          ClearDataProfile()
+        }
         console.log(error);
       })
     },

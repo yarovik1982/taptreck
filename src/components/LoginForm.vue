@@ -134,10 +134,10 @@ export default {
             localStorage.setItem("user", JSON.stringify(profileData))
             
               toProfile.push("/profile/profile-favorites");
-            setTimeout(() => {
-              location.reload(true)
-              message.value = ''
-            }, 500)
+            // setTimeout(() => {
+            //   location.reload(true)
+            //   message.value = ''
+            // }, 500)
           } else
             message.value = "Упс , что-то пошло не так. Попробуйте заново!";
         }
